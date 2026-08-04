@@ -1,0 +1,53 @@
+{
+  "platform": "Project Genesis v1.0",
+  "timestamp": "2026-08-04T09:40:29.240Z",
+  "seed": 42,
+  "architecture": {
+    "id": "traditional",
+    "name": "Traditional / Standardized Model",
+    "presetId": "traditional",
+    "description": "High exam reliance, fixed grade progression, rigid standardized curriculum, top-down instruction.",
+    "examWeightPct": 70,
+    "homeworkHoursPerDay": 3.5,
+    "aiIntegrationLevel": 10,
+    "studentAutonomyPct": 15,
+    "teacherAutonomyPct": 30,
+    "classSize": 32,
+    "masteryThresholdPct": 60,
+    "fundingPerStudentUSD": 8500,
+    "wellbeingFocusPct": 30,
+    "collaborativeLearningPct": 25,
+    "interdisciplinaryPct": 20
+  },
+  "day": 1,
+  "month": 1,
+  "year": 2026,
+  "studentCount": 40,
+  "teacherCount": 2,
+  "economy": {
+    "jobsAvailable": 12500,
+    "skillDemand": {
+      "STEM": 85,
+      "Humanities": 65,
+      "Social": 70,
+      "Arts": 60,
+      "Practical": 90,
+      "Ethics": 80
+    },
+    "innovationIndex": 55,
+    "gdpProxy": 42000,
+    "entrepreneurshipRate": 8.5,
+    "hiringRate": 72,
+    "automationResilience": 50
+  },
+  "society": {
+    "happinessIndex": 65,
+    "wellbeingIndex": 68,
+    "crimeProxy": 18,
+    "researchBreakthroughs": 12,
+    "socialCohesion": 60,
+    "socialMobilityIndex": 55
+  },
+  "historySnapshotCount": 0,
+  "verificationHash": "genesis-v1.0-42-1-0"
+}

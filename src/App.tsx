@@ -17,6 +17,7 @@ import { Classroom3DView } from './components/visualizers/Classroom3DView';
 import { FrameworksView } from './components/visualizers/FrameworksView';
 import { ArchitectureDesigner } from './components/designer/ArchitectureDesigner';
 import { ResearchPaperView } from './components/research/ResearchPaperView';
+import { KarmayogiCompetencyView } from './components/capacity/KarmayogiCompetencyView';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('dashboard');
@@ -197,14 +198,21 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* Tab 7: 8 Research Frameworks */}
+        {/* Tab 7: iGOT Karmayogi Competency & AI Quiz */}
+        {activeTab === 'igot' && (
+          <div className="tab-view fade-in">
+            <KarmayogiCompetencyView />
+          </div>
+        )}
+
+        {/* Tab 8: 8 Research Frameworks */}
         {activeTab === 'frameworks' && (
           <div className="tab-view fade-in">
             <FrameworksView frameworks={activeFrameworks} />
           </div>
         )}
 
-        {/* Tab 8: Publication Package */}
+        {/* Tab 9: Publication Package */}
         {activeTab === 'publication' && (
           <div className="tab-view fade-in">
             <ResearchPaperView

@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { ShieldCheck, Cpu, Sliders, GitBranch, Share2, Users, Sparkles, BookOpen, Download, Box } from 'lucide-react';
+import { ShieldCheck, Cpu, Sliders, GitBranch, Share2, Users, Sparkles, BookOpen, Download, Box, Award } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: string;
@@ -25,6 +25,7 @@ export const Navbar: FC<NavbarProps> = ({
     { id: 'classroom3d', label: '3D Spatial Visualizer', icon: Box },
     { id: 'population', label: 'Population & Faculty', icon: Users },
     { id: 'knowledge', label: 'Knowledge Graph', icon: Share2 },
+    { id: 'igot', label: 'iGOT Competency & AI Quiz', icon: Award },
     { id: 'frameworks', label: 'Research Frameworks', icon: Sparkles },
     { id: 'publication', label: 'Publication Package', icon: BookOpen }
   ];

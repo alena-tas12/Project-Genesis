@@ -17,7 +17,7 @@ import { Classroom3DView } from './components/visualizers/Classroom3DView';
 import { FrameworksView } from './components/visualizers/FrameworksView';
 import { ArchitectureDesigner } from './components/designer/ArchitectureDesigner';
 import { ResearchPaperView } from './components/research/ResearchPaperView';
-import { KarmayogiCompetencyView } from './components/capacity/KarmayogiCompetencyView';
+import { SIHMasterDashboard } from './components/sih/SIHMasterDashboard';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('dashboard');
@@ -198,10 +198,10 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* Tab 7: iGOT Karmayogi Competency & AI Quiz */}
+        {/* Tab 7: SIH 26101 Master Enterprise Suite */}
         {activeTab === 'igot' && (
           <div className="tab-view fade-in">
-            <KarmayogiCompetencyView />
+            <SIHMasterDashboard />
           </div>
         )}
 

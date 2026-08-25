@@ -25,7 +25,7 @@ export const Navbar: FC<NavbarProps> = ({
     { id: 'classroom3d', label: '3D Spatial Visualizer', icon: Box },
     { id: 'population', label: 'Population & Faculty', icon: Users },
     { id: 'knowledge', label: 'Knowledge Graph', icon: Share2 },
-    { id: 'igot', label: 'iGOT Competency & AI Quiz', icon: Award },
+    { id: 'igot', label: 'SIH 26101 Master Suite', icon: Award },
     { id: 'frameworks', label: 'Research Frameworks', icon: Sparkles },
     { id: 'publication', label: 'Publication Package', icon: BookOpen }
   ];

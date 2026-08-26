@@ -24,6 +24,18 @@ One of the key lessons learned from building complex AGI-like architectures (suc
 - **Scope**: Finite (Closed Architecture)
 - **Primary Goal**: Objective comparison of educational architectures via multi-agent population simulation.
 
+### 1.3 The Karunya Educational Philosophy: Externalizing Cognitive Processing
+The underlying philosophy guiding all work across Karunya institutional projects (including `course-website` and **Project Genesis**) stems from a fundamental design paradigm: **System-First Representation over Screen-First Design**.
+
+Rather than treating educational software as a collection of disconnected CRUD pages or administrative forms, the architecture models **education itself as a unified computational system**:
+
+1. **Cognitive Externalization**: Human working memory has finite limits. The architecture acts as a cognitive prosthesis, externalizing complex pedagogical structures, student memory retention curves (Ebbinghaus decay), and institutional knowledge DAGs into explicit, visual computational models.
+2. **Systemic Representation**: Every module begins with the fundamental question: *"What system am I actually representing?"* rather than *"What UI screen should I build?"*
+3. **The Triadic Architectural Hierarchy**:
+   - **Layer 1 (Karunya Institutional Product Layer)**: The concrete academic experience and course delivery environment (`course-website`).
+   - **Layer 2 (Genesis Computational Engine)**: The macro simulation engine modeling the physical, cognitive, economic, and social dynamics of educational systems over 50-year horizons.
+   - **Layer 3 (SIH 26101 Specialized Domain Layer)**: Sector-specific workforce capacity building and closed-loop competency gap assessments for India's Official Statistical System (MoSPI DIID).
+
 ---
 
 ## 2. Global Educational Systems Integrated (The 12 Major Models)

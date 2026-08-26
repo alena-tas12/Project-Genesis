@@ -615,6 +615,30 @@ body {
   border-bottom: 1px solid var(--border-glass);
 }
 
+.arch-name-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.arch-name-cell .name {
+  font-weight: 700;
+  color: var(--text-main);
+  font-size: 0.88rem;
+}
+
+.arch-name-cell .tag {
+  font-size: 0.7rem;
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  background: rgba(0, 242, 254, 0.1);
+  border: 1px solid var(--border-cyan);
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+}
+
 .row-clickable {
   cursor: pointer;
   transition: background 0.15s ease;

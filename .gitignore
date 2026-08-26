@@ -8,6 +8,10 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+data/*.db
+data/*.db-shm
+data/*.db-wal
+.env
 dist
 dist-ssr
 *.local

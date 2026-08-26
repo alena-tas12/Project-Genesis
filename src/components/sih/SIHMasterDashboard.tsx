@@ -5,9 +5,9 @@ import { Award, Brain, CheckCircle, Database, FileText, Globe, Layers, RefreshCw
 export const SIHMasterDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'heatmap' | 'profile' | 'nlp_quiz' | 'igot_api'>('heatmap');
   
-  // Data State
+  // Data State with Persistence
   const cadres = MoSPICompetencyFramework.getCadresList();
-  const officials = MoSPICompetencyFramework.getSampleMoSPIOfficials();
+  const [officials, setOfficials] = useState<MoSPIOfficialProfile[]>(() => MoSPICompetencyFramework.getSampleMoSPIOfficials());
   const courses = MoSPICompetencyFramework.getIGOTCourseCatalog();
 
   const [selectedOfficial, setSelectedOfficial] = useState<MoSPIOfficialProfile>(officials[0]);
@@ -23,22 +23,73 @@ export const SIHMasterDashboard: React.FC = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [showQuizResults, setShowQuizResults] = useState<boolean>(false);
   const [apiSyncSuccess, setApiSyncSuccess] = useState<boolean>(false);
+  const [feedbackNotice, setFeedbackNotice] = useState<string | null>(null);
 
   const handleGenerateNLPQuizzes = () => {
     const newQuizzes = MoSPICompetencyFramework.parseDocumentAndGenerateNLPQuizzes(inputText, 4);
     setGeneratedQuizzes(newQuizzes);
     setSelectedAnswers({});
     setShowQuizResults(false);
+    setFeedbackNotice(null);
   };
 
   const handleSelectOption = (quizId: string, optionIdx: number) => {
     setSelectedAnswers(prev => ({ ...prev, [quizId]: optionIdx }));
   };
 
+  const handleVerifyAnswersAndLoopSkillGap = () => {
+    setShowQuizResults(true);
+
+    // Calculate score percentage
+    let correctCount = 0;
+    generatedQuizzes.forEach(q => {
+      const selectedIdx = selectedAnswers[q.id];
+      if (selectedIdx !== undefined && q.options[selectedIdx]?.isCorrect) {
+        correctCount++;
+      }
+    });
+
+    const scorePct = Math.round((correctCount / generatedQuizzes.length) * 100);
+
+    // Closed-Loop: Update officer's competency profile dynamically!
+    const domainCategory = generatedQuizzes[0]?.domainCategory || 'Survey Methodology';
+    const updatedProfiles = MoSPICompetencyFramework.updateOfficialCompetencyAfterAssessment(
+      selectedOfficial.id,
+      domainCategory,
+      scorePct
+    );
+
+    setOfficials(updatedProfiles);
+    const refreshedSelected = updatedProfiles.find(o => o.id === selectedOfficial.id);
+    if (refreshedSelected) {
+      setSelectedOfficial(refreshedSelected);
+    }
+
+    setFeedbackNotice(
+      `Assessment complete! Score: ${scorePct}%. Competency score for ${selectedOfficial.name} boosted by +${Math.round((scorePct / 100) * 12)}% and saved!`
+    );
+  };
+
+  const handleToggleQuizApproval = (quizId: string) => {
+    setGeneratedQuizzes(prev =>
+      prev.map(q => {
+        if (q.id === quizId) {
+          const nextStatus = q.status === 'Approved' ? 'Pending Review' : 'Approved';
+          return { ...q, status: nextStatus };
+        }
+        return q;
+      })
+    );
+  };
+
   const handleTriggerIGOTSync = () => {
     setApiSyncSuccess(true);
     setTimeout(() => setApiSyncSuccess(false), 3000);
   };
+
+  const filteredOfficials = selectedCadreFilter === 'ALL' 
+    ? officials 
+    : officials.filter(o => o.cadre === selectedCadreFilter);
 
   return (
     <div className="sih-master-container fade-in">
@@ -170,7 +221,7 @@ export const SIHMasterDashboard: React.FC = () => {
               </div>
 
               <div className="officials-list">
-                {officials.map(off => (
+                {filteredOfficials.map(off => (
                   <div
                     key={off.id}
                     onClick={() => setSelectedOfficial(off)}
@@ -179,7 +230,7 @@ export const SIHMasterDashboard: React.FC = () => {
                     <div className="off-name">{off.name}</div>
                     <div className="off-sub">{off.designation} • {off.postedDivision}</div>
                     <div className="off-readiness">
-                      <span>Readiness:</span>
+                      <span>Readiness Index:</span>
                       <span className="val-cyan">{off.overallReadinessIndexPct}%</span>
                     </div>
                   </div>
@@ -278,6 +329,13 @@ export const SIHMasterDashboard: React.FC = () => {
             </div>
           </div>
 
+          {feedbackNotice && (
+            <div className="sih-alert-banner">
+              <CheckCircle className="icon-emerald" size={20} />
+              <div>{feedbackNotice}</div>
+            </div>
+          )}
+
           {/* Generated MCQs Display */}
           <div className="generated-mcqs-container">
             <div className="mcq-list-header">
@@ -296,6 +354,12 @@ export const SIHMasterDashboard: React.FC = () => {
                       <span className="q-number">Q{idx + 1}.</span>
                       <span className="blooms-pill">{q.bloomsLevel}</span>
                       <span className="domain-pill">{q.domainCategory}</span>
+                      <button
+                        onClick={() => handleToggleQuizApproval(q.id)}
+                        className={`status-chip ${q.status === 'Approved' ? 'approved' : 'pending'}`}
+                      >
+                        {q.status || 'Pending Review'}
+                      </button>
                     </div>
 
                     <div className="q-text">{q.questionText}</div>
@@ -342,8 +406,8 @@ export const SIHMasterDashboard: React.FC = () => {
             </div>
 
             <div className="quiz-bottom-actions">
-              <button onClick={() => setShowQuizResults(true)} className="btn-verify-answers">
-                Verify Answers & View Explanations
+              <button onClick={handleVerifyAnswersAndLoopSkillGap} className="btn-verify-answers">
+                Verify Answers & Update Skill-Gap (Closed-Loop)
               </button>
               <button onClick={handleGenerateNLPQuizzes} className="btn-regen-quizzes">
                 <RefreshCw size={14} />

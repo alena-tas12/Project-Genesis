@@ -47,7 +47,10 @@ export interface AdvancedGeneratedMCQ {
   domainCategory: string;
   distractorFallacyType: string;
   difficultyRating: number; // 1 to 5
+  status?: 'Pending Review' | 'Approved' | 'Rejected';
 }
+
+const STORAGE_KEY_OFFICIALS = 'mospi_officials_profiles_v1';
 
 export class MoSPICompetencyFramework {
   static getCadresList(): { cadre: MoSPICadre; name: string; description: string }[] {
@@ -62,7 +65,16 @@ export class MoSPICompetencyFramework {
   }
 
   static getSampleMoSPIOfficials(): MoSPIOfficialProfile[] {
-    return [
+    const saved = localStorage.getItem(STORAGE_KEY_OFFICIALS);
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed to parse saved officials profiles', e);
+      }
+    }
+
+    const defaultProfiles: MoSPIOfficialProfile[] = [
       {
         id: 'off-101',
         name: 'Dr. Rajesh Sharma, ISS',
@@ -95,6 +107,46 @@ export class MoSPICompetencyFramework {
         ]
       }
     ];
+
+    localStorage.setItem(STORAGE_KEY_OFFICIALS, JSON.stringify(defaultProfiles));
+    return defaultProfiles;
+  }
+
+  static updateOfficialCompetencyAfterAssessment(
+    officialId: string,
+    passedDomainCategory: string,
+    scorePct: number
+  ): MoSPIOfficialProfile[] {
+    const officials = this.getSampleMoSPIOfficials();
+    const updated = officials.map(off => {
+      if (off.id === officialId) {
+        const boost = Math.round((scorePct / 100) * 12); // up to +12% skill gain per quiz pass
+        const updatedComps = off.competencies.map(comp => {
+          if (comp.name.toLowerCase().includes(passedDomainCategory.toLowerCase()) || passedDomainCategory.toLowerCase().includes(comp.category.toLowerCase())) {
+            const newScore = Math.min(comp.requiredTargetScorePct, comp.currentScorePct + boost);
+            const newGap = Math.max(0, comp.requiredTargetScorePct - newScore);
+            return {
+              ...comp,
+              currentScorePct: newScore,
+              gapPct: newGap
+            };
+          }
+          return comp;
+        });
+
+        const avgScore = Math.round(updatedComps.reduce((acc, c) => acc + c.currentScorePct, 0) / updatedComps.length);
+
+        return {
+          ...off,
+          competencies: updatedComps,
+          overallReadinessIndexPct: avgScore
+        };
+      }
+      return off;
+    });
+
+    localStorage.setItem(STORAGE_KEY_OFFICIALS, JSON.stringify(updated));
+    return updated;
   }
 
   static getIGOTCourseCatalog(): IGOTCourseSchema[] {
@@ -139,7 +191,6 @@ export class MoSPICompetencyFramework {
   }
 
   static parseDocumentAndGenerateNLPQuizzes(_textMaterial: string, numQuestions: number = 4): AdvancedGeneratedMCQ[] {
-    // Advanced NLP Parser simulating Bloom's Taxonomy & Distractor Fallacy Algorithms for MoSPI Learning Materials
     const baseQuizzes: AdvancedGeneratedMCQ[] = [
       {
         id: 'nlp-mcq-1',
@@ -154,7 +205,8 @@ export class MoSPICompetencyFramework {
         bloomsLevel: 'Evaluating',
         domainCategory: 'Survey Methodology & AI Imputation',
         distractorFallacyType: 'Deletion Fallacy & Geographical Substitution Error',
-        difficultyRating: 4
+        difficultyRating: 4,
+        status: 'Approved'
       },
       {
         id: 'nlp-mcq-2',
@@ -169,7 +221,8 @@ export class MoSPICompetencyFramework {
         bloomsLevel: 'Analyzing',
         domainCategory: 'National Accounts',
         distractorFallacyType: 'Sign Inversion & Depreciation Confusion',
-        difficultyRating: 3
+        difficultyRating: 3,
+        status: 'Approved'
       },
       {
         id: 'nlp-mcq-3',
@@ -184,7 +237,8 @@ export class MoSPICompetencyFramework {
         bloomsLevel: 'Applying',
         domainCategory: 'Data Informatics & Anomaly Detection',
         distractorFallacyType: 'Irrelevant Demographic Correlation',
-        difficultyRating: 5
+        difficultyRating: 5,
+        status: 'Approved'
       },
       {
         id: 'nlp-mcq-4',
@@ -199,7 +253,8 @@ export class MoSPICompetencyFramework {
         bloomsLevel: 'Understanding',
         domainCategory: 'GIS & Spatial Analytics',
         distractorFallacyType: 'Over-extrapolation of Remote Sensing Capabilities',
-        difficultyRating: 3
+        difficultyRating: 3,
+        status: 'Approved'
       }
     ];
 

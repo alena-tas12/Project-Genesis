@@ -507,10 +507,14 @@ body {
 
 .mcqs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.25rem; }
 .sih-mcq-card { background: rgba(11, 15, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.85rem; }
-.mcq-card-top { display: flex; align-items: center; gap: 0.6rem; }
+.mcq-card-top { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
 .q-number { font-weight: 800; color: var(--cyan); font-family: var(--font-mono); }
 .blooms-pill { font-size: 0.72rem; color: var(--purple); background: rgba(139, 92, 246, 0.2); border: 1px solid var(--purple); padding: 0.15rem 0.5rem; border-radius: 6px; }
 .domain-pill { font-size: 0.72rem; color: var(--emerald); background: rgba(16, 185, 129, 0.15); padding: 0.15rem 0.5rem; border-radius: 6px; }
+.status-chip { font-size: 0.72rem; padding: 0.15rem 0.5rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; }
+.status-chip.approved { background: rgba(16, 185, 129, 0.2); color: var(--emerald); border: 1px solid var(--emerald); }
+.status-chip.pending { background: rgba(245, 158, 11, 0.2); color: var(--amber); border: 1px solid var(--amber); }
+
 .q-text { font-weight: 600; font-size: 0.92rem; }
 
 .options-stack { display: flex; flex-direction: column; gap: 0.45rem; }

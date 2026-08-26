@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { ShieldCheck, Cpu, Sliders, GitBranch, Share2, Users, Sparkles, BookOpen, Download, Box, Award } from 'lucide-react';
+import { ShieldCheck, Cpu, Sliders, GitBranch, Share2, Users, Sparkles, BookOpen, Download, Box, Award, Layers } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: string;
@@ -18,16 +18,19 @@ export const Navbar: FC<NavbarProps> = ({
   currentYear,
   onExportPackage
 }) => {
-  const tabs = [
+  const genesisTabs = [
     { id: 'dashboard', label: 'Research Dashboard', icon: Cpu },
     { id: 'designer', label: 'Architecture Designer', icon: Sliders },
     { id: 'experiments', label: 'Experiment Runner', icon: GitBranch },
     { id: 'classroom3d', label: '3D Spatial Visualizer', icon: Box },
     { id: 'population', label: 'Population & Faculty', icon: Users },
     { id: 'knowledge', label: 'Knowledge Graph', icon: Share2 },
-    { id: 'igot', label: 'SIH 26101 Master Suite', icon: Award },
     { id: 'frameworks', label: 'Research Frameworks', icon: Sparkles },
     { id: 'publication', label: 'Publication Package', icon: BookOpen }
+  ];
+
+  const sihTabs = [
+    { id: 'igot', label: 'SIH 26101 Master Suite', icon: Award }
   ];
 
   return (
@@ -38,25 +41,59 @@ export const Navbar: FC<NavbarProps> = ({
           <span className="logo-text">PROJECT GENESIS</span>
         </div>
         <span className="version-badge">
-          v1.0 Research Architecture
+          v1.0 Dual-Platform Engine
         </span>
       </div>
 
-      <nav className="nav-tabs">
-        {tabs.map(t => {
-          const Icon = t.icon;
-          const isActive = activeTab === t.id;
-          return (
-            <button
-              key={t.id}
-              onClick={() => setActiveTab(t.id)}
-              className={`nav-button ${isActive ? 'active' : ''}`}
-            >
-              <Icon className="nav-icon" size={15} />
-              <span>{t.label}</span>
-            </button>
-          );
-        })}
+      {/* Main Tab Groups */}
+      <nav className="nav-tabs-container">
+        {/* Core Genesis Visuals (Pre-SIH) Group */}
+        <div className="nav-group">
+          <span className="group-label">
+            <Layers size={12} className="icon-cyan" /> Core Genesis Visuals (Pre-SIH)
+          </span>
+          <div className="nav-tabs">
+            {genesisTabs.map(t => {
+              const Icon = t.icon;
+              const isActive = activeTab === t.id;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => setActiveTab(t.id)}
+                  className={`nav-button ${isActive ? 'active' : ''}`}
+                >
+                  <Icon className="nav-icon" size={14} />
+                  <span>{t.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="nav-divider" />
+
+        {/* SIH 26101 Module (Post-SIH) Group */}
+        <div className="nav-group">
+          <span className="group-label">
+            <Award size={12} className="icon-purple" /> SIH 26101 MoSPI Suite (Post-SIH)
+          </span>
+          <div className="nav-tabs">
+            {sihTabs.map(t => {
+              const Icon = t.icon;
+              const isActive = activeTab === t.id;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => setActiveTab(t.id)}
+                  className={`nav-button sih-highlight ${isActive ? 'active' : ''}`}
+                >
+                  <Icon className="nav-icon" size={14} />
+                  <span>{t.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </nav>
 
       <div className="header-actions">

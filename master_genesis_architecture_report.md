@@ -59,35 +59,94 @@ Project Genesis now integrates **all 12 major global educational systems and alt
 
 ---
 
-## 3. The Complete 12-Module Subsystem Architecture
+## 3. The Multi-Scale Triadic Architecture: Human, Educational, and Societal Systems
 
+Project Genesis operates far beyond the scope of a traditional "education dashboard." It is a comprehensive framework representing the complex feedback loops between curriculum, individual cognitive networks, and macro-institutional dynamics.
+
+```text
+                         PROJECT GENESIS
+                              │
+              ┌───────────────┼────────────────┐
+              │               │                │
+              ▼               ▼                ▼
+          EDUCATION         HUMAN           SOCIETY
+          SYSTEMS           SYSTEMS         SYSTEMS
+              │               │                │
+          Curriculum      Cognition       Institutions
+          Teachers        Psychology      Economics
+          Learners        Emotion         Culture
+          Assessment      Physiology      Society
+          Institutions    Behaviour
+              │               │                │
+              └───────────────┼────────────────┘
+                              ▼
+                     COMPLEX SYSTEM MODEL
+                              │
+                 ┌────────────┼────────────┐
+                 ▼            ▼            ▼
+              NETWORKS     AGENTS      DYNAMICS
+                 │            │            │
+                 └────────────┼────────────┘
+                              ▼
+                         SIMULATION
+                              │
+                    ┌─────────┼─────────┐
+                    ▼         ▼         ▼
+                 WHAT-IF   TRAJECTORY  EMERGENCE
+                              │
+                              ▼
+                         OBSERVATION
+                              │
+                              ▼
+                         RESEARCH
 ```
-                                  PROJECT GENESIS
-                                
-                                  Research Layer
-                                         │
-                        ┌────────────────┴────────────────┐
-                        │                                 │
-                 Architecture Engine              Experiment Engine
-                        │                                 │
-                        └──────────────┬──────────────────┘
-                                       │
-                               Simulation Engine
-                                       │
-               ┌──────────┬──────────┬─┴────────┬──────────┐
-               │          │          │          │          │
-            Students   Teachers Knowledge Society  Economy
-               │          │          │          │          │
-               └──────────┴──────────┴──────────┴──────────┘
-                                       │
-                               Data Collection Engine
-                                       │
-                                Analytics Engine
-                                       │
-                              Visualization Engine
-                                       │
-                                Research Dashboard
+
+### 3.1 The Human Development & Cognitive Network Model
+
+Within the **Human System**, agents are not mere collections of independent variables (e.g., `motivation = 0.73`). Instead, Genesis represents human development as evolving, interconnected networks of biological, cognitive, psychological, emotional, and social states.
+
+```text
+                         HUMAN
+                           │
+        ┌──────────────────┼──────────────────┐
+        ▼                  ▼                  ▼
+    COGNITIVE         PSYCHOLOGICAL       PHYSIOLOGICAL
+        │                  │                  │
+        ▼                  ▼                  ▼
+   perception          motivation          sleep
+   attention           identity            energy
+   memory              stress              physical state
+   learning            adaptation          biological factors
+   reasoning           behaviour
+        │                  │                  │
+        └──────────────────┼──────────────────┘
+                           ▼
+                       EMOTIONAL
+                           │
+                           ▼
+                    SOCIAL / RELATIONAL
+                           │
+                           ▼
+                      DEVELOPMENT
+                           │
+                           ↺
 ```
+
+In this model, developmental trajectories emerge from continuous feedback cycles:
+`EXPERIENCES -> PERCEPTION -> INTERPRETATION -> EMOTION -> MEMORY -> BELIEF/EXPECTATION -> BEHAVIOUR -> NEW EXPERIENCE`
+
+### 3.2 Scientific Boundary and Epistemological Stance
+
+It is a critical scientific boundary of this research to state: **Project Genesis does not claim to literally recreate a human brain or definitively diagnose a real person's psychological or physiological state.** 
+
+Instead, the epistemological stance is:
+> *"Genesis constructs computational models and simulations of selected cognitive, psychological, physiological, emotional and social processes and investigates their interactions under explicitly stated assumptions."*
+
+These models act as computational proxies, allowing researchers to observe how different outcomes emerge at multiple scales (Micro, Meso, Macro) over time.
+
+---
+
+## 4. The Complete Subsystem Architecture (Genesis Core)
 
 - **Module 1 (Architecture Engine)**: Presets and custom sliders for all 12 global systems.
 - **Module 2 (Experiment Engine)**: Multi-world parallel matrix runs across all 12 systems.

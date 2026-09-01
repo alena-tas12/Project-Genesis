@@ -25,19 +25,19 @@ Our findings demonstrate that high-stakes standardized examination systems gener
 A persistent flaw in software engineering and systems design—termed the *Chrono Principle*—is the tendency for system boundaries to expand infinitely. In educational technology, platforms frequently dissolve into administrative feature creep (e.g., attendance trackers, chat modules, and grading portals) rather than solving the core scientific problem.
 
 To prevent infinite feature creep, **Project Genesis** is intentionally established with a **closed, finite architecture**:
-- **System Identity**: Educational Systems Simulation & Research Platform.
-- **Core Research Question**: *"Can educational architectures be objectively compared through large-scale simulation before implementation in real institutions?"*
-- **Completion Definition (v1.0)**: The simulator code is 100% complete. Future educational models are integrated as **data configurations, rule matrices, and parameters**, rather than mutating core source code.
+- **System Identity**: Human, Educational & Societal Systems Simulation Framework.
+- **Core Research Question**: *"Can complex human and educational systems be represented computationally well enough that we can observe their interactions, simulate interventions, and investigate how different outcomes emerge?"*
+- **Completion Definition (v1.0)**: The simulator code provides a core framework. Future models (cognitive, psychological, institutional) are integrated as **data configurations, rule matrices, and parameters**, rather than mutating core source code.
 
-### 1.2 System-First Cognitive Externalization (The Karunya Philosophy)
-The architectural philosophy underlying this research originates from the **Karunya Educational System Design Principle**: *Software must externalize cognitive processing rather than merely digitizing administrative forms*.
+### 1.2 The Multi-Scale Triadic Model: Human, Educational, and Societal Systems
+The architectural philosophy underlying this research rejects treating education as isolated. Instead, it asks: **"What relationships between experiences, cognition, emotion, behaviour, and environment produce observed states?"**
 
-In traditional software development, educational applications are designed around UI screens ("What page should we build?"). The Karunya philosophy reverses this process by asking: **"What underlying system are we representing?"**
+This establishes a multi-scale computational hierarchy:
+1. **Micro Scale (The Human System)**: Individual cognition, psychology, physiology, emotion, and behaviour. Modeled as a feedback loop: `Experience -> Perception -> Interpretation -> Emotion -> Memory -> Belief -> Behaviour -> New Experience`.
+2. **Meso Scale (The Interaction Network)**: The interaction layer representing relationships (Student ↔ Teacher, Person ↔ Family, Person ↔ Institution).
+3. **Macro Scale (Educational & Societal Systems)**: Curriculum, institutions, economics, and culture.
 
-This establishes a three-tier computational hierarchy:
-1. **Institutional Product Layer (`course-website`)**: The concrete academic delivery interface, student/faculty interaction space, and institutional governance framework.
-2. **Computational Simulation Layer (`Project Genesis`)**: The macro educational physics engine modeling population dynamics, memory retention decay (Ebbinghaus equations), daily commute fatigue, and 50-year macroeconomic trajectories.
-3. **Specialized Capacity Layer (`SIH 26101 MoSPI Engine`)**: Sector-specific workforce upskilling, competency gap identification, and Bloom's Taxonomy assessment generation for government statistical personnel.
+**Epistemological Boundary:** Genesis constructs computational models and simulations of selected cognitive, psychological, physiological, emotional and social processes. It does not claim to literally recreate a human brain or definitively diagnose an individual.
 
 ---
 

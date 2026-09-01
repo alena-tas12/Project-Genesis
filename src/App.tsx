@@ -18,6 +18,7 @@ import { FrameworksView } from './components/visualizers/FrameworksView';
 import { ArchitectureDesigner } from './components/designer/ArchitectureDesigner';
 import { ResearchPaperView } from './components/research/ResearchPaperView';
 import { SIHMasterDashboard } from './components/sih/SIHMasterDashboard';
+import { HumanSystemNetworkView } from './components/visualizers/HumanSystemNetworkView';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('dashboard');
@@ -198,7 +199,14 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* Tab 7: SIH 26101 Master Enterprise Suite */}
+        {/* Tab 7: Human Network Proxy Model */}
+        {activeTab === 'human-network' && (
+          <div className="tab-view fade-in">
+            <HumanSystemNetworkView />
+          </div>
+        )}
+
+        {/* Tab 8: SIH 26101 Master Enterprise Suite */}
         {activeTab === 'igot' && (
           <div className="tab-view fade-in">
             <SIHMasterDashboard />

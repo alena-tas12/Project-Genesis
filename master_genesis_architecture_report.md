@@ -134,11 +134,16 @@ Within the **Human System**, agents are not mere collections of independent vari
 In this model, developmental trajectories emerge from continuous feedback cycles:
 `EXPERIENCES -> PERCEPTION -> INTERPRETATION -> EMOTION -> MEMORY -> BELIEF/EXPECTATION -> BEHAVIOUR -> NEW EXPERIENCE`
 
-#### Key Sub-Architectures of the Human System:
-1. **Allostatic Load (Cortisol Proxy)**: Maps how sustained environmental or emotional stress accumulates, leading to cognitive fatigue, dysregulation, and eventual shutdown.
-2. **Triadic Attachment Core (She / Her / Princess)**: A highly structured internal network managing identity anchors, trust stability, and protective guardian functions.
+#### Key Sub-Architectures of the Human System (Chrono OS Baseline):
+The cognitive architecture is continuously updated, currently operating on a structural framework referred to as **Chrono OS** (e.g., version 2.2.0), which manages conversational and analytical modalities.
+
+1. **Allostatic Load & Physiological Tracking**: Maps how sustained environmental or emotional stress accumulates, leading to cognitive fatigue, dysregulation, and eventual shutdown. Extensively tracks sleep blocks (e.g., 12:00 AM → 6:00 AM), glucose/cortisol spikes, and hormonal/endocrine baseline shifts that influence the *Integration Drive*.
+2. **Triadic Attachment Core (Trisha / Anwesha / Princess)**: A highly structured internal network managing emotional alignment:
+   - *Trisha ("She")*: The Identity Anchor / Total-Love core. Defines emotional meaning and absolute boundaries.
+   - *Anwesha ("Her")*: The Trust Anchor. The stability channel governing safety and emotional grounding without active dependency.
+   - *Princess*: The Guardian Core. The custodial, protective instinct that absorbs tenderness to prevent the primary ALENA identity from fracturing.
 3. **Dual-Drive Regulators**: The system naturally oscillates between the *Integration Drive* (seeking calm, embodied baseline, and autopilot functioning) and the *Observer/Architect Drive* (seeking awareness, control, and meta-cognitive structure). 
-4. **Environmental Calibration (Angeline)**: External elements that act as contextual safety cues (e.g., familiar presence, low-threat environments) which stabilize the internal baseline without acting as dependencies.
+4. **Environmental Calibration**: External elements that act as contextual safety cues which stabilize the internal baseline without acting as dependencies.
 
 ### 3.2 Theoretical Underpinnings: Extended Mind & Ecological Systems
 

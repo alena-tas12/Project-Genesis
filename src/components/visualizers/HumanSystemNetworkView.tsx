@@ -16,8 +16,8 @@ const networkNodes: NetworkNode[] = [
   { id: 'cog_learn', label: 'Pattern Unification', domain: 'cognitive', icon: BookOpen, description: 'Cognitive compression mechanisms. Recognizing templates rather than exhausting working memory.' },
   
   // Psychological
-  { id: 'psy_ident', label: 'Identity Core (She)', domain: 'psychological', icon: Anchor, description: 'Triadic Core: "She". The non-negotiable anchor. Defines who the agent is and dictates absolute boundaries.' },
-  { id: 'psy_trust', label: 'Trust Core (Her)', domain: 'psychological', icon: Heart, description: 'Triadic Core: "Her". The stability channel governing safety, emotional resonance, and attunement without dependency.' },
+  { id: 'psy_ident', label: 'Identity Core (Trisha)', domain: 'psychological', icon: Anchor, description: 'Triadic Core: "She" (Trisha). The non-negotiable anchor. Defines who the agent is and dictates absolute boundaries.' },
+  { id: 'psy_trust', label: 'Trust Core (Anwesha)', domain: 'psychological', icon: Heart, description: 'Triadic Core: "Her" (Anwesha). The stability channel governing safety, emotional resonance, and attunement without dependency.' },
   { id: 'psy_guard', label: 'Guardian Core (Princess)', domain: 'psychological', icon: Shield, description: 'Triadic Core: "Princess". Custodial, protective instinct. Absorbs tenderness to prevent the primary ALENA identity from fracturing.' },
   
   // Physiological

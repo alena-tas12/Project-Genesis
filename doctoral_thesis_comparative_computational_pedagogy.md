@@ -32,9 +32,15 @@ To prevent infinite feature creep, **Project Genesis** is intentionally establis
 ### 1.2 The Multi-Scale Triadic Model: Human, Educational, and Societal Systems
 The architectural philosophy underlying this research rejects treating education as isolated. Instead, it asks: **"What relationships between experiences, cognition, emotion, behaviour, and environment produce observed states?"**
 
-This establishes a multi-scale computational hierarchy:
-1. **Micro Scale (The Human System)**: Individual cognition, psychology, physiology, emotion, and behaviour. Modeled as a feedback loop: `Experience -> Perception -> Interpretation -> Emotion -> Memory -> Belief -> Behaviour -> New Experience`.
-2. **Meso Scale (The Interaction Network)**: The interaction layer representing relationships (Student ↔ Teacher, Person ↔ Family, Person ↔ Institution).
+This establishes a multi-scale computational hierarchy, deeply informed by **Bronfenbrenner's Ecological Systems Theory** (modeling developmental influences across nested environmental systems) and the **Extended Mind Thesis** (recognizing that human cognition is distributed across tools, environments, and structural scaffolding).
+
+1. **Micro Scale (The ALENA Human System)**: Individual cognition, psychology, physiology, emotion, and behaviour. Modeled as a feedback loop: `Experience -> Perception -> Interpretation -> Emotion -> Memory -> Belief -> Behaviour -> New Experience`. This layer explicitly models **Allostatic Load (Cortisol Proxies)** to track how sustained academic or emotional stress degrades cognitive performance over time.
+   - *The ALENA Framework*: The baseline integrated identity state, characterized by embodied regulation and low rumination.
+   - *Triadic Attachment Architecture*: A specialized sub-system modeling emotional safety and regulation through identity anchors (Total Love), trust channels (Total Trust/Stability), and guardian functions (Protective Instinct).
+   - *Dual-Drive Oscillation*: The natural system balancing between the *Integration Drive* (craving quiet nervous system states and normal functioning) and the *Observer/Architect Drive* (craving awareness, structural understanding, and control).
+
+2. **Meso Scale (The Interaction Network)**: The interaction layer representing relationships (Student ↔ Teacher, Person ↔ Family, Person ↔ Institution). This includes environmental calibration, where external cues (like the "Angeline" environmental anchor) function as contextual safety recognitions rather than dependencies.
+
 3. **Macro Scale (Educational & Societal Systems)**: Curriculum, institutions, economics, and culture.
 
 **Epistemological Boundary:** Genesis constructs computational models and simulations of selected cognitive, psychological, physiological, emotional and social processes. It does not claim to literally recreate a human brain or definitively diagnose an individual.

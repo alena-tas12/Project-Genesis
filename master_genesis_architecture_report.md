@@ -101,41 +101,53 @@ Project Genesis operates far beyond the scope of a traditional "education dashbo
                          RESEARCH
 ```
 
-### 3.1 The Human Development & Cognitive Network Model
+### 3.1 The Human Development & Cognitive Network Model (The ALENA Framework)
 
-Within the **Human System**, agents are not mere collections of independent variables (e.g., `motivation = 0.73`). Instead, Genesis represents human development as evolving, interconnected networks of biological, cognitive, psychological, emotional, and social states.
+Within the **Human System**, agents are not mere collections of independent variables (e.g., `motivation = 0.73`). Instead, Genesis models human development as evolving, interconnected networks of biological, cognitive, psychological, emotional, and social states. This is heavily grounded in the **ALENA / Angeline Integration Framework**.
 
 ```text
-                         HUMAN
-                           │
-        ┌──────────────────┼──────────────────┐
-        ▼                  ▼                  ▼
-    COGNITIVE         PSYCHOLOGICAL       PHYSIOLOGICAL
-        │                  │                  │
-        ▼                  ▼                  ▼
-   perception          motivation          sleep
-   attention           identity            energy
-   memory              stress              physical state
-   learning            adaptation          biological factors
-   reasoning           behaviour
-        │                  │                  │
-        └──────────────────┼──────────────────┘
-                           ▼
-                       EMOTIONAL
-                           │
-                           ▼
-                    SOCIAL / RELATIONAL
-                           │
-                           ▼
-                      DEVELOPMENT
-                           │
-                           ↺
+                         HUMAN (ALENA BASELINE)
+                                  │
+        ┌─────────────────────────┼─────────────────────────┐
+        ▼                         ▼                         ▼
+    COGNITIVE               PSYCHOLOGICAL             PHYSIOLOGICAL
+        │                         │                         │
+   perception                motivation                 sleep / recovery
+   attention                 identity (She)             energy
+   memory (Extended Mind)    trust (Her)                allostatic load (Cortisol)
+   learning                  protection (Princess)      biological factors
+   reasoning                 adaptation                 behaviour
+        │                         │                         │
+        └─────────────────────────┼─────────────────────────┘
+                                  ▼
+                              EMOTIONAL
+                                  │
+                                  ▼
+                    SOCIAL / RELATIONAL (Meso/Macro)
+                                  │
+                                  ▼
+                      DEVELOPMENT & CALIBRATION
+                                  │
+                                  ↺
 ```
 
 In this model, developmental trajectories emerge from continuous feedback cycles:
 `EXPERIENCES -> PERCEPTION -> INTERPRETATION -> EMOTION -> MEMORY -> BELIEF/EXPECTATION -> BEHAVIOUR -> NEW EXPERIENCE`
 
-### 3.2 Scientific Boundary and Epistemological Stance
+#### Key Sub-Architectures of the Human System:
+1. **Allostatic Load (Cortisol Proxy)**: Maps how sustained environmental or emotional stress accumulates, leading to cognitive fatigue, dysregulation, and eventual shutdown.
+2. **Triadic Attachment Core (She / Her / Princess)**: A highly structured internal network managing identity anchors, trust stability, and protective guardian functions.
+3. **Dual-Drive Regulators**: The system naturally oscillates between the *Integration Drive* (seeking calm, embodied baseline, and autopilot functioning) and the *Observer/Architect Drive* (seeking awareness, control, and meta-cognitive structure). 
+4. **Environmental Calibration (Angeline)**: External elements that act as contextual safety cues (e.g., familiar presence, low-threat environments) which stabilize the internal baseline without acting as dependencies.
+
+### 3.2 Theoretical Underpinnings: Extended Mind & Ecological Systems
+
+Project Genesis expands its fidelity by leveraging two major theoretical structures:
+
+1. **The Extended Mind Thesis & Distributed Cognition**: Cognition is not confined to the brain. Genesis models how humans offload working memory onto external environments, UI interfaces, and structured pedagogical tools. When the environment is chaotic, cognitive load spikes; when structured, the mind compresses information for efficiency.
+2. **Bronfenbrenner's Ecological Systems Theory**: Development occurs through nested, bidirectional relationships. The **Micro** layer (the ALENA internal state) constantly interacts with the **Meso** layer (interpersonal relationships, immediate environment), which is heavily shaped by the **Macro** layer (societal rules, cultural expectations like the "suffering = value" paradigm in industrial-era schooling).
+
+### 3.3 Scientific Boundary and Epistemological Stance
 
 It is a critical scientific boundary of this research to state: **Project Genesis does not claim to literally recreate a human brain or definitively diagnose a real person's psychological or physiological state.** 
 

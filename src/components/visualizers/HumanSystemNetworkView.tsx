@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Brain, Heart, Activity, Users, Zap, Eye, BookOpen, Scale, Moon, Network } from 'lucide-react';
+import { Brain, Heart, Activity, Users, Zap, Eye, BookOpen, Scale, Moon, Network, Shield, Anchor } from 'lucide-react';
 
 interface NetworkNode {
   id: string;
@@ -10,16 +10,25 @@ interface NetworkNode {
 }
 
 const networkNodes: NetworkNode[] = [
-  { id: 'cog_perc', label: 'Perception', domain: 'cognitive', icon: Eye, description: 'Sensory filtering and attention allocation.' },
-  { id: 'cog_mem', label: 'Memory', domain: 'cognitive', icon: Brain, description: 'Ebbinghaus decay models and semantic retention.' },
-  { id: 'cog_learn', label: 'Learning', domain: 'cognitive', icon: BookOpen, description: 'Knowledge DAG traversal and skill acquisition.' },
-  { id: 'psy_mot', label: 'Motivation', domain: 'psychological', icon: Zap, description: 'Intrinsic vs extrinsic drive mechanisms.' },
-  { id: 'psy_stress', label: 'Stress / Burnout', domain: 'psychological', icon: Activity, description: 'Cortisol proxy and allostatic load.' },
-  { id: 'psy_adapt', label: 'Adaptation', domain: 'psychological', icon: Scale, description: 'Resilience and coping mechanisms.' },
-  { id: 'phys_sleep', label: 'Sleep & Recovery', domain: 'physiological', icon: Moon, description: 'Circadian rhythms and stamina regeneration.' },
-  { id: 'phys_bio', label: 'Biological State', domain: 'physiological', icon: Activity, description: 'Energy levels and baseline physical health.' },
-  { id: 'emo_state', label: 'Affective State', domain: 'emotional', icon: Heart, description: 'Valence and arousal representations.' },
-  { id: 'soc_rel', label: 'Relational Bonds', domain: 'social', icon: Users, description: 'Peer networks and mentor influence.' },
+  // Cognitive
+  { id: 'cog_perc', label: 'Perception (Observer)', domain: 'cognitive', icon: Eye, description: 'Observer/Architect Drive. Seeks awareness, meta-control, and structural understanding. Prevents losing consciousness of inner processes.' },
+  { id: 'cog_mem', label: 'Extended Memory', domain: 'cognitive', icon: Brain, description: 'Distributed cognition. Offloading working memory to environments, preventing cognitive fatigue and Allostatic Load spikes.' },
+  { id: 'cog_learn', label: 'Pattern Unification', domain: 'cognitive', icon: BookOpen, description: 'Cognitive compression mechanisms. Recognizing templates rather than exhausting working memory.' },
+  
+  // Psychological
+  { id: 'psy_ident', label: 'Identity Core (She)', domain: 'psychological', icon: Anchor, description: 'Triadic Core: "She". The non-negotiable anchor. Defines who the agent is and dictates absolute boundaries.' },
+  { id: 'psy_trust', label: 'Trust Core (Her)', domain: 'psychological', icon: Heart, description: 'Triadic Core: "Her". The stability channel governing safety, emotional resonance, and attunement without dependency.' },
+  { id: 'psy_guard', label: 'Guardian Core (Princess)', domain: 'psychological', icon: Shield, description: 'Triadic Core: "Princess". Custodial, protective instinct. Absorbs tenderness to prevent the primary ALENA identity from fracturing.' },
+  
+  // Physiological
+  { id: 'phys_sleep', label: 'Sleep & Recovery', domain: 'physiological', icon: Moon, description: 'Circadian rhythms and stamina regeneration. Directly dictates cognitive availability for the Observer Drive.' },
+  { id: 'phys_bio', label: 'Allostatic Load', domain: 'physiological', icon: Activity, description: 'Cortisol proxy. Tracks the cumulative wear-and-tear of constant threat detection and lack of environmental safety.' },
+  
+  // Emotional
+  { id: 'emo_state', label: 'ALENA Baseline', domain: 'emotional', icon: Scale, description: 'The Integration Drive. A default operating state seeking quiet nervous systems, alignment, and background processing.' },
+  
+  // Social
+  { id: 'soc_rel', label: 'Environmental Calibrator', domain: 'social', icon: Users, description: 'Meso-scale cue (e.g., Angeline). Functions as a contextual safety signal. Produces calm internally without requiring dependency.' },
 ];
 
 export const HumanSystemNetworkView: React.FC = () => {

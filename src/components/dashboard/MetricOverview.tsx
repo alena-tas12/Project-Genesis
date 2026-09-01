@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Brain, Flame, TrendingUp, Sparkles, Smile, ShieldAlert } from 'lucide-react';
 import type { WorldState } from '../../engine/types';
 

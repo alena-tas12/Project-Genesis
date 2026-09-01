@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import type { WorldState } from '../../engine/types';
 import { TrendingUp, Smile, ShieldCheck, Activity, BarChart3, Layers } from 'lucide-react';
 
@@ -82,7 +82,7 @@ export const MacroImpactView: React.FC<MacroImpactViewProps> = ({ world }) => {
         <div className="graph-content-card">
           <div className="graph-card-header">
             <BarChart3 className="icon-green" size={20} />
-            <h3>Economic Graph — Innovation & GDP Trajectory</h3>
+            <h3>Economic Graph ÔÇö Innovation & GDP Trajectory</h3>
           </div>
 
           <div className="charts-dual-grid">
@@ -115,7 +115,7 @@ export const MacroImpactView: React.FC<MacroImpactViewProps> = ({ world }) => {
         <div className="graph-content-card">
           <div className="graph-card-header">
             <Smile className="icon-cyan" size={20} />
-            <h3>Societal Graph — Happiness & Social Mobility Trajectory</h3>
+            <h3>Societal Graph ÔÇö Happiness & Social Mobility Trajectory</h3>
           </div>
 
           <div className="charts-dual-grid">
@@ -148,7 +148,7 @@ export const MacroImpactView: React.FC<MacroImpactViewProps> = ({ world }) => {
         <div className="graph-content-card">
           <div className="graph-card-header">
             <ShieldCheck className="icon-purple" size={20} />
-            <h3>Policy Graph — Active Educational System Constraints</h3>
+            <h3>Policy Graph ÔÇö Active Educational System Constraints</h3>
           </div>
 
           <div className="policy-matrix-grid">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Brain, Heart, Activity, Users, Zap, Eye, BookOpen, Scale, Moon, Network, Shield, Anchor } from 'lucide-react';
+import { Brain, Heart, Activity, Users, Eye, BookOpen, Scale, Moon, Network, Shield, Anchor } from 'lucide-react';
 
 interface NetworkNode {
   id: string;

@@ -28,7 +28,9 @@ export type ResearchDomain =
   | 'Philosophical'
   | 'Temporal'
   | 'Complex_Systems'
-  | 'Physiological';
+  | 'Physiological'
+  | 'Methodological'
+  | 'Life_History';
 
 export const DOMAIN_SUBDOMAIN_MAP: Record<ResearchDomain, string[]> = {
   Biological: [
@@ -118,6 +120,16 @@ export const DOMAIN_SUBDOMAIN_MAP: Record<ResearchDomain, string[]> = {
     'heart_rate', 'hrv', 'cortisol', 'glucose', 'temperature', 'fatigue',
     'arousal', 'homeostasis', 'allostatic_load', 'sleep', 'circadian_rhythms',
     'endocrine_function'
+  ],
+  Methodological: [
+    'measurement_error', 'validity', 'reliability', 'causal_inference',
+    'bayesian_modelling', 'mixed_effects', 'latent_variables', 'reproducibility',
+    'p_hacking', 'publication_bias', 'epistemology', 'instrumentation'
+  ],
+  Life_History: [
+    'cumulative_experience', 'sensitive_periods', 'habit_formation',
+    'adaptation', 'cumulative_disadvantage', 'path_dependence', 'hysteresis',
+    'critical_transitions', 'developmental_trajectories'
   ]
 };
 
@@ -243,6 +255,27 @@ export interface ClaimSet {
   contradictCount: number;
   mixedCount: number;
   noEffectCount: number;
+}
+
+// ─────────────────────────────────────────────────────────────
+// COMPETING MODELS & EXPLANATIONS
+// ─────────────────────────────────────────────────────────────
+
+export interface CompetingModel {
+  id: string;
+  name: string;
+  description: string;
+  predictions: string[];
+  supportingEvidenceIds: string[];
+  contradictingEvidenceIds: string[];
+  confidenceScore: number; // dynamically updated
+}
+
+export interface ModelComparison {
+  phenomenon: string;
+  models: CompetingModel[];
+  bestFitConditions: Record<string, string>; // Maps modelId to condition string
+  resolutionStatus: 'Unresolved' | 'Conditionally_Resolved' | 'Consensus';
 }
 
 // ─────────────────────────────────────────────────────────────

@@ -217,11 +217,12 @@ export interface Study {
   pValue?: number;
   limitations: string[];
   replicationStatus: 'Unreplicated' | 'Replicated' | 'Partial' | 'Failed' | 'N/A';
+  validationState?: ValidationState; // Explict tracking of theory settledness
   evidenceQuality: 'Low' | 'Moderate' | 'High' | 'Very_High' | 'N/A';
   domains: ResearchDomain[];
-  subDomains: string[];
-  era: TemporalEvidenceEra;
-  keywords: string[];
+  subDomains?: string[];
+  era?: TemporalEvidenceEra;
+  keywords?: string[];
 }
 
 export type ClaimDirection = 'Positive' | 'Negative' | 'No_Effect' | 'Nonlinear' | 'Conditional';

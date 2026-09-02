@@ -44,10 +44,11 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     population: { description: 'New Zealand birth cohort followed to age 26', sampleSize: 847 },
     variablesStudied: ['Life Stress', 'Depression', '5-HTTLPR Polymorphism'],
     measurements: ['Genotyping', 'Diagnostic interviews', 'Life event calendars'],
-    effectDescription: 'Gene × Environment interaction: Individuals with short alleles of the 5-HTT promoter polymorphism exhibited more depressive symptoms in response to stressful life events than those with homozygous long alleles.',
-    replicationStatus: 'Partial', // Famous for replication controversies later resolved by larger meta-analyses
+    effectDescription: 'Initial hypothesis of Gene × Environment interaction proposing that short alleles of the 5-HTT promoter increase depression vulnerability. Highly influential but subject to massive replication failures and ongoing statistical controversy.',
+    replicationStatus: 'Failed', // Meta-analyses later showed null effects or tiny effects requiring massive N
+    validationState: 'Mixed_Evidence',
     evidenceQuality: 'Moderate',
-    domains: ['Biological', 'Psychological', 'Developmental'],
+    domains: ['Biological', 'Psychological', 'Developmental', 'Methodological'],
   },
 
   // ─────────────────────────────────────────────────────────────
@@ -64,9 +65,10 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     population: { description: 'Phylogenetic comparative / Human physiology' },
     variablesStudied: ['Vagal Tone', 'Autonomic Nervous System', 'Social Engagement'],
     measurements: ['Heart Rate Variability (HRV)', 'Respiratory Sinus Arrhythmia'],
-    effectDescription: 'The myelinated vagus nerve actively dampens sympathetic arousal, enabling social engagement, emotional regulation, and cognitive flexibility (Coupling of brainstem, heart, and social behavior).',
-    replicationStatus: 'Replicated',
-    evidenceQuality: 'High',
+    effectDescription: 'Proposes that the myelinated vagus nerve actively dampens sympathetic arousal, enabling social engagement. Hypothesis suggests coupling of brainstem, heart, and social behavior, though evolutionary mechanisms are heavily debated.',
+    replicationStatus: 'Partial',
+    validationState: 'Theoretical', // Highly influential but evolutionary/anatomical claims are contested
+    evidenceQuality: 'Moderate',
     domains: ['Physiological', 'Neuroscience', 'Emotional', 'Social'],
   },
 
@@ -84,9 +86,10 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     population: { description: 'Patients with VMPFC lesions vs healthy controls' },
     variablesStudied: ['Emotion', 'Decision Making', 'Physiological Arousal', 'VMPFC'],
     measurements: ['Iowa Gambling Task', 'Skin Conductance Responses (SCR)'],
-    effectDescription: 'Emotional/somatic physiological signals (somatic markers) generated prior to conscious awareness guide advantageous decision-making. Reason relies crucially on emotional arousal.',
-    replicationStatus: 'Replicated',
-    evidenceQuality: 'High',
+    effectDescription: 'Proposes that emotional/somatic physiological signals (somatic markers) generated prior to conscious awareness guide advantageous decision-making. Still actively researched and debated regarding the causal necessity of somatic feedback.',
+    replicationStatus: 'Partial',
+    validationState: 'Supported',
+    evidenceQuality: 'Moderate',
     domains: ['Emotional', 'Cognitive', 'Neuroscience', 'Physiological'],
   },
 
@@ -104,9 +107,10 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     population: { description: 'Highly satisfied married couples', sampleSize: 16 },
     variablesStudied: ['Social Support (Handholding)', 'Neural Threat Response', 'Relationship Quality'],
     measurements: ['fMRI', 'Electric shock anticipation'],
-    effectDescription: 'Holding a spouse\'s hand profoundly attenuated neural threat responses in the right anterior insula and hypothalamus. The degree of attenuation correlated directly with marital quality (Social Baseline Theory).',
-    replicationStatus: 'Replicated',
-    evidenceQuality: 'High',
+    effectDescription: 'Holding a spouse\'s hand attenuated neural threat responses in the right anterior insula and hypothalamus. Suggests Social Baseline Theory (that social connection is the baseline metabolic state), though effect sizes vary across replications.',
+    replicationStatus: 'Partial',
+    validationState: 'Supported',
+    evidenceQuality: 'Moderate',
     domains: ['Social', 'Emotional', 'Neuroscience'],
   },
 
@@ -124,9 +128,10 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     population: { description: 'Low-SES vs Middle-SES youth' },
     variablesStudied: ['Poverty', 'Allostatic Load', 'Environmental Toxins', 'Cognitive Development'],
     measurements: ['Physiological stress markers', 'Cognitive tests', 'Environmental metrics'],
-    effectDescription: 'Poverty generates a confluence of psychosocial (family turmoil, violence) and physical (noise, crowding, toxins) stressors that cumulatively elevate allostatic load, directly impairing working memory and self-regulation.',
+    effectDescription: 'Proposes that poverty generates a confluence of psychosocial and physical stressors that cumulatively elevate allostatic load, correlating with impaired working memory. Highly cited, but causal directionality in humans remains complex.',
     replicationStatus: 'Replicated',
-    evidenceQuality: 'Very_High',
+    validationState: 'Supported',
+    evidenceQuality: 'High',
     domains: ['Economic', 'Environmental', 'Developmental', 'Physiological', 'Cognitive'],
   },
 
@@ -144,10 +149,11 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     population: { description: 'Theoretical models of biological agents' },
     variablesStudied: ['Predictive Processing', 'Surprise / Free Energy', 'Perception', 'Action'],
     measurements: ['Bayesian updating models'],
-    effectDescription: 'Biological systems maintain themselves by actively minimizing surprise (variational free energy). Perception updates internal models (identity/self), while action modifies the environment to fulfill predictions (Active Inference).',
-    replicationStatus: 'N/A', // Theoretical/Computational framework
-    evidenceQuality: 'Moderate', // Extremely high impact, but mathematically dense and difficult to falsify directly
-    domains: ['Neuroscience', 'Philosophical', 'Complex_Systems', 'Cognitive'],
+    effectDescription: 'Theoretical framework suggesting biological systems maintain themselves by minimizing variational free energy. A highly influential but polarizing mathematical model; critics argue it is overly broad and unfalsifiable.',
+    replicationStatus: 'N/A',
+    validationState: 'Theoretical', // Grand unifying theory, highly contested
+    evidenceQuality: 'Moderate', 
+    domains: ['Neuroscience', 'Philosophical', 'Complex_Systems', 'Cognitive', 'Methodological'],
   },
 
   // ─────────────────────────────────────────────────────────────

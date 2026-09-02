@@ -337,3 +337,50 @@ export interface MissingVariable {
   suggestedRelationships: string[];  // e.g. "sleep → this variable → attention"
   priority: 'Low' | 'Medium' | 'High' | 'Critical';
 }
+
+// ─────────────────────────────────────────────────────────────
+// NEGATIVE EVIDENCE
+// ─────────────────────────────────────────────────────────────
+
+export type NegativeEvidenceType =
+  | 'Null_Result'
+  | 'Failed_Replication'
+  | 'Insufficient_Evidence'
+  | 'Effect_Smaller_Than_Claimed'
+  | 'Opposite_Direction';
+
+export interface NegativeEvidence {
+  id: string;
+  claimId: string;
+  type: NegativeEvidenceType;
+  originalClaimId?: string;
+  studyId: string;
+  description: string;
+}
+
+// ─────────────────────────────────────────────────────────────
+// RESEARCH GAP GRAPH
+// ─────────────────────────────────────────────────────────────
+
+export type GapType =
+  | 'No_Studies'
+  | 'Insufficient_Replication'
+  | 'Population_Gap'
+  | 'Timescale_Gap'
+  | 'Mechanism_Unknown'
+  | 'Measurement_Gap'
+  | 'Contradictory_Evidence'
+  | 'Missing_Moderators'
+  | 'Missing_Mediators'
+  | 'Causal_Design_Missing';
+
+export interface ResearchGap {
+  id: string;
+  description: string;
+  domain: ResearchDomain;
+  relatedVariables: string[];
+  gapType: GapType;
+  priority: 'Low' | 'Medium' | 'High' | 'Critical';
+  discoveredBy: 'Manual' | 'Gap_Detection_Algorithm';
+  suggestedSearchTerms: string[];
+}

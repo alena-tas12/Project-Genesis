@@ -42,6 +42,7 @@ export class LiveAcquisitionEngine {
    */
   public extractStudies(rawResults: RawSearchResult[]): Study[] {
     // Pipeline: RawSearchResult -> Entity Extraction -> Claim Generation -> Study
+    console.log(`[Acquisition] Extracting ${rawResults.length} studies...`);
     return [];
   }
 }

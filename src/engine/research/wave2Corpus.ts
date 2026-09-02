@@ -23,7 +23,7 @@ export const WAVE_2_CORPUS: Partial<Study>[] = [
     limitations: ['Small sample size per genotype', 'Laboratory conditions'],
     replicationStatus: 'Replicated',
     evidenceQuality: 'High',
-    domains: ['Genetics', 'Cognitive', 'Neuroscience'],
+    domains: ['Biological', 'Cognitive', 'Neuroscience'],
   },
   {
     id: 'study_duffy_2009',
@@ -32,7 +32,7 @@ export const WAVE_2_CORPUS: Partial<Study>[] = [
     publicationYear: 2009,
     doi: '10.1111/j.1532-5415.2009.02303.x',
     methodology: '26h constant routine wakefulness comparing age cohorts',
-    studyDesign: 'Observational_Only', // Cross-sectional cohort comparison under experimental condition
+    studyDesign: 'Observational', // Cross-sectional cohort comparison under experimental condition
     population: { description: 'Young adults (18-32y) vs Older adults (60-76y)', sampleSize: 29 },
     variablesStudied: ['Sleep Deprivation', 'Sustained Attention', 'Age_Stage'],
     measurements: ['PVT lapses', 'Reaction time variability'],
@@ -49,7 +49,7 @@ export const WAVE_2_CORPUS: Partial<Study>[] = [
     publicationYear: 2007,
     doi: '10.1111/j.1365-2869.2007.00615.x',
     methodology: '77 hours of continuous sleep deprivation with personality inventory',
-    studyDesign: 'Observational_Only', 
+    studyDesign: 'Observational', 
     population: { description: 'Healthy military personnel', sampleSize: 23 },
     variablesStudied: ['Sleep Deprivation', 'Sustained Attention', 'Extraversion_Score'],
     measurements: ['PVT', 'NEO-PI-R', 'EPQ'],
@@ -66,7 +66,7 @@ export const WAVE_2_CORPUS: Partial<Study>[] = [
     publicationYear: 2009,
     doi: '10.1126/science.1167337',
     methodology: 'fMRI PVT during varying homeostatic sleep pressures',
-    studyDesign: 'Observational_Only',
+    studyDesign: 'Observational',
     population: { description: 'Extreme chronotype adults (Evening vs Morning)', sampleSize: 31 },
     variablesStudied: ['Sleep Pressure', 'Sustained Attention', 'Chronotype_Alignment'],
     measurements: ['fMRI', 'PVT'],

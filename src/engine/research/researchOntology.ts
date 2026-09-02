@@ -323,6 +323,8 @@ export interface ResearchQuery {
   eraFilter?: TemporalEvidenceEra[];
   minEvidenceQuality?: 'Low' | 'Moderate' | 'High' | 'Very_High';
   maxResults?: number;
+  searchQueryString?: string;
+  priority?: string;
 }
 
 // ─────────────────────────────────────────────────────────────

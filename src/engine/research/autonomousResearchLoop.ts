@@ -9,10 +9,7 @@
 import type { GenesisKnowledgeGraph } from './knowledgeGraph';
 import type { 
   ResearchQuery, 
-  ResearchGap, 
-  MissingVariable, 
-  ContradictionReport, 
-  KnowledgeEdge 
+  ResearchGap
 } from './researchOntology';
 
 export class AutonomousResearchLoop {

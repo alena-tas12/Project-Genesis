@@ -108,6 +108,65 @@ export class AutonomousResearchLoop {
       }
     }
 
+    // 5. WAVE 3: Cross-Domain Integration Gaps
+    // If we have nodes in Cognitive and Biological, but no edges between them
+    const domainsPresent = new Set<string>();
+    const nodeDomains = new Map<string, string>();
+    for (const edge of this.kg.edges.values()) {
+      edge.domains.forEach(d => domainsPresent.add(d));
+      nodeDomains.set(edge.sourceVariable, edge.domains[0] || 'Unknown');
+      nodeDomains.set(edge.targetVariable, edge.domains[0] || 'Unknown');
+    }
+    
+    // Look for highly connected nodes that don't bridge domains
+    const crossDomainTargets = Array.from(domainsPresent);
+    if (crossDomainTargets.length > 1) {
+      gapCounter++;
+      gaps.push({
+        id: `gap_${gapCounter}`,
+        description: `Cross-domain integration missing between ${crossDomainTargets[0]} and ${crossDomainTargets[1]} domains.`,
+        domain: 'Complex_Systems',
+        relatedVariables: [],
+        gapType: 'Cross_Domain_Integration',
+        priority: 'High',
+        discoveredBy: 'Gap_Detection_Algorithm',
+        suggestedSearchTerms: [`(mediator OR mechanism) AND "${crossDomainTargets[0]}" AND "${crossDomainTargets[1]}"`]
+      });
+    }
+
+    // 6. WAVE 5: Brain/Body/Physiology Coupling Gaps
+    if (domainsPresent.has('Cognitive') && !domainsPresent.has('Physiological')) {
+      gapCounter++;
+      gaps.push({
+        id: `gap_${gapCounter}`,
+        description: `Cognitive mechanisms identified, but physiological coupling (autonomic/endocrine/immune) is unmapped.`,
+        domain: 'Physiological',
+        relatedVariables: [],
+        gapType: 'Coupling_Gap',
+        priority: 'High',
+        discoveredBy: 'Gap_Detection_Algorithm',
+        suggestedSearchTerms: [`(autonomic OR endocrine OR immune OR microbiome OR HPA axis) AND cognition`]
+      });
+    }
+
+    // 7. WAVE 10: Complexity and Dynamical Systems Gaps
+    const hasFeedbackLoops = Array.from(this.kg.edges.values()).some(e => 
+      e.relationshipType === 'Feedback_Amplifying' || e.relationshipType === 'Feedback_Dampening'
+    );
+    if (!hasFeedbackLoops && this.kg.edges.size > 10) {
+      gapCounter++;
+      gaps.push({
+        id: `gap_${gapCounter}`,
+        description: `Graph lacks dynamical feedback loops. Most human systems are non-linear, but current edges are linear.`,
+        domain: 'Complex_Systems',
+        relatedVariables: [],
+        gapType: 'Complexity_Gap',
+        priority: 'Medium',
+        discoveredBy: 'Gap_Detection_Algorithm',
+        suggestedSearchTerms: [`"feedback loop" OR "non-linear" OR "dynamical system" OR "emergence"`]
+      });
+    }
+
     return gaps;
   }
 

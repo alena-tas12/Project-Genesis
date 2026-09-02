@@ -374,7 +374,12 @@ export type GapType =
   | 'Contradictory_Evidence'
   | 'Missing_Moderators'
   | 'Missing_Mediators'
-  | 'Causal_Design_Missing';
+  | 'Causal_Design_Missing'
+  | 'Cross_Domain_Integration'
+  | 'Coupling_Gap'
+  | 'Philosophical_Empirical_Gap'
+  | 'Complexity_Gap'
+  | 'Causal_Synthesis_Gap';
 
 export interface ResearchGap {
   id: string;

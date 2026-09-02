@@ -27,6 +27,8 @@ export class GenesisCore {
     return GenesisCore.instance;
   }
 
+  public activeGaps: any[] = [];
+  
   private setupCoreSubscribers() {
     // Listen for source retractions to trigger cascades
     this.eventBus.subscribe('SOURCE_RETRACTED', async (event: CoreEvent) => {
@@ -47,6 +49,23 @@ export class GenesisCore {
           payload: { reason: 'Upstream evidence retracted. Model recalibration required.', affectedNodes: staleModels }
         });
       }
+    });
+
+    // Listen for new gaps
+    this.eventBus.subscribe('RESEARCH_GAP_QUEUED', async (event: CoreEvent) => {
+      console.log(`[GenesisCore] Queuing new gap to active memory...`);
+      const generatedGap = event.payload.generatedGap || {
+        id: `gap_${Date.now()}`,
+        description: event.payload.reason,
+        domain: 'Interdisciplinary',
+        relatedVariables: [],
+        gapType: 'Contradiction_Resolution',
+        priority: 'High',
+        discoveredBy: 'Core_Event_Bus',
+        status: 'UNADDRESSED',
+        dateIdentified: new Date().toISOString()
+      };
+      this.activeGaps.push(generatedGap);
     });
   }
 

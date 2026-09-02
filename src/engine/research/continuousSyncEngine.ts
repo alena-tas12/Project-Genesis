@@ -50,27 +50,28 @@ export class ContinuousSyncEngine {
       }
     }
 
-    // PHASE C: QUEUE GENERATION
-    console.log('[SYNC] Building Research Queue...');
-    const queueGaps = this.gapDiscovery.discoverGapsFromCorpus([]); 
-    // Usually we would read the whole graph here. For this script, we'll mock the graph.
-    // Let's inject a synthetic gap for the daily sync to prove it runs.
-    const activeGaps: ResearchGap[] = [
-      {
-        id: `gap_daily_${Date.now()}`,
-        description: 'New literature indicates potential measurement drift in HRV biofeedback protocols.',
-        domain: 'Physiological',
-        relatedVariables: ['HRV_Biofeedback', 'Measurement_Drift'],
-        gapType: 'Measurement_Gap',
-        priority: 'High',
-        discoveredBy: 'Gap_Detection_Algorithm',
-        suggestedSearchTerms: ['HRV biofeedback', 'measurement consistency', 'drift']
-      }
-    ];
+    // PHASE C: QUEUE GENERATION & PROCESSING
+    console.log('[SYNC] Reading Research Queue from GenesisCore...');
+    const activeGaps = [...core.activeGaps]; // Pull from central memory
+    
+    // Clear them from core so we don't research them again next cycle
+    core.activeGaps = []; 
 
     // PHASE D: AUTONOMOUS RESEARCH
-    console.log(`[SYNC] Processing ${Math.min(activeGaps.length, config.maxGaps)} high-priority items...`);
-    const cycleRecord = await this.autonomousCycle.runCycle(`SYNC_${versionId}`, activeGaps, { topK: config.maxGaps });
+    let cycleRecord: any;
+    if (activeGaps.length > 0) {
+      console.log(`[SYNC] Processing ${Math.min(activeGaps.length, config.maxGaps)} high-priority items...`);
+      cycleRecord = await this.autonomousCycle.runCycle(`SYNC_${versionId}`, activeGaps, { topK: config.maxGaps });
+    } else {
+      console.log(`[SYNC] No pending gaps to process.`);
+      cycleRecord = {
+        graphChangesProposed: 0,
+        graphChangesRejected: 0,
+        studiesSuccessfullyExtracted: 0,
+        claimsExtracted: 0,
+        newlyDiscoveredGaps: []
+      };
+    }
 
     // PHASE E: TRANSACTIONAL GRAPH UPDATE
     console.log('[SYNC] Validating Proposed Graph Mutations...');

@@ -45,7 +45,7 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     variablesStudied: ['Life Stress', 'Depression', '5-HTTLPR Polymorphism'],
     measurements: ['Genotyping', 'Diagnostic interviews', 'Life event calendars'],
     effectDescription: 'Gene × Environment interaction: Individuals with short alleles of the 5-HTT promoter polymorphism exhibited more depressive symptoms in response to stressful life events than those with homozygous long alleles.',
-    replicationStatus: 'Mixed_Evidence', // Famous for replication controversies later resolved by larger meta-analyses
+    replicationStatus: 'Partial', // Famous for replication controversies later resolved by larger meta-analyses
     evidenceQuality: 'Moderate',
     domains: ['Biological', 'Psychological', 'Developmental'],
   },

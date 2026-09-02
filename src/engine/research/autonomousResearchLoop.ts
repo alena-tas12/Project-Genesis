@@ -130,7 +130,7 @@ export class AutonomousResearchLoop {
   /**
    * Sorts the research queue based on priority and systemic importance.
    */
-  private prioritizeQueries(queries: (ResearchQuery & { priority: string })[]): ResearchQuery[] {
+  private prioritizeQueries(queries: ResearchQuery[]): ResearchQuery[] {
     const priorityWeight: Record<string, number> = {
       'Critical': 4,
       'High': 3,
@@ -138,6 +138,6 @@ export class AutonomousResearchLoop {
       'Low': 1
     };
 
-    return queries.sort((a, b) => priorityWeight[b.priority] - priorityWeight[a.priority]);
+    return queries.sort((a, b) => (priorityWeight[b.priority || 'Low'] || 1) - (priorityWeight[a.priority || 'Low'] || 1));
   }
 }

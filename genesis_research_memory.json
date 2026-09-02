@@ -1,0 +1,21 @@
+{
+  "history": [],
+  "versions": [
+    {
+      "versionId": "2026.09.02.0001",
+      "timestamp": "2026-09-02T09:52:32.179Z",
+      "studiesAdded": 4,
+      "studiesUpdated": 0,
+      "studiesRetracted": 1,
+      "claimsAdded": 4,
+      "claimsModified": 0,
+      "claimsDowngraded": 0,
+      "edgesAdded": 4,
+      "gapsAdded": 0,
+      "gapsResolved": 0
+    }
+  ],
+  "retractedIds": [
+    "mock_retracted_10.1234/bad.paper"
+  ]
+}

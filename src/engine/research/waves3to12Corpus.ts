@@ -23,7 +23,11 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     studyDesign: 'Systematic_Review',
     population: { description: 'General human populations across lifespan' },
     variablesStudied: ['Psychological Stress', 'Inflammation', 'Immune Function'],
-    measurements: ['Cytokines (IL-6)', 'Cortisol', 'Self-reported stress'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Cytokines (IL-6)' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Cortisol' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Self-reported stress' }
+    ],
     effectDescription: 'Psychological stress directly downregulates cellular immune response and upregulates systemic inflammation, bridging cognitive appraisal with biological vulnerability.',
     replicationStatus: 'Replicated',
     evidenceQuality: 'Very_High',
@@ -43,7 +47,11 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     studyDesign: 'Longitudinal',
     population: { description: 'New Zealand birth cohort followed to age 26', sampleSize: 847 },
     variablesStudied: ['Life Stress', 'Depression', '5-HTTLPR Polymorphism'],
-    measurements: ['Genotyping', 'Diagnostic interviews', 'Life event calendars'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Genotyping' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Diagnostic interviews' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Life event calendars' }
+    ],
     effectDescription: 'Initial hypothesis of Gene × Environment interaction proposing that short alleles of the 5-HTT promoter increase depression vulnerability. Highly influential but subject to massive replication failures and ongoing statistical controversy.',
     replicationStatus: 'Failed', // Meta-analyses later showed null effects or tiny effects requiring massive N
     evidenceStatus: 'MIXED',
@@ -64,7 +72,10 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     studyDesign: 'Systematic_Review',
     population: { description: 'Phylogenetic comparative / Human physiology' },
     variablesStudied: ['Vagal Tone', 'Autonomic Nervous System', 'Social Engagement'],
-    measurements: ['Heart Rate Variability (HRV)', 'Respiratory Sinus Arrhythmia'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Heart Rate Variability (HRV)' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Respiratory Sinus Arrhythmia' }
+    ],
     effectDescription: 'Proposes that the myelinated vagus nerve actively dampens sympathetic arousal, enabling social engagement. Hypothesis suggests coupling of brainstem, heart, and social behavior, though evolutionary mechanisms are heavily debated.',
     replicationStatus: 'Partial',
     epistemicCategory: 'THEORETICAL', // Highly influential but evolutionary/anatomical claims are contested
@@ -85,7 +96,10 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     studyDesign: 'Case_Study', // Aggregated lesion studies
     population: { description: 'Patients with VMPFC lesions vs healthy controls' },
     variablesStudied: ['Emotion', 'Decision Making', 'Physiological Arousal', 'VMPFC'],
-    measurements: ['Iowa Gambling Task', 'Skin Conductance Responses (SCR)'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Iowa Gambling Task' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Skin Conductance Responses (SCR)' }
+    ],
     effectDescription: 'Proposes that emotional/somatic physiological signals (somatic markers) generated prior to conscious awareness guide advantageous decision-making. Still actively researched and debated regarding the causal necessity of somatic feedback.',
     replicationStatus: 'Partial',
     evidenceStatus: 'SUPPORTED',
@@ -106,7 +120,10 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     studyDesign: 'RCT',
     population: { description: 'Highly satisfied married couples', sampleSize: 16 },
     variablesStudied: ['Social Support (Handholding)', 'Neural Threat Response', 'Relationship Quality'],
-    measurements: ['fMRI', 'Electric shock anticipation'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'fMRI' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Electric shock anticipation' }
+    ],
     effectDescription: 'Holding a spouse\'s hand attenuated neural threat responses in the right anterior insula and hypothalamus. Suggests Social Baseline Theory (that social connection is the baseline metabolic state), though effect sizes vary across replications.',
     replicationStatus: 'Partial',
     evidenceStatus: 'SUPPORTED',
@@ -127,7 +144,11 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     studyDesign: 'Systematic_Review',
     population: { description: 'Low-SES vs Middle-SES youth' },
     variablesStudied: ['Poverty', 'Allostatic Load', 'Environmental Toxins', 'Cognitive Development'],
-    measurements: ['Physiological stress markers', 'Cognitive tests', 'Environmental metrics'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Physiological stress markers' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Cognitive tests' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Environmental metrics' }
+    ],
     effectDescription: 'Proposes that poverty generates a confluence of psychosocial and physical stressors that cumulatively elevate allostatic load, correlating with impaired working memory. Highly cited, but causal directionality in humans remains complex.',
     replicationStatus: 'Replicated',
     evidenceStatus: 'SUPPORTED',
@@ -148,7 +169,9 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     studyDesign: 'Computational',
     population: { description: 'Theoretical models of biological agents' },
     variablesStudied: ['Predictive Processing', 'Surprise / Free Energy', 'Perception', 'Action'],
-    measurements: ['Bayesian updating models'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Bayesian updating models' }
+    ],
     effectDescription: 'Theoretical framework suggesting biological systems maintain themselves by minimizing variational free energy. A highly influential but polarizing mathematical model; critics argue it is overly broad and unfalsifiable.',
     replicationStatus: 'N/A',
     epistemicCategory: 'THEORETICAL', // Grand unifying theory, highly contested
@@ -169,7 +192,11 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     studyDesign: 'Computational',
     population: { description: 'Clinical populations across psychopathology' },
     variablesStudied: ['Psychopathology', 'Symptom Networks', 'Feedback Loops'],
-    measurements: ['Network connectivity', 'Centrality indices', 'Dynamical thresholds'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Network connectivity' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Centrality indices' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Dynamical thresholds' }
+    ],
     effectDescription: 'Mental disorders are not latent diseases causing symptoms, but rather emergent properties of mutually interacting symptom networks. A disorder occurs when a symptom network crosses a critical threshold into a self-sustaining feedback loop.',
     replicationStatus: 'Replicated',
     evidenceQuality: 'High',
@@ -189,7 +216,9 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     studyDesign: 'Systematic_Review',
     population: { description: 'Statistical simulation populations' },
     variablesStudied: ['Causal Inference', 'Simpson\'s Paradox', 'Individual Differences'],
-    measurements: ['Between-subject vs Within-subject correlations'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Between-subject vs Within-subject correlations' }
+    ],
     effectDescription: 'Demonstrated that cross-sectional group averages frequently reverse when modeled at the intra-individual longitudinal level, highlighting that generalized causal models often fail to capture individual-level causal architectures.',
     replicationStatus: 'Replicated',
     evidenceQuality: 'Very_High',

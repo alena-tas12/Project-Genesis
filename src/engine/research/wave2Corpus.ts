@@ -18,7 +18,10 @@ export const WAVE_2_CORPUS: Partial<Study>[] = [
     studyDesign: 'RCT',
     population: { description: 'Healthy young adults (PER3 4/4 vs 5/5)', sampleSize: 24 },
     variablesStudied: ['Sleep Deprivation', 'Sustained Attention', 'PER3_VNTR', 'Working Memory'],
-    measurements: ['PVT', 'Genotyping'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'PVT' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Genotyping' }
+    ],
     effectDescription: 'PER3 5/5 carriers showed massive PVT lapse escalation and severe WM decrement. PER3 4/4 carriers maintained vigilance (Resilience).',
     limitations: ['Small sample size per genotype', 'Laboratory conditions'],
     replicationStatus: 'Replicated',
@@ -35,7 +38,10 @@ export const WAVE_2_CORPUS: Partial<Study>[] = [
     studyDesign: 'Observational', // Cross-sectional cohort comparison under experimental condition
     population: { description: 'Young adults (18-32y) vs Older adults (60-76y)', sampleSize: 29 },
     variablesStudied: ['Sleep Deprivation', 'Sustained Attention', 'Age_Stage'],
-    measurements: ['PVT lapses', 'Reaction time variability'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'PVT lapses' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Reaction time variability' }
+    ],
     effectDescription: 'Contrary to intuition, healthy older adults are highly resilient to acute sleep loss. Younger adults suffer severe attentional lapse escalation.',
     limitations: ['Extremely healthy older adult criteria may induce survivorship bias'],
     replicationStatus: 'Replicated',
@@ -52,7 +58,11 @@ export const WAVE_2_CORPUS: Partial<Study>[] = [
     studyDesign: 'Observational', 
     population: { description: 'Healthy military personnel', sampleSize: 23 },
     variablesStudied: ['Sleep Deprivation', 'Sustained Attention', 'Extraversion_Score'],
-    measurements: ['PVT', 'NEO-PI-R', 'EPQ'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'PVT' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'NEO-PI-R' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'EPQ' }
+    ],
     effectDescription: 'Higher extraversion strongly predicted faster and larger declines in PVT response speed. Introversion conferred cognitive resilience.',
     limitations: ['Military cohort may restrict personality variance', 'Small sample size'],
     replicationStatus: 'Replicated',
@@ -69,7 +79,10 @@ export const WAVE_2_CORPUS: Partial<Study>[] = [
     studyDesign: 'Observational',
     population: { description: 'Extreme chronotype adults (Evening vs Morning)', sampleSize: 31 },
     variablesStudied: ['Sleep Pressure', 'Sustained Attention', 'Chronotype_Alignment'],
-    measurements: ['fMRI', 'PVT'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'fMRI' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'PVT' }
+    ],
     effectDescription: 'Evening types maintained higher vigilance and LC/SCN activation under high evening sleep load compared to morning types.',
     limitations: ['Extreme chronotypes only, excluding intermediate types'],
     replicationStatus: 'Replicated',

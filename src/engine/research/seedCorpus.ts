@@ -23,7 +23,9 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'Systematic_Review',
     population: { description: 'Healthy adults / young adults', sampleSize: 1500 },
     variablesStudied: ['Sleep Restriction', 'Sustained Attention', 'Executive Functioning', 'Long-Term Memory'],
-    measurements: ['Cognitive task batteries'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Cognitive task batteries' }
+    ],
     effectDescription: 'Sleep restriction significantly degraded sustained attention, overall processing, and executive functioning.',
     effectSize: -0.409, // Hedges' g for sustained attention
     limitations: ['High heterogeneity among task batteries', 'Short-term restriction limits generalizability to chronic states'],
@@ -41,7 +43,10 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'Systematic_Review',
     population: { description: 'Healthy adult volunteers (ages 18-60)', sampleSize: 1087 },
     variablesStudied: ['Acute Sleep Restriction', 'Sustained Attention', 'Working Memory', 'Inhibitory Control'],
-    measurements: ['Psychomotor Vigilance Task (PVT)', 'Subjective Sleepiness'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Psychomotor Vigilance Task (PVT)' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Subjective Sleepiness' }
+    ],
     effectDescription: 'Significantly impaired sustained attention (PVT). Null/non-significant effects on working memory and inhibitory control.',
     limitations: ['Confined to single-night acute restriction', 'Laboratory artificiality'],
     replicationStatus: 'Replicated',
@@ -58,7 +63,9 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'Systematic_Review',
     population: { description: 'Clinical insomnia patients vs healthy controls', sampleSize: 4539 },
     variablesStudied: ['Chronic Insomnia', 'Working Memory Manipulation', 'Complex Attention', 'Episodic Memory'],
-    measurements: ['Objective and subjective cognitive decrements'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Objective and subjective cognitive decrements' }
+    ],
     effectDescription: 'Chronic insomnia associated with objective decrements in working memory (g = -0.52) and complex attention (g = -0.36).',
     effectSize: -0.52,
     limitations: ['44% of primary studies lacked formal DSM diagnostic verification', 'Observational design precludes causal determination'],
@@ -76,7 +83,10 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'Systematic_Review',
     population: { description: 'Healthy young adults (ages 18-35)', sampleSize: 1940 },
     variablesStudied: ['Total Sleep Deprivation', 'Sustained Attention', 'Working Memory', 'Processing Speed'],
-    measurements: ['Attentional lapses', 'Reaction speed'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Attentional lapses' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Reaction speed' }
+    ],
     effectDescription: 'Large impairments in sustained attention/vigilance (d = -1.02) and moderate impairments in working memory (d = -0.55).',
     effectSize: -1.02,
     limitations: ['Total acute deprivation rather than partial restriction', 'Vulnerability to publication bias'],
@@ -98,7 +108,11 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'RCT',
     population: { description: 'Healthy young adults (ages 21-38)', sampleSize: 66 },
     variablesStudied: ['Sleep Restriction Dose', 'PVT Attention Lapses', 'Working Memory', 'Subjective Sleepiness'],
-    measurements: ['Digit Symbol Substitution', 'PVT', 'Subjective ratings'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Digit Symbol Substitution' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'PVT' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Subjective ratings' }
+    ],
     effectDescription: '14 days of 4h sleep produced cognitive impairment equivalent to 48 hours of total sleep deprivation. Subjective sleepiness plateaued, showing lack of awareness of decline.',
     limitations: ['Small sample per arm (n=16)', 'Highly regimented laboratory environment'],
     replicationStatus: 'Replicated',
@@ -115,7 +129,9 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'RCT',
     population: { description: 'Healthy adult volunteers', sampleSize: 66 },
     variablesStudied: ['Sleep Restriction Dose', 'Recovery Time', 'PVT Response Speed'],
-    measurements: ['PVT response speed'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'PVT response speed' }
+    ],
     effectDescription: 'PVT degraded monotonically. After 7 days of 3h sleep, 3 full recovery nights failed to restore performance to baseline (persistent neurobehavioral debt).',
     limitations: ['Recovery phase restricted to 3 days', 'Fixed time-in-bed vs polysomnographic TST'],
     replicationStatus: 'Replicated',
@@ -132,7 +148,9 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'Systematic_Review',
     population: { description: 'Human and animal neurobiological models' },
     variablesStudied: ['Slow-wave sleep (SWS)', 'Memory Consolidation', 'Hippocampal Memory Traces'],
-    measurements: ['EEG/LFP markers'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'EEG/LFP markers' }
+    ],
     effectDescription: 'Active System Consolidation Theory: SWS mediates active replay of memory traces via coupling of slow oscillations, spindles, and sharp-wave ripples.',
     limitations: ['Synthesizes largely correlational EEG/LFP markers in humans', 'Difficult to isolate causal effects of micro-architectures'],
     replicationStatus: 'Replicated',
@@ -153,7 +171,9 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'RCT',
     population: { description: 'Healthy college students', sampleSize: 97 },
     variablesStudied: ['Sleep', 'Retroactive Interference', 'Memory Recall'],
-    measurements: ['Verbal paired-associates task'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Verbal paired-associates task' }
+    ],
     effectDescription: 'NULL EFFECT. Failed to replicate findings that sleep protects memories against retroactive interference. Interference impaired recall equally regardless of sleep.',
     effectSize: 0,
     limitations: ['Standard verbal paired-associates only', 'Did not assess emotional interference'],
@@ -171,7 +191,9 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'Observational',
     population: { description: 'Healthy young adult men and women', sampleSize: 159 },
     variablesStudied: ['Slow-Wave Sleep Duration', 'Declarative Memory Consolidation'],
-    measurements: ['Intra-individual correlational analysis'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Intra-individual correlational analysis' }
+    ],
     effectDescription: 'NULL EFFECT. No significant correlation between declarative memory improvement and duration/power of SWS. Refutes assumption that higher individual SWS predicts greater consolidation.',
     effectSize: 0,
     limitations: ['Restricted to healthy good sleepers', 'Word-pair association tasks may have ceiling effects'],
@@ -189,7 +211,9 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'RCT',
     population: { description: 'Healthy young adults', sampleSize: 31 },
     variablesStudied: ['Sleep', 'Verbal Memory Interference', 'Forgetting'],
-    measurements: ['List learning recall'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'List learning recall' }
+    ],
     effectDescription: 'NULL EFFECT. Sleep provided no protective buffer against retroactive verbal memory interference. Prior claims likely overestimated.',
     effectSize: 0,
     limitations: ['Modest sample sizes', 'Restricted to paired-word lists'],
@@ -207,7 +231,9 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'RCT',
     population: { description: 'Healthy college students', sampleSize: 31 },
     variablesStudied: ['Targeted Memory Reactivation (TMR)', 'Implicit Bias (IAT)'],
-    measurements: ['Implicit Association Test (IAT)'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Implicit Association Test (IAT)' }
+    ],
     effectDescription: 'NULL EFFECT. Failed to replicate Hu et al. (2015). Re-exposure to auditory cues during sleep yielded no significant change in bias.',
     effectSize: 0,
     limitations: ['Modest sample size', 'Validity constraints inherent to IAT metric stability'],
@@ -229,7 +255,9 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'Systematic_Review',
     population: { description: 'Healthy adult populations', sampleSize: 3098 },
     variablesStudied: ['Sleep Deprivation Before Learning', 'Sleep Deprivation After Learning', 'Memory Retrieval'],
-    measurements: ['Declarative and non-declarative memory tasks'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Declarative and non-declarative memory tasks' }
+    ],
     effectDescription: 'Sleep deprivation BEFORE learning (encoding) has a much larger detrimental effect (g = 0.621) than sleep deprivation AFTER learning (consolidation, g = 0.277).',
     effectSize: -0.621,
     limitations: ['Predominance of college-aged participants', 'Variability in recall retention delays'],
@@ -247,7 +275,10 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'Cross_Sectional',
     population: { description: 'Global general adult population (ages 18-100)', sampleSize: 10324 },
     variablesStudied: ['Sleep Duration', 'Reasoning', 'Verbal Abilities', 'Working Memory'],
-    measurements: ['Cognitive battery', 'Self-reported sleep'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Cognitive battery' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Self-reported sleep' }
+    ],
     effectDescription: 'Inverted U-shape: sleeping 7-8h is optimal. Both short (<7h) and long (>8h) durations impaired reasoning/verbal abilities (equivalent to 4-7 years of aging). Short-term working memory was comparatively unaffected.',
     limitations: ['Self-reported sleep duration', 'Cross-sectional design cannot confirm causality'],
     replicationStatus: 'Replicated',
@@ -264,7 +295,10 @@ export const SLEEP_COGNITION_CORPUS: Partial<Study>[] = [
     studyDesign: 'RCT',
     population: { description: 'Healthy volunteers', sampleSize: 74 },
     variablesStudied: ['Olfactory Context Cues in SWS', 'Memory Retention', 'Hippocampal Reactivation'],
-    measurements: ['2D object-location learning', 'fMRI'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: '2D object-location learning' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'fMRI' }
+    ],
     effectDescription: 'Re-exposure to olfactory cues during SWS significantly enhanced spatial memory retention next morning. Simultaneous fMRI showed selective hippocampal reactivation.',
     limitations: ['Specific to olfactory modality', 'Spatial declarative tasks only'],
     replicationStatus: 'Replicated',

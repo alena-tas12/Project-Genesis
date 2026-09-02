@@ -18,7 +18,10 @@ export const GAP_DRIVEN_CORPUS_1: Partial<Study>[] = [
     studyDesign: 'Meta_Analysis',
     population: { description: 'Lifespan samples (childhood through older adulthood)' },
     variablesStudied: ['Chronic Stress', 'Diurnal Cortisol Slope', 'Cognitive Ability', 'Biological Aging'],
-    measurements: ['Salivary cortisol', 'Cognitive tests'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Salivary cortisol' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Cognitive tests' }
+    ],
     effectDescription: 'Flatter diurnal cortisol slopes (HPA axis dysregulation) mediate stress-induced cognitive wear-and-tear via sustained glucocorticoid receptor down-regulation.',
     replicationStatus: 'Replicated',
     evidenceQuality: 'Very_High',
@@ -34,7 +37,10 @@ export const GAP_DRIVEN_CORPUS_1: Partial<Study>[] = [
     studyDesign: 'Meta_Analysis',
     population: { description: 'Healthy adults and anxiety disorder samples' },
     variablesStudied: ['Vagal Tone (HRV)', 'vmPFC Activity', 'Cognitive Flexibility', 'Inhibitory Control'],
-    measurements: ['ECG (HRV)', 'fMRI'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'ECG (HRV)' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'fMRI' }
+    ],
     effectDescription: 'Higher resting vagal tone allows for superior cognitive flexibility and sustained attention (Neurovisceral Integration Model). Autonomic output is a bidirectional marker of central executive network integrity.',
     replicationStatus: 'Replicated',
     evidenceQuality: 'Very_High',
@@ -50,7 +56,10 @@ export const GAP_DRIVEN_CORPUS_1: Partial<Study>[] = [
     studyDesign: 'Systematic_Review',
     population: { description: 'Healthy individuals exposed to acute stress' },
     variablesStudied: ['Acute Stress', 'SAM-Axis', 'Prefrontal Cortex', 'Decision Making'],
-    measurements: ['Neuropharmacology', 'Behavioral paradigms'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Neuropharmacology' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Behavioral paradigms' }
+    ],
     effectDescription: 'SAM and HPA-axis activation chemically impairs the prefrontal cortex during acute stress, shifting control from cognitive/deliberative to habitual/affective decision-making systems.',
     replicationStatus: 'Replicated',
     evidenceQuality: 'High',
@@ -66,7 +75,10 @@ export const GAP_DRIVEN_CORPUS_1: Partial<Study>[] = [
     studyDesign: 'Meta_Analysis',
     population: { description: 'Individuals with a history of childhood adversity' },
     variablesStudied: ['Childhood Adversity', 'Vagally-mediated HRV', 'Self-Regulation'],
-    measurements: ['Early life stress inventories', 'HRV'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Early life stress inventories' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'HRV' }
+    ],
     effectDescription: 'Early life adversity alters the developmental trajectory of the parasympathetic nervous system, leading to lower resting vagal tone which mediates deficits in cognitive-emotional control.',
     replicationStatus: 'Replicated',
     evidenceQuality: 'High',

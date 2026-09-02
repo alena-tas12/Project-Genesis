@@ -20,7 +20,10 @@ export const VALIDATION_CORPUS: Partial<Study>[] = [
     studyDesign: 'RCT',
     population: { description: 'University undergraduate students' },
     variablesStudied: ['Self-Control Exertion', 'Task Persistence', 'Willpower'],
-    measurements: ['Time spent on unsolvable puzzles', 'Task persistence duration'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Time spent on unsolvable puzzles' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Task persistence duration' }
+    ],
     effectDescription: 'Initial hypothesis proposing the Resource Model of Self-Control: Exerting self-control in an initial task depletes a shared global resource (ego depletion), directly impairing performance on subsequent self-control tasks.',
     replicationStatus: 'Failed', // Now known to be failed, though historically highly cited
     epistemicCategory: 'HYPOTHESIS',
@@ -37,7 +40,9 @@ export const VALIDATION_CORPUS: Partial<Study>[] = [
     studyDesign: 'Meta_Analysis',
     population: { description: 'Various laboratory samples' },
     variablesStudied: ['Self-Control Exertion', 'Subsequent Self-Control', 'Ego Depletion'],
-    measurements: ['Effect size (Cohen\'s d) across sequential task paradigms'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Effect size (Cohen\'s d) across sequential task paradigms' }
+    ],
     effectDescription: 'Provided strong meta-analytic support (d = 0.62) for the ego-depletion effect, establishing the Resource Model as the dominant framework in psychology for nearly a decade.',
     replicationStatus: 'Failed', // Re-analyses showed severe publication bias
     evidenceStatus: 'DISPUTED',
@@ -54,7 +59,10 @@ export const VALIDATION_CORPUS: Partial<Study>[] = [
     studyDesign: 'Systematic_Review', // Theoretical/review
     population: { description: 'Human subjects in self-control paradigms' },
     variablesStudied: ['Self-Control Exertion', 'Motivation', 'Attention Allocation'],
-    measurements: ['Motivational shifts', 'Attentional bias'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Motivational shifts' },
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Attentional bias' }
+    ],
     effectDescription: 'Proposes the Process Model of Self-Control as a competing explanation to the Resource Model: Self-control declines not because a resource is depleted, but because motivation and attention shift from "have-to" goals to "want-to" goals.',
     replicationStatus: 'Partial',
     evidenceStatus: 'SUPPORTED',
@@ -71,7 +79,9 @@ export const VALIDATION_CORPUS: Partial<Study>[] = [
     studyDesign: 'Meta_Analysis', // Multilab replication
     population: { description: '2,141 participants across 23 labs globally' },
     variablesStudied: ['Self-Control Exertion', 'Task Persistence', 'Ego Depletion'],
-    measurements: ['Sequential task paradigm (Sripada et al. protocol)'],
+    measurements: [
+      { construct: 'Unknown', operationalDefinition: 'Unknown', instrument: 'Sequential task paradigm (Sripada et al. protocol)' }
+    ],
     effectDescription: 'Massive, methodologically rigorous replication attempt found a meta-analytic effect size of exactly zero (d = 0.04) for the ego-depletion effect, contradicting the 2010 meta-analysis and exposing severe publication bias.',
     replicationStatus: 'N/A', // This is the replication itself
     evidenceStatus: 'SUPPORTED', // The null finding is highly validated

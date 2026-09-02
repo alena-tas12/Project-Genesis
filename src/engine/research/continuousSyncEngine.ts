@@ -5,6 +5,7 @@ import { LiveAcquisitionEngine } from './liveAcquisition';
 import type { Study, ResearchGap } from './researchOntology';
 import { GenesisCore } from '../core/GenesisCore';
 import * as path from 'path';
+import * as fs from 'fs';
 
 export interface SyncConfig {
   maxGaps: number;
@@ -28,6 +29,8 @@ export class ContinuousSyncEngine {
     console.log(`[SYNC] Initializing Synchronization: ${versionId}`);
     console.log(`[SYNC] Mode: ${config.isDryRun ? 'DRY RUN' : 'ACTIVE COMMIT'}`);
 
+    const core = GenesisCore.getInstance();
+
     // PHASE B: CHANGE DETECTION
     console.log('[SYNC] Executing Change Detection (Incremental Scan)...');
     
@@ -35,7 +38,6 @@ export class ContinuousSyncEngine {
     
     if (incrementalChanges.retractions.length > 0) {
       console.log(`[SYNC] Detected ${incrementalChanges.retractions.length} retractions. Updating ledger...`);
-      const core = GenesisCore.getInstance();
       for (const retraction of incrementalChanges.retractions) {
         if (!config.isDryRun) {
           this.memory.markRetracted(retraction);

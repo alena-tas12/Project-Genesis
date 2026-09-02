@@ -91,12 +91,12 @@ export class ValidationEngine {
   public extractValidationTargets(activeGraph: GraphEdge[]): ValidationTarget[] {
     const targets: ValidationTarget[] = [];
     for (const edge of activeGraph) {
-      if (edge.evidenceStatus === 'SUPPORTED' && edge.causalSupport === 'CAUSAL_SUPPORTED') {
+      if (edge.evidenceStatus === 'SUPPORTED') {
         targets.push({
-          variableX: edge.source.toLowerCase(),
-          variableY: edge.target.toLowerCase(),
+          variableX: edge.sourceVariable.toLowerCase(),
+          variableY: edge.targetVariable.toLowerCase(),
           expectedCorrelation: edge.relationshipType === 'INCREASES' ? 'POSITIVE' : 'NEGATIVE',
-          minimumEffectSize: edge.effectSize ? edge.effectSize.value * 0.5 : 0.1 // lenient threshold
+          minimumEffectSize: edge.synthesizedStrength ? edge.synthesizedStrength * 0.5 : 0.1
         });
       }
     }

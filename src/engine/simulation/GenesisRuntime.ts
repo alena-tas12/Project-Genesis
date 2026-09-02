@@ -48,7 +48,11 @@ export class GenesisRuntime {
 
   private stepAgentRK4(agent: HumanState, env: SimulationEnvironment): HumanState {
     const dt = env.dt;
-    let currentState = { ...agent.state };
+    // Flatten all layers into a single StateSpace for the RK4 solver
+    let currentState: StateSpace = {};
+    for (const layerName in agent.layers) {
+      Object.assign(currentState, agent.layers[layerName as keyof typeof agent.layers]);
+    }
 
     for (const modelId of agent.activeModels) {
       const model = env.models.find(m => m.id === modelId);
@@ -56,8 +60,6 @@ export class GenesisRuntime {
 
       const params = env.globalParameters[modelId];
 
-      // RK4 requires calculating k1, k2, k3, k4 for all variables in the system simultaneously
-      // To keep prototype manageable, we compute derivatives treating other variables as constant at current step
       const k1 = this.computeDerivatives(model, currentState, params);
       
       const stateK2 = this.addState(currentState, this.scaleState(k1, dt / 2));
@@ -69,18 +71,27 @@ export class GenesisRuntime {
       const stateK4 = this.addState(currentState, this.scaleState(k3, dt));
       const k4 = this.computeDerivatives(model, stateK4, params);
 
-      // y_{n+1} = y_n + dt/6 * (k1 + 2k2 + 2k3 + k4)
       for (const eq of model.equations) {
         const dVar = (dt / 6) * (k1[eq.variable] + 2 * k2[eq.variable] + 2 * k3[eq.variable] + k4[eq.variable]);
         currentState[eq.variable] = currentState[eq.variable] + dVar;
-        // Clamp to avoid NaN or infinite explosions in uncalibrated prototypes
         currentState[eq.variable] = Math.max(-10, Math.min(10, currentState[eq.variable])); 
+      }
+    }
+
+    // Write the updated flat state back into the layered structure
+    const updatedLayers = { ...agent.layers };
+    for (const layerName in updatedLayers) {
+      const layer = updatedLayers[layerName as keyof typeof updatedLayers];
+      for (const varName in layer) {
+        if (currentState[varName] !== undefined) {
+          layer[varName] = currentState[varName];
+        }
       }
     }
 
     return {
       ...agent,
-      state: currentState
+      layers: updatedLayers
     };
   }
 

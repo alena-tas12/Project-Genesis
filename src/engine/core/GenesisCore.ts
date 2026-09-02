@@ -3,6 +3,8 @@ import { DependencyGraph } from './DependencyGraph';
 import type { MathematicalModel } from '../models/ModelLibrary';
 import { ModelLibrary } from '../models/ModelLibrary';
 import type { GraphEdge } from '../research/researchOntology';
+import * as fs from 'fs';
+import * as path from 'path';
 
 export class GenesisCore {
   private static instance: GenesisCore;
@@ -18,6 +20,7 @@ export class GenesisCore {
     this.dependencyGraph = new DependencyGraph();
     this.modelLibrary = new ModelLibrary();
     this.setupCoreSubscribers();
+    this.loadState();
   }
 
   public static getInstance(): GenesisCore {
@@ -66,6 +69,7 @@ export class GenesisCore {
         dateIdentified: new Date().toISOString()
       };
       this.activeGaps.push(generatedGap);
+      this.saveState();
     });
   }
 
@@ -86,5 +90,35 @@ export class GenesisCore {
       timestamp: new Date().toISOString(),
       payload: { edgeId: edge.id }
     });
+    this.saveState();
+  }
+
+  public saveState() {
+    const stateFile = path.join(process.cwd(), 'genesis_core_state.json');
+    const state = {
+      activeKnowledgeGraph: this.activeKnowledgeGraph,
+      activeGaps: this.activeGaps,
+      nodes: Array.from((this.dependencyGraph as any).nodes.entries()),
+      upstream: Array.from((this.dependencyGraph as any).upstream.entries()),
+      downstream: Array.from((this.dependencyGraph as any).downstream.entries())
+    };
+    fs.writeFileSync(stateFile, JSON.stringify(state, null, 2), 'utf-8');
+  }
+
+  public loadState() {
+    const stateFile = path.join(process.cwd(), 'genesis_core_state.json');
+    if (fs.existsSync(stateFile)) {
+      try {
+        const state = JSON.parse(fs.readFileSync(stateFile, 'utf-8'));
+        this.activeKnowledgeGraph = state.activeKnowledgeGraph || [];
+        this.activeGaps = state.activeGaps || [];
+        if (state.nodes) (this.dependencyGraph as any).nodes = new Map(state.nodes);
+        if (state.upstream) (this.dependencyGraph as any).upstream = new Map(state.upstream);
+        if (state.downstream) (this.dependencyGraph as any).downstream = new Map(state.downstream);
+        console.log(`[GenesisCore] State loaded from disk. Graph size: ${this.activeKnowledgeGraph.length}`);
+      } catch (err) {
+        console.error(`[GenesisCore] Failed to load state:`, err);
+      }
+    }
   }
 }

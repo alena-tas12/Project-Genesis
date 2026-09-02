@@ -1,7 +1,8 @@
 import { GapDiscoveryEngine } from './gapDiscovery';
-import { calculateGapPriority, generateQueriesForGap, PrioritizedGap } from './gapPrioritization';
+import { calculateGapPriority, generateQueriesForGap, PrioritizedGap, prioritizeGaps } from './gapPrioritization';
 import { LiveAcquisitionEngine } from './liveAcquisition';
-import { EuropePMCAdapter } from './fullTextAcquisition';
+import { EuropePMCAdapter, FullTextAcquisitionEngine } from './fullTextAcquisition';
+import { extractClaims } from './evidenceExtraction';
 import type { Study, Claim, ResearchGap, ScientificDocument } from './researchOntology';
 
 export interface ResearchCycleRecord {
@@ -108,8 +109,8 @@ export class AutonomousResearchCycle {
             continue;
           }
 
-          // 5. Structure LLM Extraction (Mocked schema enforcement)
-          const extractedClaims = this.mockExtract(document, study, gap);
+          // 5. Structure LLM Extraction (Replaced mock with real heuristic extractor)
+          const extractedClaims = extractClaims(study);
           
           if (extractedClaims.length > 0) {
             record.studiesSuccessfullyExtracted++;
@@ -148,26 +149,5 @@ export class AutonomousResearchCycle {
 
     record.endTimestamp = new Date().toISOString();
     return record;
-  }
-
-  private mockExtract(doc: ScientificDocument, study: Study, gap: PrioritizedGap): Partial<Claim>[] {
-    // Generate an epistemically safe mock extraction
-    // Ensure "Negative-Evidence" support and structural separation
-    const claims: Partial<Claim>[] = [];
-
-    // Simulate finding a replication or contradiction
-    const isContradiction = Math.random() > 0.7;
-    
-    claims.push({
-      claimType: isContradiction ? 'EMPIRICAL_RESULT' : 'EMPIRICAL_RESULT',
-      evidenceStatus: isContradiction ? 'CONTRADICTED' : 'SUPPORTED',
-      causalSupport: (study.studyDesign || '').includes('Observational') ? 'CAUSAL_INSUFFICIENT' : 'CAUSAL_PLAUSIBLE',
-      reviewStatus: (study.studyDesign || '').includes('Observational') ? 'REVIEW_REQUIRED' : 'APPROVED',
-      statement: isContradiction ? 'Failed to replicate primary mechanism.' : 'Supports hypothesis.',
-      moderators: isContradiction ? ['Contextual environment'] : [],
-      mediators: []
-    });
-
-    return claims;
   }
 }

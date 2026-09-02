@@ -34,17 +34,17 @@ function runSimulationTest() {
 
   const agent = DynamicHumanSystem.initializeHuman('subject_1', 'Test Subject', [model]);
   // Override initial conditions for test
-  agent.state['fatigue'] = 0.0;
-  agent.state['attention'] = 1.0;
+  agent.layers['Physiological']['fatigue'] = 0.0;
+  agent.layers['Cognitive']['attention'] = 1.0;
 
   let env = runtime.initializeEnvironment([agent], [model], 0.5); // dt = 0.5 hours
 
   const log: any[] = [];
-  log.push({ t: env.time, fatigue: env.agents[0].state['fatigue'], attention: env.agents[0].state['attention'] });
+  log.push({ t: env.time, fatigue: env.agents[0].layers['Physiological']['fatigue'], attention: env.agents[0].layers['Cognitive']['attention'] });
 
   for (let i = 0; i < 20; i++) {
     env = runtime.step(env);
-    log.push({ t: env.time, fatigue: env.agents[0].state['fatigue'], attention: env.agents[0].state['attention'] });
+    log.push({ t: env.time, fatigue: env.agents[0].layers['Physiological']['fatigue'], attention: env.agents[0].layers['Cognitive']['attention'] });
   }
 
   const csvHeader = 'Time,Fatigue,Attention\n';

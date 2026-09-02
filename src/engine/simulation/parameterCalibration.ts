@@ -19,19 +19,15 @@ export class ParameterCalibrationEngine {
       // between "Sleep" and "Fatigue".
       // This is a naive matching strategy for the prototype.
       const supportingEdge = activeGraph.find(edge => 
-        edge.source.toLowerCase().includes(param.name.split('_')[0]) ||
-        edge.target.toLowerCase().includes(param.name.split('_')[0])
+        edge.sourceVariable.toLowerCase().includes(param.name.split('_')[0]) ||
+        edge.targetVariable.toLowerCase().includes(param.name.split('_')[0])
       );
 
-      if (supportingEdge && supportingEdge.effectSize) {
+      if (supportingEdge && supportingEdge.synthesizedStrength !== undefined) {
         anyCalibrated = true;
-        // In a real system, the effect size needs translation to parameter scales.
-        // We use the effect size value as a proxy for the parameter value.
-        const value = supportingEdge.effectSize.value;
-        // Construct standard error / uncertainty if available, or assume moderate uncertainty
-        const uncertainty = supportingEdge.effectSize.confidenceInterval ? 
-          Math.abs(supportingEdge.effectSize.confidenceInterval.upper - supportingEdge.effectSize.confidenceInterval.lower) / 4 : 
-          0.1;
+        const value = supportingEdge.synthesizedStrength;
+        // Use confidence as proxy for precision; lower confidence = higher uncertainty
+        const uncertainty = supportingEdge.confidence ? (1 - supportingEdge.confidence) * 0.5 : 0.1;
         
         return {
           ...param,

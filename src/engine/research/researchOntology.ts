@@ -494,3 +494,6 @@ export interface ScientificDocument {
   sections: DocumentSection[];
   checksum?: string;
 }
+
+// Alias for backward compatibility — GenesisCore, ValidationEngine, parameterCalibration import GraphEdge
+export type GraphEdge = KnowledgeEdge;

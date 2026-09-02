@@ -9,14 +9,24 @@ export class ModelDiscoveryEngine {
     const core = GenesisCore.getInstance();
     console.log(`[MODEL DISCOVERY] Evaluating ${competingModels.length} competing models against the Knowledge Graph...`);
     
-    // In a real system, we would run ValidationEngine on all models and rank by error margin
     let bestModel: MathematicalModel | null = null;
     let highestScore = -1;
 
     for (const model of competingModels) {
-      // Mock evaluation score
-      const supportScore = Math.random(); 
-      console.log(`- Model ${model.id} empirical support score: ${supportScore.toFixed(2)}`);
+      // Calculate real empirical support score based on the knowledge graph
+      let supportedEdges = 0;
+      let totalEdgesNeeded = model.equations.length;
+
+      for (const eq of model.equations) {
+         const hasSupport = core.activeKnowledgeGraph.some(edge => 
+            edge.targetVariable.toLowerCase() === eq.variable.toLowerCase() && 
+            edge.evidenceStatus === 'SUPPORTED'
+         );
+         if (hasSupport) supportedEdges++;
+      }
+
+      const supportScore = totalEdgesNeeded > 0 ? (supportedEdges / totalEdgesNeeded) : 0;
+      console.log(`- Model ${model.id} empirical support score: ${supportScore.toFixed(2)} (${supportedEdges}/${totalEdgesNeeded} equations supported)`);
       
       if (supportScore > highestScore) {
         highestScore = supportScore;

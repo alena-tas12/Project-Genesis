@@ -1,0 +1,102 @@
+{
+  "activeKnowledgeGraph": [],
+  "activeGaps": [
+    {
+      "id": "gap_1788347310307",
+      "description": "Upstream evidence retracted. Model recalibration required.",
+      "domain": "Interdisciplinary",
+      "relatedVariables": [],
+      "gapType": "Contradiction_Resolution",
+      "priority": "High",
+      "discoveredBy": "Core_Event_Bus",
+      "status": "UNADDRESSED",
+      "dateIdentified": "2026-09-02T11:08:30.307Z"
+    }
+  ],
+  "nodes": [
+    [
+      "doi:10.1234/test.paper",
+      {
+        "id": "doi:10.1234/test.paper",
+        "type": "SOURCE",
+        "status": "RETRACTED"
+      }
+    ],
+    [
+      "edge_01",
+      {
+        "id": "edge_01",
+        "type": "EDGE",
+        "status": "REQUIRES_REVIEW"
+      }
+    ],
+    [
+      "physio_cognitive_01",
+      {
+        "id": "physio_cognitive_01",
+        "type": "MODEL",
+        "status": "REQUIRES_REVIEW"
+      }
+    ],
+    [
+      "param_fatigue_growth",
+      {
+        "id": "param_fatigue_growth",
+        "type": "PARAMETER",
+        "status": "UNKNOWN"
+      }
+    ],
+    [
+      "sim_run_104",
+      {
+        "id": "sim_run_104",
+        "type": "SIMULATION",
+        "status": "STALE"
+      }
+    ]
+  ],
+  "upstream": [
+    [
+      "doi:10.1234/test.paper",
+      {}
+    ],
+    [
+      "edge_01",
+      {}
+    ],
+    [
+      "physio_cognitive_01",
+      {}
+    ],
+    [
+      "param_fatigue_growth",
+      {}
+    ],
+    [
+      "sim_run_104",
+      {}
+    ]
+  ],
+  "downstream": [
+    [
+      "doi:10.1234/test.paper",
+      {}
+    ],
+    [
+      "edge_01",
+      {}
+    ],
+    [
+      "physio_cognitive_01",
+      {}
+    ],
+    [
+      "param_fatigue_growth",
+      {}
+    ],
+    [
+      "sim_run_104",
+      {}
+    ]
+  ]
+}

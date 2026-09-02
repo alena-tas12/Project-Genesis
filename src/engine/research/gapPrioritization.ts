@@ -1,4 +1,4 @@
-import { ResearchGap } from './researchOntology';
+import type { ResearchGap } from './researchOntology';
 
 export interface PriorityComponents {
   scientificImportance: number;     // e.g., how central is this domain?
@@ -20,7 +20,7 @@ export interface PrioritizedGap extends ResearchGap {
  * Calculates a MULTI-FACTOR RESEARCH PRIORITY SCORE.
  * (This is a weighted heuristic, NOT an empirical probability).
  */
-export function calculateGapPriority(gap: ResearchGap, graphMetrics: any): PrioritizedGap {
+export function calculateGapPriority(gap: ResearchGap): PrioritizedGap {
   // We use heuristics based on the gap type and domain centrality
   let importance = 0.5;
   let uncertainty = 0.5;

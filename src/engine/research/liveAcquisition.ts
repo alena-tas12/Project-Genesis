@@ -1,4 +1,4 @@
-import { ResearchQuery, Study, Provenance } from './researchOntology';
+import type { ResearchQuery, Study } from './researchOntology';
 import { parseStudyMetadata } from './researchAcquisition';
 
 export interface ResearchAcquisitionProvider {
@@ -54,13 +54,14 @@ export class PubMedAdapter implements ResearchAcquisitionProvider {
           doi: (item.articleids || []).find((a: any) => a.idtype === 'doi')?.value,
           journal: item.source,
           abstract: 'Abstract unavailable in eSummary (Requires eFetch)',
-          keywords: []
+          keywords: [],
+          source: 'PubMed' as const
         };
 
         const study = parseStudyMetadata(raw);
         study.pmid = id;
         study.provenance = {
-          source: 'PubMed',
+          source: 'PubMed' as const,
           sourceId: id,
           retrievalTimestamp: new Date().toISOString(),
           extractionVersion: 'v2_epistemic',
@@ -131,13 +132,14 @@ export class OpenAlexAdapter implements ResearchAcquisitionProvider {
       doi: item.doi,
       journal: item.primary_location?.source?.display_name,
       abstract,
-      keywords: (item.concepts || []).map((c: any) => c.display_name)
+      keywords: (item.concepts || []).map((c: any) => c.display_name),
+      source: 'OpenAlex' as const
     };
 
     const study = parseStudyMetadata(raw);
     study.openAlexId = item.id;
     study.provenance = {
-      source: 'OpenAlex',
+      source: 'OpenAlex' as const,
       sourceId: item.id,
       retrievalTimestamp: new Date().toISOString(),
       extractionVersion: 'v2_epistemic',

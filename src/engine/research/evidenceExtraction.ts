@@ -40,6 +40,8 @@ export function extractClaims(study: Study): Claim[] {
 
   const primaryClaim: Claim = {
     id: `claim_${claimCounter}_${study.id}`,
+    extractionConfidence: 0.9,
+    claimType: 'EMPIRICAL_RESULT',
     studyId: study.id,
     statement: study.effectDescription,
     sourceVariable: variables.independent[0] ?? 'unknown',

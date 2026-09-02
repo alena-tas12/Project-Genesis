@@ -13,9 +13,41 @@
       "edgesAdded": 4,
       "gapsAdded": 0,
       "gapsResolved": 0
+    },
+    {
+      "versionId": "2026.09.02.0002",
+      "timestamp": "2026-09-02T09:58:41.165Z",
+      "studiesAdded": 2,
+      "studiesUpdated": 0,
+      "studiesRetracted": 19,
+      "claimsAdded": 2,
+      "claimsModified": 0,
+      "claimsDowngraded": 0,
+      "edgesAdded": 2,
+      "gapsAdded": 0,
+      "gapsResolved": 0
     }
   ],
   "retractedIds": [
-    "mock_retracted_10.1234/bad.paper"
+    "mock_retracted_10.1234/bad.paper",
+    "study_1_2026",
+    "10.1016/j.revmed.2026.08.006",
+    "study_2_2026",
+    "10.1182/bloodadvances.2025019459",
+    "study_3_2026",
+    "10.1155/carj/1509295",
+    "study_4_2026",
+    "10.1007/s10143-026-04464-x",
+    "study_5_2026",
+    "10.1111/all.70503",
+    "study_6_2010",
+    "https://doi.org/10.1016/j.tibtech.2010.11.006",
+    "study_7_1985",
+    "https://doi.org/10.2307/1251430",
+    "study_8_1991",
+    "https://doi.org/10.1097/00007890-199109000-00001",
+    "study_9_2013",
+    "https://doi.org/10.48550/arxiv.1309.5821",
+    "study_10_2005"
   ]
 }

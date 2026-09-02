@@ -31,9 +31,7 @@ export class ContinuousSyncEngine {
     // PHASE B: CHANGE DETECTION
     console.log('[SYNC] Executing Change Detection (Incremental Scan)...');
     
-    // Simulate detecting new top-level literature/retractions
-    // (In reality, this would hit Crossref/PubMed daily feeds or search RSS)
-    const incrementalChanges = await this.detectIncrementalChanges();
+    const incrementalChanges = await this.detectIncrementalChanges(prevVersion);
     
     if (incrementalChanges.retractions.length > 0) {
       console.log(`[SYNC] Detected ${incrementalChanges.retractions.length} retractions. Updating ledger...`);
@@ -99,11 +97,64 @@ export class ContinuousSyncEngine {
     return newVersion;
   }
 
-  private async detectIncrementalChanges() {
-    // In a real system, query Crossref/PubMed daily feeds
+  private async detectIncrementalChanges(prevVersion?: KnowledgeVersion) {
+    console.log('[SYNC] Executing Real Internet Change Detection...');
+    
+    // Default to looking back 1 day if no previous version exists
+    let lastSyncDate = new Date();
+    lastSyncDate.setDate(lastSyncDate.getDate() - 1);
+    
+    if (prevVersion && prevVersion.timestamp) {
+      lastSyncDate = new Date(prevVersion.timestamp);
+    }
+
+    const dateStr = lastSyncDate.toISOString().split('T')[0].replace(/-/g, '/');
+    const todayStr = new Date().toISOString().split('T')[0].replace(/-/g, '/');
+
+    const retractions: string[] = [];
+    const newPapers: any[] = [];
+
+    try {
+      // 1. Detect Retractions via PubMed
+      // "Retracted Publication"[PT] OR "Retraction of Publication"[PT]
+      const retractionQuery = `("Retracted Publication"[Publication Type] OR "Retraction of Publication"[Publication Type]) AND ("${dateStr}"[Date - Create] : "${todayStr}"[Date - Create])`;
+      
+      console.log(`[SYNC] Querying PubMed for new retractions since ${dateStr}...`);
+      const retractionResults = await this.acquisition.executeLiveSearch({
+        id: 'retraction_scan',
+        rawString: retractionQuery,
+        targetEntities: [],
+        logicalConstraints: []
+      });
+      
+      retractionResults.forEach(r => {
+        if (r.id) retractions.push(r.id);
+        if (r.doi) retractions.push(r.doi);
+      });
+      console.log(`[SYNC] Found ${retractions.length} potential retractions/corrections.`);
+
+      // 2. Detect New Literature in Active Domains
+      // For now, we scan for general active domains like "Computer Engineering" or "Data Science"
+      const domainQuery = `("Cognitive Science" OR "Data Science" OR "Cybersecurity") AND ("${dateStr}"[Date - Create] : "${todayStr}"[Date - Create])`;
+      console.log(`[SYNC] Querying active domains for new literature...`);
+      const literatureResults = await this.acquisition.executeLiveSearch({
+        id: 'literature_scan',
+        rawString: domainQuery,
+        targetEntities: [],
+        logicalConstraints: []
+      });
+
+      newPapers.push(...literatureResults);
+      console.log(`[SYNC] Found ${literatureResults.length} new papers in active domains.`);
+
+    } catch (error) {
+      console.error('[SYNC] Change detection encountered network errors, proceeding with available data:', error);
+    }
+
     return {
-      newPapers: 12,
-      retractions: ['mock_retracted_10.1234/bad.paper']
+      newPapers: newPapers.length,
+      retractions,
+      retrievedStudies: newPapers
     };
   }
 

@@ -1,3 +1,4 @@
+import { GapDiscoveryEngine } from './gapDiscovery';
 import { calculateGapPriority, generateQueriesForGap, PrioritizedGap } from './gapPrioritization';
 import { LiveAcquisitionEngine } from './liveAcquisition';
 import { EuropePMCAdapter } from './fullTextAcquisition';
@@ -27,12 +28,13 @@ export interface ResearchCycleRecord {
   graphChangesRejected: number;
   reviewRequiredItems: number;
   unresolvedGaps: number;
-  newlyDiscoveredGaps: number;
+  newlyDiscoveredGaps: ResearchGap[];
 }
 
 export class AutonomousResearchCycle {
   private acquisition = new LiveAcquisitionEngine();
   private fullTextFetcher = new EuropePMCAdapter();
+  private gapDiscovery = new GapDiscoveryEngine();
 
   async runCycle(cycleId: string, initialGaps: ResearchGap[], config = { topK: 5 }): Promise<ResearchCycleRecord> {
     const record: ResearchCycleRecord = {
@@ -59,7 +61,7 @@ export class AutonomousResearchCycle {
       graphChangesRejected: 0,
       reviewRequiredItems: 0,
       unresolvedGaps: 0,
-      newlyDiscoveredGaps: 0
+      newlyDiscoveredGaps: []
     };
 
     // 1. Prioritize Gaps
@@ -71,6 +73,7 @@ export class AutonomousResearchCycle {
     record.gapsSelected = selectedGaps;
 
     // 2. Process Each Gap
+    const cycleAcquiredStudies: Study[] = [];
     for (const gap of selectedGaps) {
       // Negative-Evidence-First Query Generation
       const queries = generateQueriesForGap(gap);
@@ -90,6 +93,7 @@ export class AutonomousResearchCycle {
           logicalConstraints: []
         });
 
+        cycleAcquiredStudies.push(...retrievedStudies);
         record.studiesAcquired += retrievedStudies.length;
 
         // 4. Retrieve Full-Text & Extract
@@ -116,7 +120,7 @@ export class AutonomousResearchCycle {
           // 6. Evidence Validation & Synthesis (Causal safeguards)
           for (const claim of extractedClaims) {
             record.claimsExtracted++;
-            record.evidenceStatuses[claim.evidenceStatus] = (record.evidenceStatuses[claim.evidenceStatus] || 0) + 1;
+            record.evidenceStatuses[claim.evidenceStatus || 'UNKNOWN'] = (record.evidenceStatuses[claim.evidenceStatus || 'UNKNOWN'] || 0) + 1;
 
             if (claim.reviewStatus === 'REVIEW_REQUIRED') {
               record.reviewRequiredItems++;
@@ -136,7 +140,10 @@ export class AutonomousResearchCycle {
         }
       }
       record.unresolvedGaps++;
-      record.newlyDiscoveredGaps += 2; // Simulate discovering sub-gaps
+      
+      // Autonomous generation of subsequent gaps based on newly acquired evidence
+      const newGaps = this.gapDiscovery.discoverGapsFromCorpus(cycleAcquiredStudies);
+      record.newlyDiscoveredGaps.push(...newGaps);
     }
 
     record.endTimestamp = new Date().toISOString();

@@ -287,7 +287,8 @@ export interface Claim {
   moderators: string[];
   mediators: string[];
   confounders: string[];
-  causalEvidenceType?: 'Association' | 'Causal' | 'Mechanistic' | 'Temporal_Precedence' | 'Mediation' | 'Moderation';
+  causalSupport?: 'CAUSAL_SUPPORTED' | 'CAUSAL_PLAUSIBLE' | 'ASSOCIATIONAL' | 'CAUSAL_INSUFFICIENT' | 'CAUSAL_OVERCLAIM' | 'UNKNOWN' | 'REVIEW_REQUIRED';
+  reviewStatus?: 'REVIEW_REQUIRED' | 'APPROVED';
   limitations?: string[];
   epistemicCategory?: EpistemicCategory;
   evidenceStatus?: EvidenceStatus; // Scientific confidence

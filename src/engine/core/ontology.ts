@@ -8,7 +8,7 @@
 // Re-export the canonical types from the research engine
 export type {
   EpistemicCategory,
-  ValidationState,
+  EvidenceStatus,
   ResearchDomain,
   TemporalEvidenceEra,
   TheoryLifecycleStage,

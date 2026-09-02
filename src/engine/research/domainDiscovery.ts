@@ -61,7 +61,7 @@ export function discoverNewDomains(
   const unknownKeywordCounts = new Map<string, { count: number; studyIds: Set<string> }>();
 
   for (const study of studies) {
-    for (const kw of study.keywords) {
+    for (const kw of (study.keywords || [])) {
       const normalized = kw.toLowerCase().trim();
       if (normalized.length < 3) continue;
       if (knownKeywords.has(normalized)) continue;
@@ -147,7 +147,7 @@ export function expandSubDomains(
   const candidateSubs = new Map<string, number>();
 
   for (const study of domainStudies) {
-    for (const kw of study.keywords) {
+    for (const kw of (study.keywords || [])) {
       const normalized = kw.toLowerCase().trim().replace(/\s+/g, '_');
       if (existingSubs.has(normalized)) continue;
       if (normalized.length < 3) continue;

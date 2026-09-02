@@ -23,7 +23,7 @@ export const VALIDATION_CORPUS: Partial<Study>[] = [
     measurements: ['Time spent on unsolvable puzzles', 'Task persistence duration'],
     effectDescription: 'Initial hypothesis proposing the Resource Model of Self-Control: Exerting self-control in an initial task depletes a shared global resource (ego depletion), directly impairing performance on subsequent self-control tasks.',
     replicationStatus: 'Failed', // Now known to be failed, though historically highly cited
-    validationState: 'Hypothesized',
+    epistemicCategory: 'HYPOTHESIS',
     evidenceQuality: 'Moderate',
     domains: ['Psychological', 'Cognitive', 'Behavioural'],
   },
@@ -40,7 +40,7 @@ export const VALIDATION_CORPUS: Partial<Study>[] = [
     measurements: ['Effect size (Cohen\'s d) across sequential task paradigms'],
     effectDescription: 'Provided strong meta-analytic support (d = 0.62) for the ego-depletion effect, establishing the Resource Model as the dominant framework in psychology for nearly a decade.',
     replicationStatus: 'Failed', // Re-analyses showed severe publication bias
-    validationState: 'Contested',
+    evidenceStatus: 'DISPUTED',
     evidenceQuality: 'High', // High at the time, later methodologically critiqued
     domains: ['Psychological', 'Cognitive', 'Methodological'],
   },
@@ -57,7 +57,7 @@ export const VALIDATION_CORPUS: Partial<Study>[] = [
     measurements: ['Motivational shifts', 'Attentional bias'],
     effectDescription: 'Proposes the Process Model of Self-Control as a competing explanation to the Resource Model: Self-control declines not because a resource is depleted, but because motivation and attention shift from "have-to" goals to "want-to" goals.',
     replicationStatus: 'Partial',
-    validationState: 'Supported',
+    evidenceStatus: 'SUPPORTED',
     evidenceQuality: 'High',
     domains: ['Psychological', 'Cognitive', 'Emotional', 'Complex_Systems'],
   },
@@ -74,7 +74,7 @@ export const VALIDATION_CORPUS: Partial<Study>[] = [
     measurements: ['Sequential task paradigm (Sripada et al. protocol)'],
     effectDescription: 'Massive, methodologically rigorous replication attempt found a meta-analytic effect size of exactly zero (d = 0.04) for the ego-depletion effect, contradicting the 2010 meta-analysis and exposing severe publication bias.',
     replicationStatus: 'N/A', // This is the replication itself
-    validationState: 'Established', // The null finding is highly validated
+    evidenceStatus: 'SUPPORTED', // The null finding is highly validated
     evidenceQuality: 'Very_High',
     domains: ['Methodological', 'Psychological', 'Cognitive'],
   }

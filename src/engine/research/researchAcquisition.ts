@@ -140,6 +140,8 @@ export function parseStudyMetadata(raw: RawSearchResult): Study {
     subDomains,
     era,
     keywords: raw.keywords ?? [],
+    moderators: [],
+    mediators: [],
   };
 }
 
@@ -179,6 +181,10 @@ export function ingestManualStudies(studies: Partial<Study>[]): Study[] {
       subDomains: s.subDomains ?? [],
       era: classifyEra(year),
       keywords: s.keywords ?? [],
+      moderators: s.moderators ?? [],
+      mediators: s.mediators ?? [],
+      evidenceStatus: s.evidenceStatus,
+      epistemicCategory: s.epistemicCategory,
     };
   });
 }

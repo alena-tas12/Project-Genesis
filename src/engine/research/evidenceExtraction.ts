@@ -218,8 +218,8 @@ function inferConfidence(claim: Claim): number {
   if (claim.epistemicCategory === 'EMPIRICAL') confidence += 0.2;
   if (claim.epistemicCategory === 'PERSONAL_OBSERVATION') confidence -= 0.2;
   if (claim.effectSize !== undefined) confidence += 0.1;
-  if (claim.limitations.length === 0) confidence += 0.05;
-  if (claim.limitations.length > 3) confidence -= 0.1;
+  if (!claim.limitations || claim.limitations.length === 0) confidence += 0.05;
+  if (claim.limitations && claim.limitations.length > 3) confidence -= 0.1;
 
   return Math.max(0.1, Math.min(1.0, confidence));
 }

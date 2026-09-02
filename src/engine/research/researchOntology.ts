@@ -165,6 +165,16 @@ export function classifyEra(year: number): TemporalEvidenceEra {
 // EPISTEMIC CATEGORIES
 // ─────────────────────────────────────────────────────────────
 
+
+export type EvidenceStatus =
+  | 'SUPPORTED'
+  | 'MIXED'
+  | 'CONTRADICTED'
+  | 'PRELIMINARY'
+  | 'INSUFFICIENT'
+  | 'DISPUTED'
+  | 'UNKNOWN';
+
 export type EpistemicCategory =
   | 'EMPIRICAL'
   | 'THEORETICAL'
@@ -174,15 +184,6 @@ export type EpistemicCategory =
   | 'PERSONAL_OBSERVATION'
   | 'HYPOTHESIS';
 
-export type ValidationState =
-  | 'Established'
-  | 'Supported'
-  | 'Mixed_Evidence'
-  | 'Preliminary'
-  | 'Theoretical'
-  | 'Hypothesized'
-  | 'Unknown'
-  | 'Falsified';
 
 // ─────────────────────────────────────────────────────────────
 // STUDY & CLAIM STRUCTURES
@@ -196,36 +197,66 @@ export interface Population {
   country?: string;
 }
 
+
+export interface Provenance {
+  source: string;
+  sourceId: string;
+  query?: string;
+  retrievalTimestamp: string;
+  extractionVersion: string;
+  ontologyVersion: string;
+  graphVersion: string;
+}
+
+export interface MeasurementInfo {
+  construct: string;
+  operationalDefinition: string;
+  instrument: string;
+  measurementError?: string;
+  reliability?: string;
+  validity?: string;
+  population?: Population;
+  limitations?: string[];
+}
+
 export interface Study {
   id: string;
   title: string;
   authors: string;
   publicationYear: number;
   doi?: string;
-  journal?: string;
+  pmid?: string;
+  openAlexId?: string;
+  sourceDatabase?: string;
   abstract?: string;
   methodology: string;
-  studyDesign: 'RCT' | 'Longitudinal' | 'Cross_Sectional' | 'Meta_Analysis'
-    | 'Systematic_Review' | 'Case_Study' | 'Quasi_Experimental'
-    | 'Observational' | 'Computational' | 'Qualitative' | 'Other';
+  studyDesign: 'RCT' | 'Longitudinal' | 'Cross_Sectional' | 'Meta_Analysis' | 'Systematic_Review' | 'Case_Study' | 'Quasi_Experimental' | 'Observational' | 'Computational' | 'Qualitative' | 'Mechanistic' | 'Natural_Experiment' | 'Other';
   population: Population;
   variablesStudied: string[];
-  measurements: string[];
+  measurements: (string | MeasurementInfo)[];
+  journal?: string;
   effectDescription: string;
   effectSize?: number;
   confidenceInterval?: [number, number];
   pValue?: number;
+  statisticalInformation?: string;
+  moderators: string[];
+  mediators: string[];
   limitations: string[];
   replicationStatus: 'Unreplicated' | 'Replicated' | 'Partial' | 'Failed' | 'N/A';
-  validationState?: ValidationState; // Explict tracking of theory settledness
+  evidenceStatus?: EvidenceStatus;
+  epistemicCategory?: EpistemicCategory;
   evidenceQuality: 'Low' | 'Moderate' | 'High' | 'Very_High' | 'N/A';
+  riskOfBias?: string;
   domains: ResearchDomain[];
   subDomains?: string[];
   era?: TemporalEvidenceEra;
   keywords?: string[];
+  provenance?: Provenance;
 }
 
 export type ClaimDirection = 'Positive' | 'Negative' | 'No_Effect' | 'Nonlinear' | 'Conditional';
+
 
 export interface Claim {
   id: string;
@@ -238,13 +269,14 @@ export interface Claim {
   effectSizeUnit?: string;
   population: Population;
   context: string;
-  measurementMethod: string;
+  measurementMethod?: string;
   timescale: string;
   moderators: string[];
   mediators: string[];
   confounders: string[];
-  limitations: string[];
-  epistemicCategory: EpistemicCategory;
+  causalEvidenceType?: 'Association' | 'Causal' | 'Mechanistic' | 'Temporal_Precedence' | 'Mediation' | 'Moderation';
+  limitations?: string[];
+  epistemicCategory?: EpistemicCategory;
 }
 
 export interface ClaimSet {
@@ -321,25 +353,28 @@ export type RelationshipType =
   | 'Emergent'
   | 'Conditional';
 
+
 export interface KnowledgeEdge {
   id: string;
   sourceVariable: string;
   targetVariable: string;
   relationshipType: RelationshipType;
   direction: 'Unidirectional' | 'Bidirectional';
-  synthesizedStrength: number;       // -1.0 to 1.0
-  confidence: number;                // 0.0 to 1.0
+  synthesizedStrength: number;       
+  confidence: number;                
   supportingClaimSetId: string;
   contradictionReportIds: string[];
-  conditions: string[];              // Under what conditions this holds
+  conditions: string[];              
   moderators: string[];
   mediators: string[];
   timescale: string;
   domains: ResearchDomain[];
   evidenceQuality: 'Low' | 'Moderate' | 'High' | 'Very_High';
+  evidenceStatus: EvidenceStatus;
+  epistemicCategory: EpistemicCategory;
   studyCount: number;
-  earliestEvidence: number;          // Year
-  latestEvidence: number;            // Year
+  earliestEvidence: number;          
+  latestEvidence: number;            
   lifecycleStage: TheoryLifecycleStage;
 }
 

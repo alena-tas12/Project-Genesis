@@ -262,6 +262,8 @@ export function synthesizeEvidence(
     earliestEvidence,
     latestEvidence,
     lifecycleStage,
+    evidenceStatus: 'UNKNOWN',
+    epistemicCategory: 'EMPIRICAL',
   };
 }
 

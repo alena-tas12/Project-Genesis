@@ -46,7 +46,7 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     measurements: ['Genotyping', 'Diagnostic interviews', 'Life event calendars'],
     effectDescription: 'Initial hypothesis of Gene × Environment interaction proposing that short alleles of the 5-HTT promoter increase depression vulnerability. Highly influential but subject to massive replication failures and ongoing statistical controversy.',
     replicationStatus: 'Failed', // Meta-analyses later showed null effects or tiny effects requiring massive N
-    validationState: 'Mixed_Evidence',
+    evidenceStatus: 'MIXED',
     evidenceQuality: 'Moderate',
     domains: ['Biological', 'Psychological', 'Developmental', 'Methodological'],
   },
@@ -67,7 +67,7 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     measurements: ['Heart Rate Variability (HRV)', 'Respiratory Sinus Arrhythmia'],
     effectDescription: 'Proposes that the myelinated vagus nerve actively dampens sympathetic arousal, enabling social engagement. Hypothesis suggests coupling of brainstem, heart, and social behavior, though evolutionary mechanisms are heavily debated.',
     replicationStatus: 'Partial',
-    validationState: 'Theoretical', // Highly influential but evolutionary/anatomical claims are contested
+    epistemicCategory: 'THEORETICAL', // Highly influential but evolutionary/anatomical claims are contested
     evidenceQuality: 'Moderate',
     domains: ['Physiological', 'Neuroscience', 'Emotional', 'Social'],
   },
@@ -88,7 +88,7 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     measurements: ['Iowa Gambling Task', 'Skin Conductance Responses (SCR)'],
     effectDescription: 'Proposes that emotional/somatic physiological signals (somatic markers) generated prior to conscious awareness guide advantageous decision-making. Still actively researched and debated regarding the causal necessity of somatic feedback.',
     replicationStatus: 'Partial',
-    validationState: 'Supported',
+    evidenceStatus: 'SUPPORTED',
     evidenceQuality: 'Moderate',
     domains: ['Emotional', 'Cognitive', 'Neuroscience', 'Physiological'],
   },
@@ -109,7 +109,7 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     measurements: ['fMRI', 'Electric shock anticipation'],
     effectDescription: 'Holding a spouse\'s hand attenuated neural threat responses in the right anterior insula and hypothalamus. Suggests Social Baseline Theory (that social connection is the baseline metabolic state), though effect sizes vary across replications.',
     replicationStatus: 'Partial',
-    validationState: 'Supported',
+    evidenceStatus: 'SUPPORTED',
     evidenceQuality: 'Moderate',
     domains: ['Social', 'Emotional', 'Neuroscience'],
   },
@@ -130,7 +130,7 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     measurements: ['Physiological stress markers', 'Cognitive tests', 'Environmental metrics'],
     effectDescription: 'Proposes that poverty generates a confluence of psychosocial and physical stressors that cumulatively elevate allostatic load, correlating with impaired working memory. Highly cited, but causal directionality in humans remains complex.',
     replicationStatus: 'Replicated',
-    validationState: 'Supported',
+    evidenceStatus: 'SUPPORTED',
     evidenceQuality: 'High',
     domains: ['Economic', 'Environmental', 'Developmental', 'Physiological', 'Cognitive'],
   },
@@ -151,7 +151,7 @@ export const WAVES_3_12_CORPUS: Partial<Study>[] = [
     measurements: ['Bayesian updating models'],
     effectDescription: 'Theoretical framework suggesting biological systems maintain themselves by minimizing variational free energy. A highly influential but polarizing mathematical model; critics argue it is overly broad and unfalsifiable.',
     replicationStatus: 'N/A',
-    validationState: 'Theoretical', // Grand unifying theory, highly contested
+    epistemicCategory: 'THEORETICAL', // Grand unifying theory, highly contested
     evidenceQuality: 'Moderate', 
     domains: ['Neuroscience', 'Philosophical', 'Complex_Systems', 'Cognitive', 'Methodological'],
   },

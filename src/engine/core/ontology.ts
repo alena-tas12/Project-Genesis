@@ -1,116 +1,65 @@
 /**
- * Project Genesis - Scientific Knowledge Architecture (Phase 2)
+ * Project Genesis — Core Ontology (Phase 2 + Research Engine aligned)
  * 
- * Defines the comprehensive epistemic and structural ontology for 
- * a general human-system research model.
+ * Re-exports key types from the research ontology for backward
+ * compatibility with existing UI components.
  */
 
-export type LayerType = 
-  | 'Biological' 
-  | 'Physiological'
-  | 'Neuroscience'
-  | 'Cognitive' 
-  | 'Psychological' 
-  | 'Emotional' 
-  | 'Behavioural' 
-  | 'Social' 
-  | 'Developmental'
-  | 'Educational'
-  | 'Environmental' 
-  | 'Cultural'
-  | 'Economic'
-  | 'Institutional'
-  | 'Digital_Technological'
-  | 'Philosophical'
-  | 'Temporal'
-  | 'Complex_Systems';
+// Re-export the canonical types from the research engine
+export type {
+  EpistemicCategory,
+  ValidationState,
+  ResearchDomain,
+  TemporalEvidenceEra,
+  TheoryLifecycleStage,
+  Study,
+  Claim,
+  ClaimSet,
+  ContradictionReport,
+  KnowledgeEdge,
+  MissingVariable,
+  Population,
+} from '../research/researchOntology';
+
+// ─────────────────────────────────────────────────────────────
+// CORE GENESIS TYPES (used by UI and simulation layers)
+// ─────────────────────────────────────────────────────────────
 
 export type TimeScale = 'Milliseconds' | 'Seconds' | 'Minutes' | 'Hours' | 'Days' | 'Months' | 'Years' | 'Generational';
 
-export type EpistemicCategory = 
-  | 'EMPIRICAL' 
-  | 'THEORETICAL' 
-  | 'COMPUTATIONAL' 
-  | 'PHENOMENOLOGICAL' 
-  | 'PHILOSOPHICAL' 
-  | 'PERSONAL_OBSERVATION' 
-  | 'HYPOTHESIS';
-
-export type ValidationState = 'Established' | 'Supported' | 'Mixed_Evidence' | 'Preliminary' | 'Theoretical' | 'Hypothesized' | 'Unknown' | 'Falsified';
-
 export interface Uncertainty {
-  confidence: number; // 0.0 (pure guess) to 1.0 (physical law)
+  confidence: number;
   variance?: number;
   notes: string;
-}
-
-export interface Population {
-  description: string;
-  demographics?: string;
-  sampleSize?: number;
-}
-
-export interface Study {
-  id: string;
-  title: string;
-  authors: string;
-  publicationYear: number;
-  methodology: string;
-  population: Population;
-  variablesStudied: string[];
-  measurements: string[];
-  effectDescription: string;
-  effectSize?: number;
-  uncertainty: Uncertainty;
-  limitations: string[];
-  replicationStatus: 'Unreplicated' | 'Replicated' | 'Mixed' | 'Falsified' | 'N/A';
-  evidenceQuality: 'Low' | 'Moderate' | 'High' | 'N/A';
-}
-
-export interface EvidenceSet {
-  id: string;
-  targetMechanismId: string;
-  studies: Study[];
-  synthesizedConfidence: number;
-  conflicts: string[];
-}
-
-export type PhilosophicalType = 'Concept' | 'Argument' | 'Assumption' | 'Position' | 'Interpretation' | 'Implication';
-
-export interface PhilosophicalConstruct {
-  id: string;
-  name: string;
-  type: PhilosophicalType;
-  description: string;
-  relatedMechanisms?: string[]; // Links abstract concepts (e.g., 'Agency') to empirical mechanisms
 }
 
 export interface Variable {
   id: string;
   name: string;
   type: 'Continuous' | 'Categorical' | 'Binary' | 'NetworkState';
-  layer: LayerType;
-  measurementModel?: string; // How this is operationalized in reality
+  measurementModel?: string;
 }
 
 export interface Mechanism {
   id: string;
   name: string;
   description: string;
-  epistemicCategory: EpistemicCategory;
-  validationState: ValidationState;
-  evidenceSetId?: string; // Links to the EvidenceSet synthesizing the literature
+  formulaType: 'Exact' | 'Heuristic' | 'Placeholder';
+  limitations: string[];
 }
 
 export interface Relationship {
   id: string;
-  sourceId: string; // ID of Variable or Mechanism
-  targetId: string; // ID of Variable or Mechanism
-  type: 'Causal' | 'Associational' | 'Modulatory' | 'Feedback_Dampening' | 'Feedback_Amplifying' | 'Emergent';
+  sourceId: string;
+  targetId: string;
+  type: 'Causal' | 'Associational' | 'Modulatory' | 'Feedback_Dampening' | 'Feedback_Amplifying' | 'Emergent' | 'Conditional';
   direction: 'Unidirectional' | 'Bidirectional';
-  strength: number; // -1.0 to 1.0
+  strength: number;
   timeScale: TimeScale;
-  conditions: string[]; // e.g., 'Only under high allostatic load'
+  conditions: string[];
+  moderators: string[];
+  mediators: string[];
+  confounders: string[];
   mechanismId?: string;
   uncertainty: Uncertainty;
 }
@@ -122,6 +71,5 @@ export interface Model {
   variables: Variable[];
   relationships: Relationship[];
   mechanisms: Mechanism[];
-  philosophicalConstructs?: PhilosophicalConstruct[];
   limitations: string[];
 }

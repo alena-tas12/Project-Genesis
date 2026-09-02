@@ -1,26 +1,42 @@
 /**
- * Project Genesis - Core Structural Ontology
+ * Project Genesis - Scientific Knowledge Architecture (Phase 2)
  * 
- * Defines the fundamental entities, states, relationships, timescales, 
- * evidence types, and causal/associational links for the entire system.
+ * Defines the comprehensive epistemic and structural ontology for 
+ * a general human-system research model.
  */
 
 export type LayerType = 
   | 'Biological' 
-  | 'Physiological' 
+  | 'Physiological'
+  | 'Neuroscience'
   | 'Cognitive' 
   | 'Psychological' 
   | 'Emotional' 
   | 'Behavioural' 
-  | 'Social_Relational' 
+  | 'Social' 
+  | 'Developmental'
+  | 'Educational'
   | 'Environmental' 
-  | 'Educational' 
-  | 'Institutional';
+  | 'Cultural'
+  | 'Economic'
+  | 'Institutional'
+  | 'Digital_Technological'
+  | 'Philosophical'
+  | 'Temporal'
+  | 'Complex_Systems';
 
 export type TimeScale = 'Milliseconds' | 'Seconds' | 'Minutes' | 'Hours' | 'Days' | 'Months' | 'Years' | 'Generational';
 
-export type EvidenceType = 'Empirical_Validated' | 'Theoretical' | 'Personal_Observation' | 'Synthetic_Assumption';
-export type ValidationState = 'Validated' | 'Falsified' | 'Pending' | 'Unsupported' | 'Timescale_Mismatch';
+export type EpistemicCategory = 
+  | 'EMPIRICAL' 
+  | 'THEORETICAL' 
+  | 'COMPUTATIONAL' 
+  | 'PHENOMENOLOGICAL' 
+  | 'PHILOSOPHICAL' 
+  | 'PERSONAL_OBSERVATION' 
+  | 'HYPOTHESIS';
+
+export type ValidationState = 'Established' | 'Supported' | 'Mixed_Evidence' | 'Preliminary' | 'Theoretical' | 'Hypothesized' | 'Unknown' | 'Falsified';
 
 export interface Uncertainty {
   confidence: number; // 0.0 (pure guess) to 1.0 (physical law)
@@ -28,95 +44,84 @@ export interface Uncertainty {
   notes: string;
 }
 
-export interface Evidence {
-  source: string;
-  type: EvidenceType;
-  validationState: ValidationState;
+export interface Population {
+  description: string;
+  demographics?: string;
+  sampleSize?: number;
+}
+
+export interface Study {
+  id: string;
+  title: string;
+  authors: string;
+  publicationYear: number;
+  methodology: string;
+  population: Population;
+  variablesStudied: string[];
+  measurements: string[];
+  effectDescription: string;
+  effectSize?: number;
+  uncertainty: Uncertainty;
+  limitations: string[];
+  replicationStatus: 'Unreplicated' | 'Replicated' | 'Mixed' | 'Falsified' | 'N/A';
+  evidenceQuality: 'Low' | 'Moderate' | 'High' | 'N/A';
+}
+
+export interface EvidenceSet {
+  id: string;
+  targetMechanismId: string;
+  studies: Study[];
+  synthesizedConfidence: number;
+  conflicts: string[];
+}
+
+export type PhilosophicalType = 'Concept' | 'Argument' | 'Assumption' | 'Position' | 'Interpretation' | 'Implication';
+
+export interface PhilosophicalConstruct {
+  id: string;
+  name: string;
+  type: PhilosophicalType;
+  description: string;
+  relatedMechanisms?: string[]; // Links abstract concepts (e.g., 'Agency') to empirical mechanisms
 }
 
 export interface Variable {
   id: string;
   name: string;
   type: 'Continuous' | 'Categorical' | 'Binary' | 'NetworkState';
-  currentValue: any;
-}
-
-export interface State {
-  id: string;
-  name: string;
-  variables: Variable[];
-}
-
-export interface Entity {
-  id: string;
-  name: string;
   layer: LayerType;
-  states: State[];
-  description: string;
-}
-
-export interface Relationship {
-  id: string;
-  sourceId: string; // ID of an Entity or Mechanism
-  targetId: string; // ID of an Entity or Mechanism
-  type: 'Causal' | 'Associational' | 'Modulatory' | 'Feedback' | 'Emergent';
-  direction: 'Unidirectional' | 'Bidirectional';
-  strength: number; // -1.0 to 1.0
-  timeScale: TimeScale;
-  evidence: Evidence;
-  uncertainty: Uncertainty;
+  measurementModel?: string; // How this is operationalized in reality
 }
 
 export interface Mechanism {
   id: string;
   name: string;
   description: string;
-  formulaType: 'Exact' | 'Heuristic' | 'Placeholder';
-  evidence: Evidence;
+  epistemicCategory: EpistemicCategory;
+  validationState: ValidationState;
+  evidenceSetId?: string; // Links to the EvidenceSet synthesizing the literature
 }
 
-export interface Hypothesis {
+export interface Relationship {
   id: string;
-  statement: string;
-  proposedMechanismId?: string;
-  evidence: Evidence;
+  sourceId: string; // ID of Variable or Mechanism
+  targetId: string; // ID of Variable or Mechanism
+  type: 'Causal' | 'Associational' | 'Modulatory' | 'Feedback_Dampening' | 'Feedback_Amplifying' | 'Emergent';
+  direction: 'Unidirectional' | 'Bidirectional';
+  strength: number; // -1.0 to 1.0
+  timeScale: TimeScale;
+  conditions: string[]; // e.g., 'Only under high allostatic load'
+  mechanismId?: string;
   uncertainty: Uncertainty;
 }
 
-export interface Event {
-  id: string;
-  timestamp: number;
-  description: string;
-  triggerId?: string;
-}
-
-export interface Observation {
-  id: string;
-  subjectId: string;
-  content: string;
-  timestamp: number;
-}
-
-export interface Outcome {
-  id: string;
-  metric: string;
-  value: any;
-  timeScale: TimeScale;
-}
-
-export interface Network {
+export interface Model {
   id: string;
   name: string;
-  entities: Entity[];
+  description: string;
+  variables: Variable[];
   relationships: Relationship[];
   mechanisms: Mechanism[];
-  hypotheses: Hypothesis[];
-}
-
-export interface Simulation {
-  id: string;
-  networkId: string;
-  tickRate: TimeScale;
-  duration: number;
-  outcomes: Outcome[];
+  philosophicalConstructs?: PhilosophicalConstruct[];
+  limitations: string[];
 }

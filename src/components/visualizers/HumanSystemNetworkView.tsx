@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Brain, Heart, Activity, Users, Eye, BookOpen, Scale, Moon, Network, Shield, Anchor } from 'lucide-react';
-import type { EvidenceType, ValidationState } from '../../engine/core/ontology';
+import type { EpistemicCategory, ValidationState } from '../../engine/core/ontology';
 
 interface NetworkNode {
   id: string;
@@ -8,31 +8,31 @@ interface NetworkNode {
   domain: 'cognitive' | 'psychological' | 'physiological' | 'emotional' | 'social_relational';
   icon: React.ElementType;
   description: string;
-  evidenceType: EvidenceType;
+  epistemicCategory: EpistemicCategory;
   validationState: ValidationState;
   confidence: number;
 }
 
 const networkNodes: NetworkNode[] = [
   // Cognitive
-  { id: 'cog_perc', label: 'Perception (Observer)', domain: 'cognitive', icon: Eye, description: 'Observer/Architect Drive. Seeks awareness, meta-control, and structural understanding.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.9 },
-  { id: 'cog_mem', label: 'Extended Memory', domain: 'cognitive', icon: Brain, description: 'Distributed cognition. Offloading working memory to environments.', evidenceType: 'Theoretical', validationState: 'Pending', confidence: 0.8 },
-  { id: 'cog_learn', label: 'Pattern Unification', domain: 'cognitive', icon: BookOpen, description: 'Cognitive compression mechanisms. Recognizing templates.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.95 },
+  { id: 'cog_perc', label: 'Perception (Observer)', domain: 'cognitive', icon: Eye, description: 'Observer/Architect Drive. Seeks awareness, meta-control, and structural understanding.', epistemicCategory: 'PERSONAL_OBSERVATION', validationState: 'Hypothesized', confidence: 0.9 },
+  { id: 'cog_mem', label: 'Extended Memory', domain: 'cognitive', icon: Brain, description: 'Distributed cognition. Offloading working memory to environments.', epistemicCategory: 'THEORETICAL', validationState: 'Supported', confidence: 0.8 },
+  { id: 'cog_learn', label: 'Pattern Unification', domain: 'cognitive', icon: BookOpen, description: 'Cognitive compression mechanisms. Recognizing templates.', epistemicCategory: 'PERSONAL_OBSERVATION', validationState: 'Hypothesized', confidence: 0.95 },
   
   // Psychological
-  { id: 'psy_ident', label: 'Identity Core (Trisha)', domain: 'psychological', icon: Anchor, description: 'Triadic Core: "She" (Trisha). The non-negotiable anchor.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.99 },
-  { id: 'psy_trust', label: 'Trust Core (Anwesha)', domain: 'psychological', icon: Heart, description: 'Triadic Core: "Her" (Anwesha). The stability channel.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.95 },
-  { id: 'psy_guard', label: 'Guardian Core (Princess)', domain: 'psychological', icon: Shield, description: 'Triadic Core: "Princess". Custodial, protective instinct.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.95 },
+  { id: 'psy_ident', label: 'Identity Core (Trisha)', domain: 'psychological', icon: Anchor, description: 'Triadic Core: "She" (Trisha). The non-negotiable anchor.', epistemicCategory: 'PERSONAL_OBSERVATION', validationState: 'Hypothesized', confidence: 0.99 },
+  { id: 'psy_trust', label: 'Trust Core (Anwesha)', domain: 'psychological', icon: Heart, description: 'Triadic Core: "Her" (Anwesha). The stability channel.', epistemicCategory: 'PERSONAL_OBSERVATION', validationState: 'Hypothesized', confidence: 0.95 },
+  { id: 'psy_guard', label: 'Guardian Core (Princess)', domain: 'psychological', icon: Shield, description: 'Triadic Core: "Princess". Custodial, protective instinct.', epistemicCategory: 'PERSONAL_OBSERVATION', validationState: 'Hypothesized', confidence: 0.95 },
   
   // Physiological
-  { id: 'phys_sleep', label: 'Sleep & Recovery', domain: 'physiological', icon: Moon, description: 'Circadian rhythms and stamina regeneration.', evidenceType: 'Empirical_Validated', validationState: 'Validated', confidence: 0.9 },
-  { id: 'phys_bio', label: 'Allostatic Load', domain: 'physiological', icon: Activity, description: 'Cortisol proxy. Tracks the cumulative wear-and-tear of constant threat detection.', evidenceType: 'Theoretical', validationState: 'Unsupported', confidence: 0.6 },
+  { id: 'phys_sleep', label: 'Sleep & Recovery', domain: 'physiological', icon: Moon, description: 'Circadian rhythms and stamina regeneration.', epistemicCategory: 'EMPIRICAL', validationState: 'Established', confidence: 0.9 },
+  { id: 'phys_bio', label: 'Allostatic Load', domain: 'physiological', icon: Activity, description: 'Cortisol proxy. Tracks the cumulative wear-and-tear of constant threat detection.', epistemicCategory: 'THEORETICAL', validationState: 'Supported', confidence: 0.6 },
   
   // Emotional
-  { id: 'emo_state', label: 'ALENA Baseline', domain: 'emotional', icon: Scale, description: 'The Integration Drive. A default operating state seeking quiet nervous systems.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.9 },
+  { id: 'emo_state', label: 'ALENA Baseline', domain: 'emotional', icon: Scale, description: 'The Integration Drive. A default operating state seeking quiet nervous systems.', epistemicCategory: 'PERSONAL_OBSERVATION', validationState: 'Hypothesized', confidence: 0.9 },
   
   // Social
-  { id: 'soc_rel', label: 'Environmental Calibrator', domain: 'social_relational', icon: Users, description: 'Meso-scale cue (e.g., Angeline). Functions as a contextual safety signal.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.85 },
+  { id: 'soc_rel', label: 'Environmental Calibrator', domain: 'social_relational', icon: Users, description: 'Meso-scale cue (e.g., Angeline). Functions as a contextual safety signal.', epistemicCategory: 'PERSONAL_OBSERVATION', validationState: 'Hypothesized', confidence: 0.85 },
 ];
 
 export const HumanSystemNetworkView: React.FC = () => {
@@ -88,7 +88,7 @@ export const HumanSystemNetworkView: React.FC = () => {
               <div className="ontology-meta">
                 <div className="meta-row">
                   <span className="meta-label">Provenance:</span>
-                  <span className={`meta-value type-${activeNode.evidenceType}`}>{activeNode.evidenceType.replace('_', ' ')}</span>
+                  <span className={`meta-value type-${activeNode.epistemicCategory}`}>{activeNode.epistemicCategory.replace('_', ' ')}</span>
                 </div>
                 <div className="meta-row">
                   <span className="meta-label">Validation:</span>

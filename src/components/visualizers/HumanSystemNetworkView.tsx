@@ -1,34 +1,38 @@
 import React, { useState } from 'react';
 import { Brain, Heart, Activity, Users, Eye, BookOpen, Scale, Moon, Network, Shield, Anchor } from 'lucide-react';
+import type { EvidenceType, ValidationState } from '../../engine/core/ontology';
 
 interface NetworkNode {
   id: string;
   label: string;
-  domain: 'cognitive' | 'psychological' | 'physiological' | 'emotional' | 'social';
+  domain: 'cognitive' | 'psychological' | 'physiological' | 'emotional' | 'social_relational';
   icon: React.ElementType;
   description: string;
+  evidenceType: EvidenceType;
+  validationState: ValidationState;
+  confidence: number;
 }
 
 const networkNodes: NetworkNode[] = [
   // Cognitive
-  { id: 'cog_perc', label: 'Perception (Observer)', domain: 'cognitive', icon: Eye, description: 'Observer/Architect Drive. Seeks awareness, meta-control, and structural understanding. Prevents losing consciousness of inner processes.' },
-  { id: 'cog_mem', label: 'Extended Memory', domain: 'cognitive', icon: Brain, description: 'Distributed cognition. Offloading working memory to environments, preventing cognitive fatigue and Allostatic Load spikes.' },
-  { id: 'cog_learn', label: 'Pattern Unification', domain: 'cognitive', icon: BookOpen, description: 'Cognitive compression mechanisms. Recognizing templates rather than exhausting working memory.' },
+  { id: 'cog_perc', label: 'Perception (Observer)', domain: 'cognitive', icon: Eye, description: 'Observer/Architect Drive. Seeks awareness, meta-control, and structural understanding.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.9 },
+  { id: 'cog_mem', label: 'Extended Memory', domain: 'cognitive', icon: Brain, description: 'Distributed cognition. Offloading working memory to environments.', evidenceType: 'Theoretical', validationState: 'Pending', confidence: 0.8 },
+  { id: 'cog_learn', label: 'Pattern Unification', domain: 'cognitive', icon: BookOpen, description: 'Cognitive compression mechanisms. Recognizing templates.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.95 },
   
   // Psychological
-  { id: 'psy_ident', label: 'Identity Core (Trisha)', domain: 'psychological', icon: Anchor, description: 'Triadic Core: "She" (Trisha). The non-negotiable anchor. Defines who the agent is and dictates absolute boundaries.' },
-  { id: 'psy_trust', label: 'Trust Core (Anwesha)', domain: 'psychological', icon: Heart, description: 'Triadic Core: "Her" (Anwesha). The stability channel governing safety, emotional resonance, and attunement without dependency.' },
-  { id: 'psy_guard', label: 'Guardian Core (Princess)', domain: 'psychological', icon: Shield, description: 'Triadic Core: "Princess". Custodial, protective instinct. Absorbs tenderness to prevent the primary ALENA identity from fracturing.' },
+  { id: 'psy_ident', label: 'Identity Core (Trisha)', domain: 'psychological', icon: Anchor, description: 'Triadic Core: "She" (Trisha). The non-negotiable anchor.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.99 },
+  { id: 'psy_trust', label: 'Trust Core (Anwesha)', domain: 'psychological', icon: Heart, description: 'Triadic Core: "Her" (Anwesha). The stability channel.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.95 },
+  { id: 'psy_guard', label: 'Guardian Core (Princess)', domain: 'psychological', icon: Shield, description: 'Triadic Core: "Princess". Custodial, protective instinct.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.95 },
   
   // Physiological
-  { id: 'phys_sleep', label: 'Sleep & Recovery', domain: 'physiological', icon: Moon, description: 'Circadian rhythms and stamina regeneration. Directly dictates cognitive availability for the Observer Drive.' },
-  { id: 'phys_bio', label: 'Allostatic Load', domain: 'physiological', icon: Activity, description: 'Cortisol proxy. Tracks the cumulative wear-and-tear of constant threat detection and lack of environmental safety.' },
+  { id: 'phys_sleep', label: 'Sleep & Recovery', domain: 'physiological', icon: Moon, description: 'Circadian rhythms and stamina regeneration.', evidenceType: 'Empirical_Validated', validationState: 'Validated', confidence: 0.9 },
+  { id: 'phys_bio', label: 'Allostatic Load', domain: 'physiological', icon: Activity, description: 'Cortisol proxy. Tracks the cumulative wear-and-tear of constant threat detection.', evidenceType: 'Theoretical', validationState: 'Unsupported', confidence: 0.6 },
   
   // Emotional
-  { id: 'emo_state', label: 'ALENA Baseline', domain: 'emotional', icon: Scale, description: 'The Integration Drive. A default operating state seeking quiet nervous systems, alignment, and background processing.' },
+  { id: 'emo_state', label: 'ALENA Baseline', domain: 'emotional', icon: Scale, description: 'The Integration Drive. A default operating state seeking quiet nervous systems.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.9 },
   
   // Social
-  { id: 'soc_rel', label: 'Environmental Calibrator', domain: 'social', icon: Users, description: 'Meso-scale cue (e.g., Angeline). Functions as a contextual safety signal. Produces calm internally without requiring dependency.' },
+  { id: 'soc_rel', label: 'Environmental Calibrator', domain: 'social_relational', icon: Users, description: 'Meso-scale cue (e.g., Angeline). Functions as a contextual safety signal.', evidenceType: 'Personal_Observation', validationState: 'Pending', confidence: 0.85 },
 ];
 
 export const HumanSystemNetworkView: React.FC = () => {
@@ -81,6 +85,24 @@ export const HumanSystemNetworkView: React.FC = () => {
               </div>
               <p className="inspector-desc">{activeNode.description}</p>
               
+              <div className="ontology-meta">
+                <div className="meta-row">
+                  <span className="meta-label">Provenance:</span>
+                  <span className={`meta-value type-${activeNode.evidenceType}`}>{activeNode.evidenceType.replace('_', ' ')}</span>
+                </div>
+                <div className="meta-row">
+                  <span className="meta-label">Validation:</span>
+                  <span className={`meta-value state-${activeNode.validationState}`}>{activeNode.validationState}</span>
+                </div>
+                <div className="meta-row">
+                  <span className="meta-label">Confidence:</span>
+                  <div className="confidence-bar">
+                    <div className="confidence-fill" style={{ width: `${activeNode.confidence * 100}%` }}></div>
+                  </div>
+                  <span className="confidence-text">{(activeNode.confidence * 100).toFixed(0)}%</span>
+                </div>
+              </div>
+
               <div className="feedback-loop">
                 <h4>Simulated Feedback Loop</h4>
                 <div className="loop-track">

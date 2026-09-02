@@ -3,7 +3,7 @@ import { AutonomousResearchCycle } from './autonomousCycle';
 import { GapDiscoveryEngine } from './gapDiscovery';
 import { LiveAcquisitionEngine } from './liveAcquisition';
 import type { Study, ResearchGap } from './researchOntology';
-import * as fs from 'fs';
+import { GenesisCore } from '../core/GenesisCore';
 import * as path from 'path';
 
 export interface SyncConfig {
@@ -35,8 +35,18 @@ export class ContinuousSyncEngine {
     
     if (incrementalChanges.retractions.length > 0) {
       console.log(`[SYNC] Detected ${incrementalChanges.retractions.length} retractions. Updating ledger...`);
-      if (!config.isDryRun) {
-        incrementalChanges.retractions.forEach(r => this.memory.markRetracted(r));
+      const core = GenesisCore.getInstance();
+      for (const retraction of incrementalChanges.retractions) {
+        if (!config.isDryRun) {
+          this.memory.markRetracted(retraction);
+        }
+        // Trigger Genesis Core Event
+        await core.eventBus.publish({
+          id: `retract_${Date.now()}_${retraction}`,
+          type: 'SOURCE_RETRACTED',
+          timestamp: new Date().toISOString(),
+          payload: { sourceId: retraction }
+        });
       }
     }
 

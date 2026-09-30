@@ -37,7 +37,7 @@ export class ExperimentEngine {
       if (t >= intervention.timeStart && t <= intervention.timeEnd) {
         // Find which layer has the variable and clamp it
         for (const layerName in env.agents[0].layers) {
-           const layer = (env.agents[0].layers as any)[layerName];
+           const layer = env.agents[0].layers[layerName as keyof typeof env.agents[0].layers];
            if (layer[intervention.variable] !== undefined) {
               layer[intervention.variable] = intervention.fixedValue;
            }
@@ -50,7 +50,7 @@ export class ExperimentEngine {
       // Record state
       const flatState: Record<string, number> = {};
       for (const layerName in env.agents[0].layers) {
-         Object.assign(flatState, (env.agents[0].layers as any)[layerName]);
+         Object.assign(flatState, env.agents[0].layers[layerName as keyof typeof env.agents[0].layers]);
       }
       
       timeSeries.push({
@@ -68,61 +68,5 @@ export class ExperimentEngine {
   public generateFalsificationCriteria(modelA: MathematicalModel, modelB: MathematicalModel): string {
     console.log(`[EXPERIMENT] Comparing ${modelA.id} vs ${modelB.id} for falsification criteria...`);
     return `To falsify ${modelA.id} against ${modelB.id}, conduct an experiment intervening on [VARIABLE]. If [OUTCOME] increases, ${modelA.id} is falsified.`;
-  }
-
-  /**
-   * Runs sensitivity analysis by perturbing initial states and model parameters
-   * to determine the uncertainty bounds of the simulation predictions.
-   */
-  public async runSensitivityAnalysis(modelId: string, targetVariable: string, perturbations: number = 10, duration: number = 50): Promise<{ mean: number[], variance: number[] }> {
-    console.log(`[EXPERIMENT] Running sensitivity analysis on ${modelId} for target ${targetVariable}...`);
-    
-    const core = GenesisCore.getInstance();
-    const model = core.modelLibrary.getModel(modelId);
-    if (!model) return { mean: [], variance: [] };
-
-    const ensembleSeries: number[][] = [];
-
-    for (let p = 0; p < perturbations; p++) {
-      const agent = DynamicHumanSystem.initializeHuman(`human_${p}`, `Subject ${p}`, [model]);
-      
-      // Perturb the initial state with Gaussian noise
-      for (const layerName in agent.layers) {
-         const layer = (agent.layers as any)[layerName];
-         for (const key in layer) {
-           layer[key] = Math.max(0, layer[key] + (Math.random() - 0.5) * 0.2); // +/- 10% noise
-         }
-      }
-
-      const runtime = new GenesisRuntime();
-      let env = runtime.initializeEnvironment([agent], [model], 1.0);
-      
-      const series: number[] = [];
-      for (let t = 0; t < duration; t++) {
-        env = runtime.step(env);
-        let val = 0;
-        for (const layerName in env.agents[0].layers) {
-           const layer = (env.agents[0].layers as any)[layerName];
-           if (layer[targetVariable] !== undefined) val = layer[targetVariable];
-        }
-        series.push(val);
-      }
-      ensembleSeries.push(series);
-    }
-
-    // Compute mean and variance at each timestep
-    const mean: number[] = [];
-    const variance: number[] = [];
-
-    for (let t = 0; t < duration; t++) {
-      const valuesAtT = ensembleSeries.map(s => s[t]);
-      const avg = valuesAtT.reduce((a, b) => a + b, 0) / perturbations;
-      mean.push(avg);
-      
-      const v = valuesAtT.reduce((sum, val) => sum + Math.pow(val - avg, 2), 0) / perturbations;
-      variance.push(v);
-    }
-
-    return { mean, variance };
   }
 }

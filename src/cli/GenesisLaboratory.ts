@@ -34,17 +34,24 @@ export class GenesisLaboratory {
     const mockModel = {
       id: 'mock_cognitive_model',
       name: 'Mock Cognitive Model',
-      type: 'ODE',
       domain: 'Cognitive',
-      description: 'Mock',
-      parameters: [],
-      variables: [],
-      equations: [],
+      equations: [
+        {
+          variable: 'fatigue',
+          computeDerivative: (state, params) => -0.1 * (state.fatigue || 0)
+        },
+        {
+          variable: 'attention',
+          computeDerivative: (state, params) => -0.5 * (state.fatigue || 0)
+        }
+      ],
       assumptions: [],
-      epistemicCategory: 'COMPUTATIONAL',
-      validationStatus: 'PENDING',
-      provenance: []
+      parameters: [],
+      calibrationStatus: 'UNINITIALIZED',
+      validationStatus: 'UNTESTED'
     } as any;
+    
+    this.core.modelLibrary.registerModel(mockModel);
 
     // 2. Discover Best Model
     console.log('\n--- 1. AUTOMATIC MODEL DISCOVERY ---');
@@ -52,7 +59,11 @@ export class GenesisLaboratory {
 
     // 3. Evaluate Paper Quality
     console.log('\n--- 2. SCIENTIFIC QUALITY & BIAS ENGINE ---');
-    const mockStudy = { studyDesign: 'observational', sampleSize: 30, keyFinding: 'fatigue causes low attention' } as any;
+    const mockStudy = { 
+      studyDesign: 'observational', 
+      population: { sampleSize: 30 }, 
+      effectDescription: 'fatigue causes low attention' 
+    } as any;
     const quality = this.qualityEngine.evaluateStudy(mockStudy);
     console.log(`Quality Score: ${quality.score}`);
     console.log(`Confidence: ${quality.confidenceLevel}`);

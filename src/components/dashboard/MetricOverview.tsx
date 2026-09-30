@@ -1,153 +1,117 @@
-﻿import React from 'react';
-import { Brain, Flame, TrendingUp, Sparkles, Smile, ShieldAlert } from 'lucide-react';
-import type { WorldState } from '../../engine/types';
+import React from "react";
+import { Brain, TrendingUp, Sparkles, ShieldAlert } from "lucide-react";
+import type { WorldState } from "../../engine/types";
 
 interface MetricOverviewProps {
   world: WorldState;
 }
 
 export const MetricOverview: React.FC<MetricOverviewProps> = ({ world }) => {
-  const studentCount = world.students.length || 1;
+  const history = world.history;
   
-  const totalMasterySum = world.students.reduce((sum, s) => {
-    const vals = Object.values(s.knowledgeMastery);
-    return sum + (vals.reduce((a, b) => a + b, 0) / (vals.length || 1));
-  }, 0);
+  // Get latest and previous data points
+  const latest = history.length > 0 ? history[history.length - 1] : null;
+  const previous = history.length > 1 ? history[history.length - 2] : null;
 
-  const avgMasteryPct = Math.round((totalMasterySum / studentCount) * 100);
-  const avgStress = Math.round(world.students.reduce((sum, s) => sum + s.stress, 0) / studentCount);
-  const avgBurnout = Math.round(world.students.reduce((sum, s) => sum + s.burnout, 0) / studentCount);
-  const innovationVal = Number(world.economy.innovationIndex).toFixed(2);
+  // Helpers for formatting
+  const getTrend = (current: any, prev: any, reverseGood = false) => {
+    if (current == null || prev == null || current === "UNKNOWN" || prev === "UNKNOWN") return { text: "N/A", color: "#94a3b8" };
+    const diff = Number(current) - Number(prev);
+    if (diff === 0) return { text: "0.0", color: "#94a3b8" };
+    
+    const isGood = reverseGood ? diff < 0 : diff > 0;
+    return { 
+      text: (diff > 0 ? "+" : "") + diff.toFixed(1), 
+      color: isGood ? "#10b981" : "#ef4444" 
+    };
+  };
+
+  if (!latest) {
+    return (
+      <div className="metrics-grid">
+        <div className="metric-card" style={{ padding: "20px", color: "#94a3b8" }}>
+           UNVALIDATED � NO DATA (Simulation initializing...)
+        </div>
+      </div>
+    );
+  }
+
+  const masteryTrend = getTrend(latest.avgKnowledgePct, previous?.avgKnowledgePct);
+  const stressTrend = getTrend(latest.avgStress, previous?.avgStress, true); // Lower stress is better
+  const gdpTrend = getTrend(latest.gdpProxy, previous?.gdpProxy);
+  const innovationTrend = getTrend(latest.innovationIndex, previous?.innovationIndex);
+
+  const formatVal = (v: any) => v === "UNKNOWN" || v == null ? "UNVALIDATED" : Number(v).toFixed(1);
 
   const cards = [
     {
-      title: 'Knowledge Mastery',
-      value: `${avgMasteryPct}%`,
-      subtitle: `${world.knowledgeGraph.nodes.length} Prerequisite Nodes`,
+      title: "Knowledge Mastery",
+      value: formatVal(latest.avgKnowledgePct) + "%",
+      subtitle: "Measured via Student Graph",
       icon: Brain,
-      colorClass: 'card-cyan',
-      trend: '+2.4% / year'
+      colorClass: "card-cyan",
+      trend: masteryTrend.text + " / yr",
+      trendColor: masteryTrend.color,
+      badge: null
     },
     {
-      title: 'Psychological Stress',
-      value: `${avgStress} / 100`,
-      subtitle: `Burnout Risk: ${avgBurnout}/100`,
+      title: "Psychological Stress",
+      value: formatVal(latest.avgStress) + " / 100",
+      subtitle: "Burnout: " + formatVal(latest.avgBurnout),
       icon: ShieldAlert,
-      colorClass: avgStress > 65 ? 'card-red' : 'card-amber',
-      trend: avgStress > 65 ? 'High Strain' : 'Nominal'
+      colorClass: Number(latest.avgStress) > 65 ? "card-red" : "card-amber",
+      trend: stressTrend.text + " / yr",
+      trendColor: stressTrend.color,
+      badge: null
     },
     {
-      title: 'GDP Proxy',
-      value: `$${world.economy.gdpProxy.toLocaleString()}`,
-      subtitle: `${Number(world.economy.entrepreneurshipRate).toFixed(1)}% Entrepreneurship`,
+      title: "GDP Proxy",
+      value: latest.gdpProxy === "UNKNOWN" ? "UNVALIDATED" : "$" + formatVal(latest.gdpProxy),
+      subtitle: "Nominal per capita",
       icon: TrendingUp,
-      colorClass: 'card-green',
-      trend: 'Per Capita Output'
+      colorClass: "card-emerald",
+      trend: gdpTrend.text + " / yr",
+      trendColor: gdpTrend.color,
+      badge: "SIMULATED"
     },
     {
-      title: 'Innovation Index',
-      value: `${innovationVal} / 100`,
-      subtitle: `${world.society.researchBreakthroughs} Research Papers`,
+      title: "System Innovation",
+      value: formatVal(latest.innovationIndex),
+      subtitle: "Derived from Research Engine",
       icon: Sparkles,
-      colorClass: 'card-purple',
-      trend: `${Number(world.economy.automationResilience).toFixed(1)}% Auto Resilience`
-    },
-    {
-      title: 'Societal Wellbeing',
-      value: `${Math.round(world.society.happinessIndex)} / 100`,
-      subtitle: `Cohesion: ${Math.round(world.society.socialCohesion)}/100`,
-      icon: Smile,
-      colorClass: 'card-emerald',
-      trend: `Crime Proxy: ${Number(world.society.crimeProxy).toFixed(1)}/100`
-    },
-    {
-      title: 'Social Mobility',
-      value: `${Math.round(world.society.socialMobilityIndex)} / 100`,
-      subtitle: `Funding: $${world.architecture.fundingPerStudentUSD.toLocaleString()}`,
-      icon: Flame,
-      colorClass: 'card-blue',
-      trend: `${world.architecture.examWeightPct}% Exam Weight`
+      colorClass: "card-purple",
+      trend: innovationTrend.text + " / yr",
+      trendColor: innovationTrend.color,
+      badge: "MODEL PROXY"
     }
   ];
 
-  // SVG Chart rendering helper
-  const history = world.history;
-  const maxPts = 50;
-  const recentHistory = history.slice(-maxPts);
-
-  const renderSvgLine = (key: keyof typeof history[0], color: string, maxVal: number = 100) => {
-    if (recentHistory.length < 2) return null;
-    const width = 280;
-    const height = 60;
-    const points = recentHistory.map((pt, i) => {
-      const x = (i / (recentHistory.length - 1)) * width;
-      const y = height - (Number(pt[key]) / maxVal) * height;
-      return `${x.toFixed(1)},${y.toFixed(1)}`;
-    }).join(' ');
-
-    return (
-      <svg width={width} height={height} className="sparkline-svg">
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={points}
-        />
-      </svg>
-    );
-  };
-
   return (
-    <div className="metrics-section">
-      <div className="metrics-grid">
-        {cards.map((c, i) => {
-          const Icon = c.icon;
-          return (
-            <div key={i} className={`metric-card ${c.colorClass}`}>
-              <div className="card-top">
-                <span className="card-title">{c.title}</span>
-                <div className="icon-wrapper">
-                  <Icon size={20} />
-                </div>
-              </div>
-              <div className="card-value">{c.value}</div>
-              <div className="card-bottom">
-                <span className="card-subtitle">{c.subtitle}</span>
-                <span className="card-trend">{c.trend}</span>
-              </div>
+    <div className="metrics-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "15px", marginBottom: "20px" }}>
+      {cards.map((card, i) => (
+        <div key={i} className={"metric-card " + card.colorClass} style={{ background: "rgba(11, 15, 23, 0.7)", border: "1px solid var(--border-glass)", borderRadius: "12px", padding: "16px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <card.icon size={18} />
+              <h3 style={{ margin: 0, fontSize: "0.9rem", color: "#cbd5e1" }}>{card.title}</h3>
             </div>
-          );
-        })}
-      </div>
-
-      {/* Real-Time Longitudinal Trends Chart */}
-      <div className="chart-panel">
-        <div className="panel-header">
-          <h3>Longitudinal Trajectory (Simulated History)</h3>
-          <span className="panel-sub">50-Year Macro & Cognitive Dynamics</span>
-        </div>
-
-        <div className="sparklines-grid">
-          <div className="sparkline-card">
-            <span className="spark-title">Knowledge Mastery (%)</span>
-            {renderSvgLine('avgKnowledgePct', '#00F2FE', 100)}
+            {card.badge && (
+              <span style={{ fontSize: "0.65rem", padding: "2px 6px", background: "rgba(255,255,255,0.1)", borderRadius: "4px", color: "#94a3b8" }}>
+                {card.badge}
+              </span>
+            )}
           </div>
-          <div className="sparkline-card">
-            <span className="spark-title">Student Stress Index</span>
-            {renderSvgLine('avgStress', '#EF4444', 100)}
+          
+          <div style={{ marginTop: "12px", display: "flex", alignItems: "baseline", gap: "10px" }}>
+            <span style={{ fontSize: "1.8rem", fontWeight: "bold", color: "#fff" }}>{card.value}</span>
+            <span style={{ fontSize: "0.8rem", color: card.trendColor, fontWeight: "bold" }}>{card.trend}</span>
           </div>
-          <div className="sparkline-card">
-            <span className="spark-title">GDP Proxy ($)</span>
-            {renderSvgLine('gdpProxy', '#10B981', 120000)}
-          </div>
-          <div className="sparkline-card">
-            <span className="spark-title">Innovation Index</span>
-            {renderSvgLine('innovationIndex', '#8B5CF6', 100)}
+          
+          <div style={{ marginTop: "8px", fontSize: "0.75rem", color: "#64748b" }}>
+            {card.subtitle}
           </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };

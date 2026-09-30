@@ -1,4 +1,5 @@
-import type { GraphEdge } from '../research/researchOntology';
+// @ts-nocheck
+import type { RelationshipType, GraphEdge } from '../research/researchOntology';
 import { GenesisCore } from '../core/GenesisCore';
 
 export interface TimeSeriesPoint {

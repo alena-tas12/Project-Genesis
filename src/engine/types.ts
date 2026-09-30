@@ -126,22 +126,22 @@ export interface TeacherAgent {
 }
 
 export interface EconomyState {
-  jobsAvailable: number;
+  jobsAvailable: number | 'UNKNOWN';
   skillDemand: Record<string, number>;    // category -> demand score (0 to 100)
-  innovationIndex: number;                // 0 to 100
-  gdpProxy: number;                       // Nominal GDP per capita proxy ($)
-  entrepreneurshipRate: number;           // % of population founding ventures
-  hiringRate: number;                     // % job placement rate
-  automationResilience: number;           // 0 to 100
+  innovationIndex: number | 'UNKNOWN';                // 0 to 100
+  gdpProxy: number | 'UNKNOWN';                       // Nominal GDP per capita proxy ($)
+  entrepreneurshipRate: number | 'UNKNOWN';           // % of population founding ventures
+  hiringRate: number | 'UNKNOWN';                     // % job placement rate
+  automationResilience: number | 'UNKNOWN';           // 0 to 100
 }
 
 export interface SocietyState {
-  happinessIndex: number;                // 0 to 100
-  wellbeingIndex: number;                // 0 to 100
-  crimeProxy: number;                    // 0 to 100 (lower is better)
-  researchBreakthroughs: number;         // Cumulative count
-  socialCohesion: number;                // 0 to 100
-  socialMobilityIndex: number;           // 0 to 100
+  happinessIndex: number | 'UNKNOWN';                // 0 to 100
+  wellbeingIndex: number | 'UNKNOWN';                // 0 to 100
+  crimeProxy: number | 'UNKNOWN';                    // 0 to 100 (lower is better)
+  researchBreakthroughs: number | 'UNKNOWN';         // Cumulative count
+  socialCohesion: number | 'UNKNOWN';                // 0 to 100
+  socialMobilityIndex: number | 'UNKNOWN';           // 0 to 100
 }
 
 export interface TimeSeriesPoint {
@@ -151,10 +151,10 @@ export interface TimeSeriesPoint {
   avgStress: number;
   avgMotivation: number;
   avgBurnout: number;
-  gdpProxy: number;
-  happinessIndex: number;
-  innovationIndex: number;
-  socialMobilityIndex: number;
+  gdpProxy: number | 'UNKNOWN';
+  happinessIndex: number | 'UNKNOWN';
+  innovationIndex: number | 'UNKNOWN';
+  socialMobilityIndex: number | 'UNKNOWN';
 }
 
 export type DailyRoutinePeriod = 

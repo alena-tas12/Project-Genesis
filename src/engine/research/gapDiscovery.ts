@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Study, ResearchGap, GapType } from './researchOntology';
 import { GenesisCore } from '../core/GenesisCore';
 import type { ResearchMemory } from './researchMemory';

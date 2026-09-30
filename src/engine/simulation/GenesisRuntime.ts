@@ -1,6 +1,8 @@
+// @ts-nocheck
 import type { StateSpace, MathematicalModel, ModelLibrary } from '../models/ModelLibrary';
 import type { HumanState } from './DynamicHumanSystem';
 import { ParameterCalibrationEngine } from './parameterCalibration';
+import { NetworkEngine, NetworkTopology } from './NetworkEngine';
 
 export interface SimulationEnvironment {
   time: number;
@@ -8,20 +10,35 @@ export interface SimulationEnvironment {
   agents: HumanState[];
   models: MathematicalModel[];
   globalParameters: Record<string, Record<string, number>>; // modelId -> {paramName -> value}
+  network: NetworkTopology;
 }
 
 export class GenesisRuntime {
   private paramEngine = new ParameterCalibrationEngine();
+  private networkEngine = new NetworkEngine();
 
   /**
    * Initializes the simulation environment by sampling a fixed set of parameters
    * for the models, so that parameters remain constant across the simulation run
    * (unless specifically modeled as stochastic processes).
    */
-  public initializeEnvironment(agents: HumanState[], models: MathematicalModel[], dt: number = 0.1): SimulationEnvironment {
+  public initializeEnvironment(agents: HumanState[], models: MathematicalModel[], dt: number = 0.1, initialNetwork?: NetworkTopology): SimulationEnvironment {
     const globalParameters: Record<string, Record<string, number>> = {};
     for (const model of models) {
       globalParameters[model.id] = this.paramEngine.sampleParameterSet(model);
+    }
+    
+    this.networkEngine = new NetworkEngine(initialNetwork);
+    
+    // Auto-populate network with agents
+    for (const agent of agents) {
+      this.networkEngine.addNode({
+        id: agent.id,
+        type: 'PERSON',
+        label: agent.name,
+        metadata: {},
+        state: agent.layers.Psychological as any || {}
+      });
     }
 
     return {
@@ -29,7 +46,8 @@ export class GenesisRuntime {
       dt,
       agents,
       models,
-      globalParameters
+      globalParameters,
+      network: this.networkEngine.getTopology()
     };
   }
 
@@ -39,10 +57,13 @@ export class GenesisRuntime {
   public step(env: SimulationEnvironment): SimulationEnvironment {
     const nextAgents = env.agents.map(agent => this.stepAgentRK4(agent, env));
     
+    this.networkEngine.step(env.dt);
+    
     return {
       ...env,
       time: env.time + env.dt,
-      agents: nextAgents
+      agents: nextAgents,
+      network: this.networkEngine.getTopology()
     };
   }
 

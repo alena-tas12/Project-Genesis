@@ -14,6 +14,7 @@ import { KnowledgeGraphView } from './components/visualizers/KnowledgeGraphView'
 import { PopulationAnalytics } from './components/visualizers/PopulationAnalytics';
 import { MacroImpactView } from './components/visualizers/MacroImpactView';
 import { Classroom3DView } from './components/visualizers/Classroom3DView';
+import { SelfGrowthLog } from './components/dashboard/SelfGrowthLog';
 import { FrameworksView } from './components/visualizers/FrameworksView';
 import { ArchitectureDesigner } from './components/designer/ArchitectureDesigner';
 import { ResearchPaperView } from './components/research/ResearchPaperView';
@@ -122,6 +123,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="genesis-app">
+      <SelfGrowthLog />
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}

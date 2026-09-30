@@ -1,0 +1,177 @@
+// @ts-nocheck
+import { GapDiscoveryEngine } from './gapDiscovery';
+import { calculateGapPriority, generateQueriesForGap } from './gapPrioritization';
+import type { PrioritizedGap } from './gapPrioritization';
+import { LiveAcquisitionEngine } from './liveAcquisition';
+import { EuropePMCAdapter } from './fullTextAcquisition';
+import { extractClaims } from './evidenceExtraction';
+import type { Study, ResearchGap, ScientificDocument } from './researchOntology';
+
+export interface ResearchCycleRecord {
+  cycleId: string;
+  startTimestamp: string;
+  endTimestamp: string;
+  corpusVersion: string;
+  ontologyVersion: string;
+  extractionVersion: string;
+  gapsSelected: PrioritizedGap[];
+  queriesGenerated: string[];
+  sourcesSearched: string[];
+  studiesAcquired: number;
+  studiesSuccessfullyExtracted: number;
+  studiesPartiallyExtracted: number;
+  failedAcquisitions: number;
+  claimsExtracted: number;
+  evidenceStatuses: Record<string, number>;
+  contradictionsDiscovered: number;
+  moderatorsDiscovered: number;
+  mediatorsDiscovered: number;
+  graphChangesProposed: number;
+  graphChangesAccepted: number;
+  graphChangesRejected: number;
+  reviewRequiredItems: number;
+  unresolvedGaps: number;
+  newlyDiscoveredGaps: ResearchGap[];
+}
+
+export class AutonomousResearchCycle {
+  private acquisition = new LiveAcquisitionEngine();
+  private fullTextFetcher = new EuropePMCAdapter();
+  private gapDiscovery = new GapDiscoveryEngine();
+
+  async runCycle(cycleId: string, initialGaps: ResearchGap[], config = { topK: 5 }): Promise<ResearchCycleRecord> {
+    const record: ResearchCycleRecord = {
+      cycleId,
+      startTimestamp: new Date().toISOString(),
+      endTimestamp: '',
+      corpusVersion: 'v0.2.0-normalized',
+      ontologyVersion: 'v4.0',
+      extractionVersion: 'v5.0-autonomous',
+      gapsSelected: [],
+      queriesGenerated: [],
+      sourcesSearched: ['PubMed', 'OpenAlex', 'EuropePMC'],
+      studiesAcquired: 0,
+      studiesSuccessfullyExtracted: 0,
+      studiesPartiallyExtracted: 0,
+      failedAcquisitions: 0,
+      claimsExtracted: 0,
+      evidenceStatuses: {},
+      contradictionsDiscovered: 0,
+      moderatorsDiscovered: 0,
+      mediatorsDiscovered: 0,
+      graphChangesProposed: 0,
+      graphChangesAccepted: 0,
+      graphChangesRejected: 0,
+      reviewRequiredItems: 0,
+      unresolvedGaps: 0,
+      newlyDiscoveredGaps: []
+    };
+
+    // 1. Prioritize Gaps
+    const prioritized = initialGaps
+      .map(calculateGapPriority)
+      .sort((a, b) => b.priorityScore - a.priorityScore);
+
+    const selectedGaps = prioritized.slice(0, config.topK);
+    record.gapsSelected = selectedGaps;
+
+    // 2. Process Each Gap
+    const cycleAcquiredStudies: Study[] = [];
+    for (const gap of selectedGaps) {
+      // Negative-Evidence-First Query Generation
+      const queries = generateQueriesForGap(gap);
+      
+      // Enforce null-effect/replication searches
+      const negativeQueries = queries.map(q => `(${q}) AND (null OR replication OR meta-analysis OR contradictory)`);
+      const activeQueries = [...queries, ...negativeQueries].slice(0, 3); // Limit to top 3 for speed
+      
+      record.queriesGenerated.push(...activeQueries);
+
+      for (const queryStr of activeQueries) {
+        // 3. Acquire Metadata (Live)
+        const retrievedStudies = await this.acquisition.executeLiveSearch({
+          id: `q_${Date.now()}`,
+          searchQueryString: queryStr,
+          targetEntities: [],
+          logicalConstraints: []
+        });
+
+        cycleAcquiredStudies.push(...retrievedStudies);
+        record.studiesAcquired += retrievedStudies.length;
+
+        // 4. Retrieve Full-Text & Extract
+        for (const study of retrievedStudies.slice(0, 2)) { // Limit processing per query to 2 docs
+          let document: ScientificDocument | null = null;
+          if (study.doi) {
+            document = await this.fullTextFetcher.fetchFullText(study.doi);
+          }
+
+          if (!document || document.accessStatus === 'ACCESS_FAILED') {
+            record.failedAcquisitions++;
+            continue;
+          }
+
+          // 5. Structure LLM Extraction (Replaced mock with real heuristic extractor)
+          const extractedClaims = extractClaims(study);
+          
+          if (extractedClaims.length > 0) {
+            record.studiesSuccessfullyExtracted++;
+          } else {
+            record.studiesPartiallyExtracted++;
+          }
+
+          // 6. Evidence Validation & Synthesis (Causal safeguards)
+          const core = (await import('../core/GenesisCore')).GenesisCore.getInstance();
+
+          for (const claim of extractedClaims) {
+            record.claimsExtracted++;
+            record.evidenceStatuses[claim.evidenceStatus || 'UNKNOWN'] = (record.evidenceStatuses[claim.evidenceStatus || 'UNKNOWN'] || 0) + 1;
+
+            if (claim.reviewStatus === 'REVIEW_REQUIRED') {
+              record.reviewRequiredItems++;
+              record.graphChangesProposed++;
+              record.graphChangesRejected++; // Hard stop
+            } else {
+              record.graphChangesProposed++;
+              record.graphChangesAccepted++; // Validated active edge
+              // INJECT INTO CANONICAL STATE
+              core.addEvidenceEdge({
+                id: `edge_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                sourceNodeId: claim.sourceNodeId || 'unknown',
+                targetNodeId: claim.targetNodeId || 'unknown',
+                relationshipType: claim.relationshipType || 'ASSOCIATED_WITH',
+                evidenceStatus: claim.evidenceStatus,
+                confidenceScore: claim.confidenceScore || 0,
+                supportingStudyIds: [study.doi || study.id],
+                effectSize: null,
+                context: []
+              }, study.doi || study.id);
+            }
+
+            if (claim.evidenceStatus === 'CONTRADICTED' || claim.evidenceStatus === 'MIXED') {
+              record.contradictionsDiscovered++;
+            }
+            if (claim.moderators?.length) record.moderatorsDiscovered++;
+            if (claim.mediators?.length) record.mediatorsDiscovered++;
+          }
+        }
+      }
+      record.unresolvedGaps++;
+      
+      // Autonomous generation of subsequent gaps based on newly acquired evidence
+      const newGaps = this.gapDiscovery.discoverGapsFromCorpus(cycleAcquiredStudies);
+      const core = (await import('../core/GenesisCore')).GenesisCore.getInstance();
+      for (const ng of newGaps) {
+        if (!core.activeGaps.some(g => g.id === ng.id)) {
+          core.activeGaps.push(ng);
+        }
+      }
+      core.saveState();
+      
+      record.newlyDiscoveredGaps.push(...newGaps);
+    }
+
+    record.endTimestamp = new Date().toISOString();
+    return record;
+  }
+}

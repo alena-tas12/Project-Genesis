@@ -9,7 +9,9 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "server": "node server/index.mjs",
-    "dev:full": "npm run server & npm run dev"
+    "dev:full": "npm run server & npm run dev",
+    "genesis": "tsx src/server/genesis-api.ts",
+    "dev:genesis": "npm run genesis & npm run dev"
   },
   "dependencies": {
     "@types/three": "^0.185.3",
@@ -25,6 +27,7 @@
     "pdf-parse": "^2.4.5",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "recharts": "^3.10.1",
     "three": "^0.185.1"
   },
   "devDependencies": {

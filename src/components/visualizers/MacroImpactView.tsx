@@ -1,195 +1,141 @@
-﻿import React, { useState } from 'react';
-import type { WorldState } from '../../engine/types';
-import { TrendingUp, Smile, ShieldCheck, Activity, BarChart3, Layers } from 'lucide-react';
+import React, { useState } from "react";
+import type { WorldState } from "../../engine/types";
+import { Activity, AlertCircle, Layers } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from "recharts";
 
 interface MacroImpactViewProps {
   world: WorldState;
 }
 
 export const MacroImpactView: React.FC<MacroImpactViewProps> = ({ world }) => {
-  const [activeGraphTab, setActiveGraphTab] = useState<'economic' | 'societal' | 'policy'>('economic');
+  const [activeGraphTab, setActiveGraphTab] = useState<"trajectory" | "economic" | "societal" | "policy">("trajectory");
 
-  const history = world.history;
-  const recent = history.slice(-50);
+  const chartData = world.history.map(pt => ({
+    year: pt.year,
+    day: pt.day,
+    label: "Yr " + pt.year,
+    mastery: pt.avgKnowledgePct,
+    stress: pt.avgStress,
+    innovation: pt.innovationIndex === "UNKNOWN" ? null : pt.innovationIndex,
+    gdp: pt.gdpProxy === "UNKNOWN" ? null : pt.gdpProxy,
+    wellbeing: pt.happinessIndex === "UNKNOWN" ? null : pt.happinessIndex,
+    mobility: pt.socialMobilityIndex === "UNKNOWN" ? null : pt.socialMobilityIndex
+  }));
 
-  const renderSparkline = (key: keyof typeof history[0], color: string, maxVal: number = 100) => {
-    if (recent.length < 2) return null;
-    const width = 500;
-    const height = 120;
-    const points = recent.map((pt, i) => {
-      const x = (i / (recent.length - 1)) * width;
-      const y = height - (Number(pt[key]) / maxVal) * height;
-      return `${x.toFixed(1)},${y.toFixed(1)}`;
-    }).join(' ');
-
-    return (
-      <svg width="100%" height="120" viewBox={`0 0 ${width} ${height}`} className="macro-graph-svg">
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={points}
-        />
-      </svg>
-    );
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip" style={{ backgroundColor: "rgba(11, 15, 23, 0.9)", padding: "10px", border: "1px solid #334155", borderRadius: "8px" }}>
+          <p className="label" style={{ margin: "0 0 5px 0", fontWeight: "bold" }}>{label}</p>
+          {payload.map((entry: any, index: number) => (
+            <p key={index} style={{ color: entry.color, margin: "2px 0", fontSize: "12px" }}>
+              {entry.name}: {entry.value != null ? Number(entry.value).toFixed(1) : "UNVALIDATED"} {entry.name.includes("GDP") ? " (SIMULATED)" : ""}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
   };
 
-  const arch = world.architecture;
-
   return (
-    <div className="macro-view-container">
-      <div className="macro-header">
-        <div className="title-group">
-          <Activity className="icon-cyan" size={24} />
+    <div className="macro-view-container" style={{ background: "rgba(11, 15, 23, 0.7)", borderRadius: "12px", padding: "20px", marginTop: "20px", border: "1px solid var(--border-glass)" }}>
+      <div className="macro-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+        <div className="title-group" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <Activity className="icon-cyan" size={24} color="#00f2fe" />
           <div>
-            <h2>Macro Economic, Societal & Policy Graphs</h2>
-            <p className="subtitle">
+            <h2 style={{ margin: 0, fontSize: "1.2rem" }}>Macro Economic, Societal & Policy Graphs</h2>
+            <p className="subtitle" style={{ margin: 0, fontSize: "0.85rem", color: "#94a3b8" }}>
               Longitudinal trajectory tracking for economic output, societal wellbeing, and policy alignment.
             </p>
           </div>
         </div>
-
-        <div className="graph-tab-selector">
-          <button
-            onClick={() => setActiveGraphTab('economic')}
-            className={`graph-tab-btn ${activeGraphTab === 'economic' ? 'active' : ''}`}
-          >
-            <TrendingUp size={15} />
-            <span>Economic Graph</span>
-          </button>
-
-          <button
-            onClick={() => setActiveGraphTab('societal')}
-            className={`graph-tab-btn ${activeGraphTab === 'societal' ? 'active' : ''}`}
-          >
-            <Smile size={15} />
-            <span>Societal Graph</span>
-          </button>
-
-          <button
-            onClick={() => setActiveGraphTab('policy')}
-            className={`graph-tab-btn ${activeGraphTab === 'policy' ? 'active' : ''}`}
-          >
-            <Layers size={15} />
-            <span>Policy Graph</span>
-          </button>
+        
+        <div className="graph-tabs" style={{ display: "flex", gap: "10px" }}>
+          {["trajectory", "economic", "societal", "policy"].map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveGraphTab(tab as any)}
+              style={{
+                padding: "6px 12px",
+                borderRadius: "6px",
+                background: activeGraphTab === tab ? "rgba(0, 242, 254, 0.1)" : "transparent",
+                border: "1px solid " + (activeGraphTab === tab ? "#00f2fe" : "#334155"),
+                color: activeGraphTab === tab ? "#00f2fe" : "#94a3b8",
+                cursor: "pointer",
+                textTransform: "capitalize"
+              }}
+            >
+              {tab}
+            </button>
+          ))}
         </div>
       </div>
 
-      {activeGraphTab === 'economic' && (
-        <div className="graph-content-card">
-          <div className="graph-card-header">
-            <BarChart3 className="icon-green" size={20} />
-            <h3>Economic Graph ÔÇö Innovation & GDP Trajectory</h3>
+      <div className="chart-container" style={{ width: "100%", height: "400px" }}>
+        {chartData.length === 0 ? (
+          <div style={{ display: "flex", height: "100%", justifyContent: "center", alignItems: "center", color: "#94a3b8" }}>
+            <AlertCircle size={20} style={{ marginRight: "8px" }} />
+            <span>UNVALIDATED � NO DATA (Simulation has not generated history yet)</span>
           </div>
-
-          <div className="charts-dual-grid">
-            <div className="big-chart-card">
-              <h4>Nominal GDP Per Capita Proxy ($)</h4>
-              <div className="chart-wrapper">
-                {renderSparkline('gdpProxy', '#10B981', 120000)}
-              </div>
-              <div className="chart-footer">
-                <span>Current GDP: <strong>${world.economy.gdpProxy.toLocaleString()}</strong></span>
-                <span>Placement Rate: <strong>{world.economy.hiringRate}%</strong></span>
-              </div>
-            </div>
-
-            <div className="big-chart-card">
-              <h4>Innovation Index (0-100)</h4>
-              <div className="chart-wrapper">
-                {renderSparkline('innovationIndex', '#8B5CF6', 100)}
-              </div>
-              <div className="chart-footer">
-                <span>Entrepreneurship: <strong>{world.economy.entrepreneurshipRate}%</strong></span>
-                <span>Automation Resilience: <strong>{world.economy.automationResilience}%</strong></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {activeGraphTab === 'societal' && (
-        <div className="graph-content-card">
-          <div className="graph-card-header">
-            <Smile className="icon-cyan" size={20} />
-            <h3>Societal Graph ÔÇö Happiness & Social Mobility Trajectory</h3>
-          </div>
-
-          <div className="charts-dual-grid">
-            <div className="big-chart-card">
-              <h4>Societal Happiness Index (0-100)</h4>
-              <div className="chart-wrapper">
-                {renderSparkline('happinessIndex', '#00F2FE', 100)}
-              </div>
-              <div className="chart-footer">
-                <span>Happiness: <strong>{world.society.happinessIndex} / 100</strong></span>
-                <span>Crime Proxy: <strong>{world.society.crimeProxy} / 100</strong></span>
-              </div>
-            </div>
-
-            <div className="big-chart-card">
-              <h4>Social Mobility Index (0-100)</h4>
-              <div className="chart-wrapper">
-                {renderSparkline('socialMobilityIndex', '#F59E0B', 100)}
-              </div>
-              <div className="chart-footer">
-                <span>Social Cohesion: <strong>{world.society.socialCohesion} / 100</strong></span>
-                <span>Research Breakthroughs: <strong>{world.society.researchBreakthroughs}</strong></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {activeGraphTab === 'policy' && (
-        <div className="graph-content-card">
-          <div className="graph-card-header">
-            <ShieldCheck className="icon-purple" size={20} />
-            <h3>Policy Graph ÔÇö Active Educational System Constraints</h3>
-          </div>
-
-          <div className="policy-matrix-grid">
-            <div className="policy-node-card">
-              <span className="p-title">Exam Weight Policy</span>
-              <span className="p-val">{arch.examWeightPct}%</span>
-              <span className="p-desc">High-stakes testing emphasis vs continuous project evaluation</span>
-            </div>
-
-            <div className="policy-node-card">
-              <span className="p-title">Daily Homework Load</span>
-              <span className="p-val">{arch.homeworkHoursPerDay} hrs</span>
-              <span className="p-desc">Prescribed daily study hours outside classroom</span>
-            </div>
-
-            <div className="policy-node-card">
-              <span className="p-title">AI Integration Level</span>
-              <span className="p-val">{arch.aiIntegrationLevel}%</span>
-              <span className="p-desc">Extent of 1-on-1 AI agent tutoring in knowledge graph navigation</span>
-            </div>
-
-            <div className="policy-node-card">
-              <span className="p-title">Student Learning Autonomy</span>
-              <span className="p-val">{arch.studentAutonomyPct}%</span>
-              <span className="p-desc">Self-directed pacing and subject node selection freedom</span>
-            </div>
-
-            <div className="policy-node-card">
-              <span className="p-title">Teacher Syllabus Autonomy</span>
-              <span className="p-val">{arch.teacherAutonomyPct}%</span>
-              <span className="p-desc">Pedagogical freedom and curriculum customization rights</span>
-            </div>
-
-            <div className="policy-node-card">
-              <span className="p-title">Institutional Funding</span>
-              <span className="p-val">${arch.fundingPerStudentUSD.toLocaleString()}</span>
-              <span className="p-desc">Annual investment per student into resources and infrastructure</span>
+        ) : activeGraphTab === "trajectory" ? (
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+              <XAxis dataKey="label" stroke="#94a3b8" fontSize={12} tickMargin={10} />
+              <YAxis yAxisId="left" stroke="#94a3b8" fontSize={12} tickFormatter={(val) => ""+val} />
+              <YAxis yAxisId="right" orientation="right" stroke="#94a3b8" fontSize={12} tickFormatter={(val) => "$"+val} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "10px" }} />
+              <Line yAxisId="left" type="monotone" dataKey="mastery" name="Knowledge Mastery (%)" stroke="#3b82f6" strokeWidth={2} dot={false} isAnimationActive={false} />
+              <Line yAxisId="left" type="monotone" dataKey="stress" name="Student Stress (Index)" stroke="#ef4444" strokeWidth={2} dot={false} isAnimationActive={false} />
+              <Line yAxisId="left" type="stepAfter" dataKey="innovation" name="Innovation (MODEL PROXY)" stroke="#8b5cf6" strokeWidth={2} dot={false} isAnimationActive={false} />
+              <Line yAxisId="right" type="monotone" dataKey="gdp" name="GDP Proxy (SIMULATED)" stroke="#10b981" strokeWidth={2} dot={false} isAnimationActive={false} />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : activeGraphTab === "economic" ? (
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <defs>
+                <linearGradient id="colorGdp" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+              <XAxis dataKey="label" stroke="#94a3b8" fontSize={12} />
+              <YAxis yAxisId="left" stroke="#94a3b8" fontSize={12} />
+              <YAxis yAxisId="right" orientation="right" stroke="#94a3b8" fontSize={12} tickFormatter={(val) => "$"+val} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "10px" }} />
+              <Line yAxisId="left" type="stepAfter" dataKey="innovation" name="Innovation (MODEL PROXY)" stroke="#8b5cf6" strokeWidth={2} dot={false} isAnimationActive={false} />
+              <Area yAxisId="right" type="monotone" dataKey="gdp" name="GDP Proxy (SIMULATED)" stroke="#10b981" fillOpacity={1} fill="url(#colorGdp)" isAnimationActive={false} />
+            </AreaChart>
+          </ResponsiveContainer>
+        ) : activeGraphTab === "societal" ? (
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+              <XAxis dataKey="label" stroke="#94a3b8" fontSize={12} />
+              <YAxis stroke="#94a3b8" fontSize={12} domain={[0, 100]} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "10px" }} />
+              <Line type="monotone" dataKey="stress" name="Student Stress (Index)" stroke="#ef4444" strokeWidth={2} dot={false} isAnimationActive={false} />
+              <Line type="monotone" dataKey="wellbeing" name="Wellbeing / QoL (MODEL PROXY)" stroke="#f59e0b" strokeWidth={2} dot={false} isAnimationActive={false} />
+              <Line type="monotone" dataKey="mobility" name="Social Mobility (SIMULATED)" stroke="#06b6d4" strokeWidth={2} dot={false} isAnimationActive={false} />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          <div style={{ display: "flex", height: "100%", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "#94a3b8" }}>
+            <Layers size={32} style={{ marginBottom: "16px", color: "#334155" }} />
+            <h3>Policy Graph</h3>
+            <p>Policy alignment and adoption tracking is derived from the Genesis Research Engine.</p>
+            <div style={{ marginTop: "10px", padding: "10px 20px", background: "rgba(255,255,255,0.05)", borderRadius: "6px" }}>
+               Status: UNVALIDATED � Policy impact models are pending backend validation.
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

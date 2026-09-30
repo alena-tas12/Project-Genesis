@@ -1,5 +1,6 @@
 import type { FC } from 'react';
-import { ShieldCheck, Cpu, Sliders, GitBranch, Share2, Users, Sparkles, BookOpen, Download, Box, Award, Network } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ShieldCheck, Cpu, Database, Sliders, GitBranch, Share2, Users, Sparkles, BookOpen, Download, Box, Award } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: string;
@@ -18,13 +19,23 @@ export const Navbar: FC<NavbarProps> = ({
   currentYear,
   onExportPackage
 }) => {
+
+  const [coreStatus, setCoreStatus] = useState<{status: string, edges: number, gaps: number} | null>(null);
+
+  useEffect(() => {
+    fetch('/api/genesis/status')
+      .then(res => res.json())
+      .then(data => setCoreStatus(data))
+      .catch(() => setCoreStatus({ status: 'offline', edges: 0, gaps: 0 }));
+  }, []);
+
   const tabs = [
+
     { id: 'dashboard', label: 'Research Dashboard', icon: Cpu },
     { id: 'designer', label: 'Architecture Designer', icon: Sliders },
     { id: 'experiments', label: 'Experiment Runner', icon: GitBranch },
     { id: 'classroom3d', label: '3D Spatial Visualizer', icon: Box },
     { id: 'population', label: 'Population & Faculty', icon: Users },
-    { id: 'human-network', label: 'Human Neural Networks', icon: Network },
     { id: 'knowledge', label: 'Knowledge Graph', icon: Share2 },
     { id: 'igot', label: 'SIH 26101 Master Suite', icon: Award, isHighlight: true },
     { id: 'frameworks', label: 'Research Frameworks', icon: Sparkles },
@@ -41,6 +52,12 @@ export const Navbar: FC<NavbarProps> = ({
         <span className="version-badge">
           v1.0 Research Architecture
         </span>
+        {coreStatus && (
+          <span className="version-badge" style={{ marginLeft: "10px", background: coreStatus.status === "online" ? "rgba(0, 255, 0, 0.1)" : "rgba(255, 0, 0, 0.1)", color: coreStatus.status === "online" ? "#0f0" : "#f00", border: "1px solid currentColor" }}>
+            <Database size={12} style={{ marginRight: "5px", display: "inline-block", verticalAlign: "middle" }} />
+            Core: {coreStatus.status.toUpperCase()} | Edges: {coreStatus.edges} | Gaps: {coreStatus.gaps}
+          </span>
+        )}
       </div>
 
       <nav className="nav-tabs">

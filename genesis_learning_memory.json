@@ -1,0 +1,22 @@
+{
+  "baseline_psychomotor_vigilance": [
+    {
+      "originalQuery": "psychomotor vigilance meaningless noise query",
+      "adaptedQuery": "psychomotor vigilance meaningless noise query",
+      "lastFailureReason": "LLM could not extract valid baseline mean and standard deviation from the source text.",
+      "success": false
+    },
+    {
+      "originalQuery": "psychomotor vigilance meaningless noise query",
+      "adaptedQuery": "psychomotor vigilance meaningless noise query \"mean\" \"standard deviation\"",
+      "lastFailureReason": "LLM could not extract valid baseline mean and standard deviation from the source text.",
+      "success": false
+    },
+    {
+      "originalQuery": "psychomotor vigilance meaningless noise query",
+      "adaptedQuery": "psychomotor vigilance meaningless noise query \"mean\" \"standard deviation\" \"mean\" \"standard deviation\"",
+      "lastFailureReason": "LLM could not extract valid baseline mean and standard deviation from the source text.",
+      "success": false
+    }
+  ]
+}

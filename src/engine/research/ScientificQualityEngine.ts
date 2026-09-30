@@ -28,16 +28,16 @@ export class ScientificQualityEngine {
     }
 
     // 2. Sample Size Check
-    if (study.sampleSize) {
-      if (study.sampleSize > 1000) score += 0.1;
-      else if (study.sampleSize < 50) {
+    if (study.population?.sampleSize) {
+      if (study.population.sampleSize > 1000) score += 0.1;
+      else if (study.population.sampleSize < 50) {
         score -= 0.15;
         flags.push('Small sample size (< 50) reduces statistical power');
       }
     }
 
     // 3. Claims versus Design Check (Overclaim detection)
-    if (study.studyDesign?.toLowerCase().includes('observational') && study.keyFinding?.toLowerCase().includes('causes')) {
+    if (study.studyDesign?.toLowerCase().includes('observational') && study.effectDescription?.toLowerCase().includes('causes')) {
       score -= 0.2;
       flags.push('Causal overclaim: Observational study uses causal language');
     }

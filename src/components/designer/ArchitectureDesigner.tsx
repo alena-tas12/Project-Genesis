@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import type { EducationalArchitecture, ArchitecturePresetId } from '../../engine/types';
 import { PRESET_ARCHITECTURES } from '../../engine/architecture/presetArchitectures';
 import { Sliders, Save, Check } from 'lucide-react';

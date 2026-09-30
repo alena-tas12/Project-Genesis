@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import type { KnowledgeGraph, KnowledgeNode, StudentAgent } from '../../engine/types';
 import { Share2, Info, ArrowRight } from 'lucide-react';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Play, Pause, FastForward, SkipForward, RefreshCw, Globe } from 'lucide-react';
 import type { WorldState } from '../../engine/types';
 

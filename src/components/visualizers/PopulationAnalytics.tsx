@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import type { StudentAgent, TeacherAgent } from '../../engine/types';
 import { Users, GraduationCap, UserCheck, Target, Bus, MapPin, Award, BookOpen } from 'lucide-react';
 

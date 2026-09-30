@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+﻿import React, { useEffect, useRef, useState } from 'react';
 import type { WorldState } from '../../engine/types';
 import * as THREE from 'three';
 import { Box, Eye, Sparkles, Layers, MapPin, Clock, Coffee, Bus } from 'lucide-react';

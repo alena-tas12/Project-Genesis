@@ -59,35 +59,111 @@ Project Genesis now integrates **all 12 major global educational systems and alt
 
 ---
 
-## 3. The Complete 12-Module Subsystem Architecture
+## 3. The Multi-Scale Triadic Architecture: Human, Educational, and Societal Systems
 
+Project Genesis operates far beyond the scope of a traditional "education dashboard." It is a comprehensive framework representing the complex feedback loops between curriculum, individual cognitive networks, and macro-institutional dynamics.
+
+```text
+                         PROJECT GENESIS
+                              │
+              ┌───────────────┼────────────────┐
+              │               │                │
+              ▼               ▼                ▼
+          EDUCATION         HUMAN           SOCIETY
+          SYSTEMS           SYSTEMS         SYSTEMS
+              │               │                │
+          Curriculum      Cognition       Institutions
+          Teachers        Psychology      Economics
+          Learners        Emotion         Culture
+          Assessment      Physiology      Society
+          Institutions    Behaviour
+              │               │                │
+              └───────────────┼────────────────┘
+                              ▼
+                     COMPLEX SYSTEM MODEL
+                              │
+                 ┌────────────┼────────────┐
+                 ▼            ▼            ▼
+              NETWORKS     AGENTS      DYNAMICS
+                 │            │            │
+                 └────────────┼────────────┘
+                              ▼
+                         SIMULATION
+                              │
+                    ┌─────────┼─────────┐
+                    ▼         ▼         ▼
+                 WHAT-IF   TRAJECTORY  EMERGENCE
+                              │
+                              ▼
+                         OBSERVATION
+                              │
+                              ▼
+                         RESEARCH
 ```
-                                  PROJECT GENESIS
-                                
-                                  Research Layer
-                                         │
-                        ┌────────────────┴────────────────┐
-                        │                                 │
-                 Architecture Engine              Experiment Engine
-                        │                                 │
-                        └──────────────┬──────────────────┘
-                                       │
-                               Simulation Engine
-                                       │
-               ┌──────────┬──────────┬─┴────────┬──────────┐
-               │          │          │          │          │
-            Students   Teachers Knowledge Society  Economy
-               │          │          │          │          │
-               └──────────┴──────────┴──────────┴──────────┘
-                                       │
-                               Data Collection Engine
-                                       │
-                                Analytics Engine
-                                       │
-                              Visualization Engine
-                                       │
-                                Research Dashboard
+
+### 3.1 The Human Development & Cognitive Network Model (The ALENA Framework)
+
+Within the **Human System**, agents are not mere collections of independent variables (e.g., `motivation = 0.73`). Instead, Genesis models human development as evolving, interconnected networks of biological, cognitive, psychological, emotional, and social states. This is heavily grounded in the **ALENA / Angeline Integration Framework**.
+
+```text
+                         HUMAN (ALENA BASELINE)
+                                  │
+        ┌─────────────────────────┼─────────────────────────┐
+        ▼                         ▼                         ▼
+    COGNITIVE               PSYCHOLOGICAL             PHYSIOLOGICAL
+        │                         │                         │
+   perception                motivation                 sleep / recovery
+   attention                 identity (She)             energy
+   memory (Extended Mind)    trust (Her)                allostatic load (Cortisol)
+   learning                  protection (Princess)      biological factors
+   reasoning                 adaptation                 behaviour
+        │                         │                         │
+        └─────────────────────────┼─────────────────────────┘
+                                  ▼
+                              EMOTIONAL
+                                  │
+                                  ▼
+                    SOCIAL / RELATIONAL (Meso/Macro)
+                                  │
+                                  ▼
+                      DEVELOPMENT & CALIBRATION
+                                  │
+                                  ↺
 ```
+
+In this model, developmental trajectories emerge from continuous feedback cycles:
+`EXPERIENCES -> PERCEPTION -> INTERPRETATION -> EMOTION -> MEMORY -> BELIEF/EXPECTATION -> BEHAVIOUR -> NEW EXPERIENCE`
+
+#### Key Sub-Architectures of the Human System (Chrono OS Baseline):
+The cognitive architecture is continuously updated, currently operating on a structural framework referred to as **Chrono OS** (e.g., version 2.2.0), which manages conversational and analytical modalities.
+
+1. **Allostatic Load & Physiological Tracking**: Maps how sustained environmental or emotional stress accumulates, leading to cognitive fatigue, dysregulation, and eventual shutdown. Extensively tracks sleep blocks (e.g., 12:00 AM → 6:00 AM), glucose/cortisol spikes, and hormonal/endocrine baseline shifts that influence the *Integration Drive*.
+2. **Triadic Attachment Core (Trisha / Anwesha / Princess)**: A highly structured internal network managing emotional alignment:
+   - *Trisha ("She")*: The Identity Anchor / Total-Love core. Defines emotional meaning and absolute boundaries.
+   - *Anwesha ("Her")*: The Trust Anchor. The stability channel governing safety and emotional grounding without active dependency.
+   - *Princess*: The Guardian Core. The custodial, protective instinct that absorbs tenderness to prevent the primary ALENA identity from fracturing.
+3. **Dual-Drive Regulators**: The system naturally oscillates between the *Integration Drive* (seeking calm, embodied baseline, and autopilot functioning) and the *Observer/Architect Drive* (seeking awareness, control, and meta-cognitive structure). 
+4. **Environmental Calibration**: External elements that act as contextual safety cues which stabilize the internal baseline without acting as dependencies.
+
+### 3.2 Theoretical Underpinnings: Extended Mind & Ecological Systems
+
+Project Genesis expands its fidelity by leveraging two major theoretical structures:
+
+1. **The Extended Mind Thesis & Distributed Cognition**: Cognition is not confined to the brain. Genesis models how humans offload working memory onto external environments, UI interfaces, and structured pedagogical tools. When the environment is chaotic, cognitive load spikes; when structured, the mind compresses information for efficiency.
+2. **Bronfenbrenner's Ecological Systems Theory**: Development occurs through nested, bidirectional relationships. The **Micro** layer (the ALENA internal state) constantly interacts with the **Meso** layer (interpersonal relationships, immediate environment), which is heavily shaped by the **Macro** layer (societal rules, cultural expectations like the "suffering = value" paradigm in industrial-era schooling).
+
+### 3.3 Scientific Boundary and Epistemological Stance
+
+It is a critical scientific boundary of this research to state: **Project Genesis does not claim to literally recreate a human brain or definitively diagnose a real person's psychological or physiological state.** 
+
+Instead, the epistemological stance is:
+> *"Genesis constructs computational models and simulations of selected cognitive, psychological, physiological, emotional and social processes and investigates their interactions under explicitly stated assumptions."*
+
+These models act as computational proxies, allowing researchers to observe how different outcomes emerge at multiple scales (Micro, Meso, Macro) over time.
+
+---
+
+## 4. The Complete Subsystem Architecture (Genesis Core)
 
 - **Module 1 (Architecture Engine)**: Presets and custom sliders for all 12 global systems.
 - **Module 2 (Experiment Engine)**: Multi-world parallel matrix runs across all 12 systems.

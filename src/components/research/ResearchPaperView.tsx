@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import type { WorldState, ResearchFrameworkPackage } from '../../engine/types';
 import { ResearchPaperGenerator } from '../../engine/research/paperGenerator';
 import { FileExporter } from '../../utils/exporter';
